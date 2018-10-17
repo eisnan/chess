@@ -1,9 +1,6 @@
-package core;
+package app.domain;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 @Entity
 public class Moves {
@@ -51,9 +48,6 @@ public class Moves {
 
     @Override
     public String toString() {
-        return "Moves{" +
-                "id=" + id +
-                ", game=" + game +
-                '}';
+        return "Moves{" + "id=" + id + ", game=" + game + '}';
     }
 }

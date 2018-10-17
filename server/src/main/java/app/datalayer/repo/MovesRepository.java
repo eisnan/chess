@@ -1,8 +1,7 @@
-package core;
+package app.datalayer.repo;
 
+import app.domain.Moves;
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.Queue;
 
 public interface MovesRepository extends CrudRepository<Moves, Long> {
 

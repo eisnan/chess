@@ -1,4 +1,4 @@
-package core;
+package app.domain;
 
 import javax.persistence.*;
 import java.util.Objects;
