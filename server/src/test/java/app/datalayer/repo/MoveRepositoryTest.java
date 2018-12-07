@@ -1,9 +1,8 @@
 package app.datalayer.repo;
 
-import app.datalayer.repo.MoveRepository;
 import app.domain.File;
 import app.domain.Move;
-import app.domain.Piece;
+import app.domain.PieceType;
 import app.domain.Rank;
 import app.domain.util.Tuple;
 import org.junit.Test;
@@ -27,7 +26,7 @@ public class MoveRepositoryTest {
     public void testFindMove() {
 
         Move move = new Move();
-        move.setPiece(Piece.PAWN);
+        move.setPieceType(PieceType.PAWN);
         move.setCoordinateFrom(new Tuple<>(File.a, Rank._3));
         entityManager.persist(move);
 

@@ -13,7 +13,7 @@ public class Move {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private Piece piece;
+    private PieceType pieceType;
 
     @Convert(converter = CoordinateConverter.class)
     private Tuple<File, Rank> coordinateFrom;
@@ -24,8 +24,8 @@ public class Move {
     public Move() {
     }
 
-    public Move(Piece piece, Tuple<File, Rank> coordinateFrom) {
-        this.piece = piece;
+    public Move(PieceType pieceType, Tuple<File, Rank> coordinateFrom) {
+        this.pieceType = pieceType;
         this.coordinateFrom = coordinateFrom;
     }
 
@@ -37,12 +37,12 @@ public class Move {
         this.id = id;
     }
 
-    public Piece getPiece() {
-        return piece;
+    public PieceType getPieceType() {
+        return pieceType;
     }
 
-    public void setPiece(Piece piece) {
-        this.piece = piece;
+    public void setPieceType(PieceType pieceType) {
+        this.pieceType = pieceType;
     }
 
     public Tuple<File, Rank> getCoordinateFrom() {
@@ -57,7 +57,7 @@ public class Move {
     public String toString() {
         return "Move{" +
                 "id=" + id +
-                ", piece=" + piece +
+                ", pieceType=" + pieceType +
                 ", coordinateFrom=" + coordinateFrom +
                 '}';
     }
