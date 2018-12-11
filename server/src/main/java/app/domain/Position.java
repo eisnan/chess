@@ -19,6 +19,23 @@ public class Position {
         this.rank = coordinate.getRight();
     }
 
+    public Position(int fileOrdinal, int rankOrdinal) {
+        try {
+            this.file = File.values()[fileOrdinal];
+            this.rank = Rank.values()[rankOrdinal];
+        } catch (IndexOutOfBoundsException ex) {
+            throw  new InvalidPositionException("");
+        }
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -51,6 +51,15 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.github.inamik.text.tables/inamik-text-tables -->
+        <dependency>
+            <groupId>com.github.inamik.text.tables</groupId>
+            <artifactId>inamik-text-tables</artifactId>
+            <version>0.8</version>
+        </dependency>
+
+
+
     </dependencies>
     <build>
         <plugins>

@@ -36,9 +36,9 @@ public class Moves {
         return game;
     }
 
-//    public Move newMove(Move move) {
-//        moves.add(move);
-//        return move;
+//    public Move newMove(Move checkMove) {
+//        moves.add(checkMove);
+//        return checkMove;
 //    }
 //
 //    public Collection<Move> getMoves() {
