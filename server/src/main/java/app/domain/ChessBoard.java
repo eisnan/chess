@@ -2,10 +2,7 @@ package app.domain;
 
 import app.domain.util.Tuple;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public enum ChessBoard {
 
@@ -14,6 +11,7 @@ public enum ChessBoard {
 
     private Map<Position, Piece> model = new LinkedHashMap<>();
     private StartPositionResolver startPositionResolver = new HardCodedPositionResolver();
+    private LinkedList<Move2> moves = new LinkedList<>();
 
 //    public Position[][] initModel() {
 //
@@ -84,5 +82,14 @@ public enum ChessBoard {
     public Position getCurrentPosition(Piece selectedPiece) {
         return model.entrySet().stream().filter(positionPieceEntry -> positionPieceEntry.getValue().equals(selectedPiece))
                 .map(Map.Entry::getKey).findFirst().orElse(null);
+    }
+
+
+    public void addMove(Move2 move) {
+        moves.add(move);
+    }
+
+    public Move2 getLastMove() {
+        return moves.isEmpty() ? null : moves.getLast();
     }
 }

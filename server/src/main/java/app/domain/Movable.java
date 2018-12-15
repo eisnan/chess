@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface Movable {
 
-    List<Position> getAvailablePositions();
+    List<Position> getAvailablePositions(Piece piece);
 
 }

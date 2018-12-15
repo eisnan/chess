@@ -23,16 +23,16 @@ public class ChessBoardTest {
 
 //        System.out.println(subject.getModel().entrySet().stream().filter(positionPieceEntry -> positionPieceEntry.getValue() != null).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 
-        Optional<Map.Entry<Position, Piece>> first = model.entrySet().stream().filter(positionPieceEntry -> positionPieceEntry.getKey().equals(new Position(File.b, Rank._2))).findFirst();
+        Optional<Map.Entry<Position, Piece>> first = model.entrySet().stream().filter(positionPieceEntry -> positionPieceEntry.getKey().equals(new Position(File.c, Rank._2))).findFirst();
         Map.Entry<Position, Piece> positionPieceEntry = first.get();
-
+        Piece piece = positionPieceEntry.getValue();
         System.out.println(positionPieceEntry);
 
-        List<Position> availablePositions = positionPieceEntry.getValue().getAvailablePositions();
+        List<Position> availablePositions = new PositionResolver().getAvailablePositions(piece, positionPieceEntry.getKey());
 
         model.put(positionPieceEntry.getKey(), null);
 
-        new Mover().move(positionPieceEntry.getValue(), availablePositions.get(1));
+        new Mover().move(subject, piece, null, availablePositions.get(1));
 
         Piece[][] arrayModel = subject.getArrayModel();
 

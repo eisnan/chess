@@ -12,4 +12,13 @@ public enum PieceType {
     public String getNotationSymbol() {
         return notationSymbol;
     }
+
+    public static PieceType getByNotationSymbol(String notationSymbol) {
+        for (PieceType pieceType : PieceType.values()) {
+            if (notationSymbol.equals(pieceType.getNotationSymbol())) {
+                return pieceType;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
 }

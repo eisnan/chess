@@ -3,7 +3,7 @@ package app.domain;
 import java.util.List;
 import java.util.Objects;
 
-public class Piece implements Movable {
+public class Piece  {
 
     private PieceColor pieceColor;
     private PieceType pieceType;
@@ -12,6 +12,7 @@ public class Piece implements Movable {
         this.pieceColor = pieceColor;
         this.pieceType = pieceType;
     }
+
 
     public static Piece getWhitePiece(PieceType pieceType) {
         return new Piece(PieceColor.WHITE, pieceType);
@@ -41,7 +42,7 @@ public class Piece implements Movable {
     }
 
     public String getNotation() {
-        return pieceColor.toString() + pieceType.getNotationSymbol();
+        return pieceColor.getColorNotation() + pieceType.getNotationSymbol();
     }
 
     public PieceColor getPieceColor() {
@@ -52,18 +53,6 @@ public class Piece implements Movable {
         return pieceType;
     }
 
-    @Override
-    public List<Position> getAvailablePositions() {
 
-        // get current position
-        Position currentPosition = ChessBoard.INSTANCE.getCurrentPosition(this);
-
-        // get checkMove algorithm
-        MovingRule movingRule = MovingRules.getMovingRule(pieceType);
-
-        // generate available positions
-        return movingRule.getPossiblePositions(this, currentPosition);
-
-    }
 
 }

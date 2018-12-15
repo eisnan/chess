@@ -20,12 +20,21 @@ public class Position {
     }
 
     public Position(int fileOrdinal, int rankOrdinal) {
+
+        if (fileOrdinal > 7 && rankOrdinal > 7) {
+
+        }
         try {
             this.file = File.values()[fileOrdinal];
             this.rank = Rank.values()[rankOrdinal];
         } catch (IndexOutOfBoundsException ex) {
             throw  new InvalidPositionException("");
         }
+    }
+
+    public Position(char file, int rank) {
+        this.file = File.valueOf(String.valueOf(file));
+        this.rank = Rank.getEnum(String.valueOf(rank));
     }
 
     public File getFile() {
@@ -56,5 +65,9 @@ public class Position {
                 "file=" + file +
                 ", rank=" + rank +
                 '}';
+    }
+
+    public String getAlgebraicNotation() {
+        return file.name() + rank.getCoordinate();
     }
 }

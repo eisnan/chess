@@ -7,16 +7,19 @@ public class MovingRules {
             case PAWN:
                 return new PawnMovingRule();
             case KING:
-                break;
+                return new PawnMovingRule();
             case QUEEN:
-                break;
+                return new PawnMovingRule();
             case BISHOP:
-                break;
+                return new PawnMovingRule();
             case KNIGHT:
-                break;
+                return new PawnMovingRule();
+
             case ROOK:
-                break;
+                return new PawnMovingRule();
+
+            default:
+                return new PawnMovingRule();
         }
-        return null;
     }
 }
