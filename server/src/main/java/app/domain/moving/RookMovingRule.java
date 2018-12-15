@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class RookMovingRule implements MovingRule {
+
+    private static final int ROOK_LIMIT_POSITIONS = 8;
+
     @Override
     public List<Position> getPossiblePositions(Piece piece, Position currentPosition) {
 
@@ -22,22 +25,20 @@ public class RookMovingRule implements MovingRule {
     private List<Position> getAvailableMoves(MoveSettings moveSettings) {
 
 
-        List<Position> positions = MoveType.FORWARD_DIAGONAL_LEFT.checkMove(moveSettings);
-        positions.addAll(MoveType.FORWARD.checkMove(moveSettings));
-        positions.addAll(MoveType.FORWARD_DIAGONAL_RIGHT.checkMove(moveSettings));
+        List<Position> positions = MoveType.FORWARD.checkMove(moveSettings);
+        positions.addAll(MoveType.BACKWARD.checkMove(moveSettings));
+        positions.addAll(MoveType.LEFT.checkMove(moveSettings));
+        positions.addAll(MoveType.RIGHT.checkMove(moveSettings));
         return positions;
     }
 
     @Override
     public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
         Map<MoveType, Integer> limitPerMoveType = new HashMap<>();
-        limitPerMoveType.put(MoveType.FORWARD_DIAGONAL_LEFT, 1);
-        limitPerMoveType.put(MoveType.FORWARD_DIAGONAL_RIGHT, 1);
-        if ((currentPosition.getRank() == Rank._2 && piece.getPieceColor() == PieceColor.WHITE) || currentPosition.getRank() == Rank._7 && piece.getPieceColor() == PieceColor.BLACK) {
-            limitPerMoveType.put(MoveType.FORWARD, 2);
-        } else {
-            limitPerMoveType.put(MoveType.FORWARD, 1);
-        }
+        limitPerMoveType.put(MoveType.FORWARD, 8);
+        limitPerMoveType.put(MoveType.BACKWARD, 8);
+        limitPerMoveType.put(MoveType.LEFT, 8);
+        limitPerMoveType.put(MoveType.RIGHT, ROOK_LIMIT_POSITIONS);
         return new MoveSettings(currentPosition, piece, this, limitPerMoveType);
 
     }
@@ -49,15 +50,12 @@ public class RookMovingRule implements MovingRule {
         List<Position> validPositions = new ArrayList<>();
         switch (moveType) {
 
-            case FORWARD_DIAGONAL_LEFT:
-                //capturing move
-                // TODO EP move
+            case FORWARD:
                 return positions.stream().filter(position -> {
                     Piece piece = ChessBoard.INSTANCE.getModel().get(position);
                     return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : true);
                 }).collect(Collectors.toList());
-            case FORWARD:
-                // move
+            case BACKWARD:
                 for (Position position : positions) {
                     Piece piece = ChessBoard.INSTANCE.getModel().get(position);
                     if (piece == null) {
@@ -65,13 +63,14 @@ public class RookMovingRule implements MovingRule {
                     }
                 }
                 break;
-            case FORWARD_DIAGONAL_RIGHT:
-                //capturing move
-                // TODO EP move
+            case LEFT:
                 return positions.stream().filter(position -> {
                     Piece piece = ChessBoard.INSTANCE.getModel().get(position);
                     return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : true);
                 }).collect(Collectors.toList());
+            case RIGHT:
+
         }
-        return validPositions;    }
+        return validPositions;
+    }
 }

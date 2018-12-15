@@ -2,6 +2,7 @@ package app.domain.moving;
 
 import app.domain.InvalidPositionException;
 import app.domain.Position;
+import app.domain.util.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +139,11 @@ public enum MoveType implements MoveDescriber {
     BACKWARD_DIAGONAL_LEFT {
         @Override
         public List<Position> checkMove(MoveSettings moveSettings) {
-            return null;
+            List<Position> validPositions = new ArrayList<>();
+            MoveIterator moveIterator = new MoveIterator();
+            List<Position> possiblePositions = moveIterator.iterate(moveSettings, this, (integer, integer2) -> integer - integer2, (integer, integer2) -> integer - integer2);
+            validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+            return validPositions;
         }
     },
     BACKWARD_DIAGONAL_RIGHT {
@@ -150,19 +155,31 @@ public enum MoveType implements MoveDescriber {
     BACKWARD {
         @Override
         public List<Position> checkMove(MoveSettings moveSettings) {
-            return null;
+            List<Position> validPositions = new ArrayList<>();
+            MoveIterator moveIterator = new MoveIterator();
+            List<Position> possiblePositions = moveIterator.iterate(moveSettings, this, (integer, integer2) -> integer, (integer, integer2) -> integer - integer2);
+            validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+            return validPositions;
         }
     },
     LEFT {
         @Override
         public List<Position> checkMove(MoveSettings moveSettings) {
-            return null;
+            List<Position> validPositions = new ArrayList<>();
+            MoveIterator moveIterator = new MoveIterator();
+            List<Position> possiblePositions = moveIterator.iterate(moveSettings, this, (integer, integer2) -> integer - integer2, (integer, integer2) -> integer);
+            validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+            return validPositions;
         }
     },
     RIGHT {
         @Override
         public List<Position> checkMove(MoveSettings moveSettings) {
-            return null;
+            List<Position> validPositions = new ArrayList<>();
+            MoveIterator moveIterator = new MoveIterator();
+            List<Position> possiblePositions = moveIterator.iterate(moveSettings, this, (integer, integer2) -> integer + integer2, (integer, integer2) -> integer);
+            validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+            return validPositions;
         }
     },
     KNIGHT {
