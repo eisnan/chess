@@ -1,5 +1,8 @@
 package app.domain;
 
+import app.domain.moving.MovingRule;
+import app.domain.moving.MovingRules;
+
 import java.util.List;
 
 public class PositionResolver {

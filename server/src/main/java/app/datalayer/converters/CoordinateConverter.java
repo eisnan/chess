@@ -16,7 +16,7 @@ public class CoordinateConverter implements AttributeConverter<Tuple<File, Rank>
 
     @Override
     public Tuple<File, Rank> convertToEntityAttribute(String dbData) {
-        return new Tuple<>(File.valueOf("" + dbData.charAt(0)), Rank.getEnum("" + dbData.charAt(1)));
+        return new Tuple<>(File.valueOf("" + dbData.charAt(0)), Rank.getRank("" + dbData.charAt(1)));
     }
 
 

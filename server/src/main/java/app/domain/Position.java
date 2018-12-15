@@ -34,7 +34,7 @@ public class Position {
 
     public Position(char file, int rank) {
         this.file = File.valueOf(String.valueOf(file));
-        this.rank = Rank.getEnum(String.valueOf(rank));
+        this.rank = Rank.getRank(String.valueOf(rank));
     }
 
     public File getFile() {

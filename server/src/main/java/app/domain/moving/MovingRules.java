@@ -1,4 +1,6 @@
-package app.domain;
+package app.domain.moving;
+
+import app.domain.PieceType;
 
 public class MovingRules {
     public static MovingRule getMovingRule(PieceType pieceType) {
@@ -7,19 +9,19 @@ public class MovingRules {
             case PAWN:
                 return new PawnMovingRule();
             case KING:
-                return new PawnMovingRule();
+                return new KingMovingRule();
             case QUEEN:
-                return new PawnMovingRule();
+                return new QueenMovingRule();
             case BISHOP:
-                return new PawnMovingRule();
+                return new BishopMovingRule();
             case KNIGHT:
-                return new PawnMovingRule();
+                return new KnightMovingRule();
 
             case ROOK:
-                return new PawnMovingRule();
+                return new RookMovingRule();
 
             default:
-                return new PawnMovingRule();
+                throw new RuntimeException();
         }
     }
 }

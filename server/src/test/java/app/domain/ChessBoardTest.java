@@ -1,12 +1,11 @@
 package app.domain;
 
+import app.domain.moving.Mover;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class ChessBoardTest {
 
@@ -16,10 +15,14 @@ public class ChessBoardTest {
 
         subject.initModel();
 
+        subject.getArrayModel();
+
         Map<Position, Piece> model = subject.getModel();
         System.out.println(model);
 
         subject.arrangePiecesForStart();
+
+        subject.getArrayModel();
 
 //        System.out.println(subject.getModel().entrySet().stream().filter(positionPieceEntry -> positionPieceEntry.getValue() != null).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 

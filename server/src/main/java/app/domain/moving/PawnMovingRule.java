@@ -1,4 +1,6 @@
-package app.domain;
+package app.domain.moving;
+
+import app.domain.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +44,7 @@ public class PawnMovingRule implements MovingRule {
     }
 
     @Override
-    public List<Position> removeInvalidPositions(MoveType moveType, Piece selectedPiece, List<Position> positions) {
+    public List<Position> removeInvalidPositions(MoveType moveType, Position currentPosition, Piece selectedPiece, List<Position> positions) {
 
 //        List<Position> validPositions = positions.stream().filter(position -> checkPositionNotToBeOccupiedBySameColor(position, piece)).collect(Collectors.toList());
         List<Position> validPositions = new ArrayList<>();
@@ -53,7 +55,7 @@ public class PawnMovingRule implements MovingRule {
                 // TODO EP move
                 return positions.stream().filter(position -> {
                     Piece piece = ChessBoard.INSTANCE.getModel().get(position);
-                    return (piece != null ? (piece.getPieceColor() != piece.getPieceColor()) : isEnPassant(selectedPiece, position));
+                    return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(selectedPiece, currentPosition, position));
                 }).collect(Collectors.toList());
             case FORWARD:
                 // move
@@ -69,18 +71,19 @@ public class PawnMovingRule implements MovingRule {
                 // TODO EP move
                 return positions.stream().filter(position -> {
                     Piece piece = ChessBoard.INSTANCE.getModel().get(position);
-                    return (piece != null ? (piece.getPieceColor() != piece.getPieceColor()) : isEnPassant(selectedPiece, position));
+                    return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(selectedPiece, currentPosition, position));
                 }).collect(Collectors.toList());
         }
         return validPositions;
     }
 
-    private boolean isEnPassant(Piece currentPiece, Position position) {
+    public boolean isEnPassant(Piece currentPiece, Position currentPosition, Position evaluatedPosition) {
 
         Move2 lastMove;
         boolean lastMoveMadeByPawn;
         boolean lastMoveWasDoubleStep;
-        boolean adjacentFiles;
+        boolean sameFiles;
+        boolean enPassant;
         switch (currentPiece.getPieceColor()) {
             case WHITE:
 
@@ -88,8 +91,8 @@ public class PawnMovingRule implements MovingRule {
                 if (lastMove != null) {
                     lastMoveMadeByPawn = lastMove.getPiece().getPieceType() == PieceType.PAWN;
                     lastMoveWasDoubleStep = lastMove.getFromPosition().getRank().ordinal() - lastMove.getToPosition().getRank().ordinal() > 1;
-                    adjacentFiles = File.areAdjacent(lastMove.getToPosition().getFile(), position.getFile());
-                    return position.getRank() == Rank._5 && lastMoveMadeByPawn && lastMoveWasDoubleStep && adjacentFiles;
+                    sameFiles = lastMove.getToPosition().getFile() == evaluatedPosition.getFile();
+                    return currentPosition.getRank() == Rank._5 && lastMoveMadeByPawn && lastMoveWasDoubleStep && sameFiles;
                 }
                 break;
             case BLACK:
@@ -97,8 +100,8 @@ public class PawnMovingRule implements MovingRule {
                 if (lastMove != null) {
                     lastMoveMadeByPawn = lastMove.getPiece().getPieceType() == PieceType.PAWN;
                     lastMoveWasDoubleStep = lastMove.getFromPosition().getRank().ordinal() - lastMove.getToPosition().getRank().ordinal() < -1;
-                    adjacentFiles = File.areAdjacent(lastMove.getToPosition().getFile(), position.getFile());
-                    return position.getRank() == Rank._4 && lastMoveMadeByPawn && lastMoveWasDoubleStep && adjacentFiles;
+                    sameFiles = lastMove.getToPosition().getFile() == evaluatedPosition.getFile();
+                    return currentPosition.getRank() == Rank._4 && lastMoveMadeByPawn && lastMoveWasDoubleStep && sameFiles;
                 }
                 break;
         }

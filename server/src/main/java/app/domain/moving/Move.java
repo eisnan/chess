@@ -1,5 +1,8 @@
-package app.domain;
+package app.domain.moving;
 
+import app.domain.File;
+import app.domain.PieceType;
+import app.domain.Rank;
 import app.domain.util.Tuple;
 import app.datalayer.converters.CoordinateConverter;
 

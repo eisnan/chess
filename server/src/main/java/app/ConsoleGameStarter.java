@@ -1,6 +1,7 @@
 package app;
 
 import app.domain.*;
+import app.domain.moving.Mover;
 
 import java.util.List;
 import java.util.Scanner;

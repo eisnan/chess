@@ -1,6 +1,6 @@
 package app.domain;
 
-import app.domain.util.Tuple;
+import app.domain.moving.Move2;
 
 import java.util.*;
 
@@ -68,22 +68,6 @@ public enum ChessBoard {
     private void updateModel(Map<Piece, Set<Position>> initialPositions) {
         initialPositions.forEach((piece, positions) -> positions.forEach(position -> model.put(position, piece)));
     }
-
-    private void updateModel(Tuple<Tuple<File, Rank>, Tuple<File, Rank>> positions, PieceType pieceType) {
-        model.put(new Position(positions.getLeft()), new Piece(PieceColor.WHITE, pieceType));
-        model.put(new Position(positions.getRight()), new Piece(PieceColor.BLACK, pieceType));
-    }
-
-    private void updateModel(List<Tuple<File, Rank>> positions, Piece piece) {
-        positions.forEach(position -> model.putIfAbsent(new Position(position), piece));
-    }
-
-
-    public Position getCurrentPosition(Piece selectedPiece) {
-        return model.entrySet().stream().filter(positionPieceEntry -> positionPieceEntry.getValue().equals(selectedPiece))
-                .map(Map.Entry::getKey).findFirst().orElse(null);
-    }
-
 
     public void addMove(Move2 move) {
         moves.add(move);

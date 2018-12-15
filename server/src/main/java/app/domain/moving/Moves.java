@@ -1,4 +1,6 @@
-package app.domain;
+package app.domain.moving;
+
+import app.domain.Game;
 
 import javax.persistence.*;
 
