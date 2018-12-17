@@ -23,7 +23,7 @@ public class MoveIterator {
                                 rankFunction.apply(currentPosition.getRank().ordinal(), integer));
                         possiblePositions.add(position);
                     } catch (InvalidPositionException ex) {
-                        System.out.println(ex);
+//                        System.out.println(ex);
                     }
                 });
         return possiblePositions;

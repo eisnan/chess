@@ -4,7 +4,7 @@ import app.domain.util.Tuple;
 
 import java.util.Objects;
 
-public class Position {
+public class Position implements Comparable<Position> {
 
     private File file;
     private Rank rank;
@@ -69,5 +69,10 @@ public class Position {
 
     public String getAlgebraicNotation() {
         return file.name() + rank.getCoordinate();
+    }
+
+    @Override
+    public int compareTo(Position o) {
+        return 0;
     }
 }

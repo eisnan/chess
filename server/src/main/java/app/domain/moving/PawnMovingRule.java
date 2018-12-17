@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class PawnMovingRule implements MovingRule {
 
+    private PositionInvalidator invalidator = new PInvalidator();
 
     @Override
     public List<Position> getPossiblePositions(Piece piece, Position currentPosition) {
@@ -45,8 +46,6 @@ public class PawnMovingRule implements MovingRule {
 
     @Override
     public List<Position> removeInvalidPositions(MoveType moveType, Position currentPosition, Piece selectedPiece, List<Position> positions) {
-
-//        List<Position> validPositions = positions.stream().filter(position -> checkPositionNotToBeOccupiedBySameColor(position, piece)).collect(Collectors.toList());
         List<Position> validPositions = new ArrayList<>();
         switch (moveType) {
 
@@ -63,6 +62,8 @@ public class PawnMovingRule implements MovingRule {
                     Piece piece = ChessBoard.INSTANCE.getModel().get(position);
                     if (piece == null) {
                         validPositions.add(position);
+                    } else {
+                        break;
                     }
                 }
                 break;
@@ -78,12 +79,10 @@ public class PawnMovingRule implements MovingRule {
     }
 
     public boolean isEnPassant(Piece currentPiece, Position currentPosition, Position evaluatedPosition) {
-
         Move2 lastMove;
         boolean lastMoveMadeByPawn;
         boolean lastMoveWasDoubleStep;
         boolean sameFiles;
-        boolean enPassant;
         switch (currentPiece.getPieceColor()) {
             case WHITE:
 
