@@ -4,6 +4,7 @@ import app.domain.ChessBoard;
 import app.domain.Piece;
 import app.domain.Position;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,13 +16,13 @@ public class RookMovingRule implements MovingRule {
     private PositionInvalidator invalidator = new RBQInvalidator();
 
     @Override
-    public List<Position> getPossiblePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
+    public Collection<Position> getPossiblePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
         return getAvailableMoves(chessBoard, getMoveSettings(currentPosition, piece));
     }
 
 
-    private List<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
-        List<Position> positions = MoveType.FORWARD.checkMove(chessBoard, moveSettings);
+    private Collection<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
+        Collection<Position> positions = MoveType.FORWARD.checkMove(chessBoard, moveSettings);
         positions.addAll(MoveType.BACKWARD.checkMove(chessBoard, moveSettings));
         positions.addAll(MoveType.LEFT.checkMove(chessBoard, moveSettings));
         positions.addAll(MoveType.RIGHT.checkMove(chessBoard, moveSettings));
@@ -40,7 +41,7 @@ public class RookMovingRule implements MovingRule {
     }
 
     @Override
-    public List<Position> removeInvalidPositions(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece selectedPiece, List<Position> positions) {
+    public Collection<Position> removeInvalidPositions(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
         return invalidator.invalidate(chessBoard, currentPosition, selectedPiece, positions);
     }
 }

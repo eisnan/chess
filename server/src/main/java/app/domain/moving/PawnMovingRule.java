@@ -2,10 +2,7 @@ package app.domain.moving;
 
 import app.domain.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PawnMovingRule implements MovingRule {
@@ -13,43 +10,74 @@ public class PawnMovingRule implements MovingRule {
 //    private PositionInvalidator invalidator = new PInvalidator();
 
     @Override
-    public List<Position> getPossiblePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
+    public Collection<Position> getPossiblePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
 
 
-        List<Position> availableMoves = getAvailableMoves(chessBoard, getMoveSettings(currentPosition, piece));
+        Collection<Position> availableMoves = getAvailableMoves(chessBoard, getMoveSettings(currentPosition, piece));
 
 
         return availableMoves;
     }
 
-    private List<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
+    private Collection<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
 
 
-        List<Position> positions = MoveType.FORWARD_DIAGONAL_LEFT.checkMove(chessBoard, moveSettings);
-        positions.addAll(MoveType.FORWARD.checkMove(chessBoard, moveSettings));
-        positions.addAll(MoveType.FORWARD_DIAGONAL_RIGHT.checkMove(chessBoard, moveSettings));
+        Collection<Position> positions = new TreeSet<>();
+        switch (moveSettings.getPiece().getPieceColor()) {
+            case WHITE:
+                positions.addAll(MoveType.FORWARD_DIAGONAL_LEFT.checkMove(chessBoard, moveSettings));
+                positions.addAll(MoveType.FORWARD.checkMove(chessBoard, moveSettings));
+                positions.addAll(MoveType.FORWARD_DIAGONAL_RIGHT.checkMove(chessBoard, moveSettings));
+                return positions;
+            case BLACK:
+                positions.addAll(MoveType.BACKWARD_DIAGONAL_LEFT.checkMove(chessBoard, moveSettings));
+                positions.addAll(MoveType.BACKWARD.checkMove(chessBoard, moveSettings));
+                positions.addAll(MoveType.BACKWARD_DIAGONAL_RIGHT.checkMove(chessBoard, moveSettings));
+                return positions;
+        }
+
         return positions;
+//        Collection<Position> positions = MoveType.FORWARD_DIAGONAL_LEFT.checkMove(chessBoard, moveSettings);
+//        positions.addAll(MoveType.FORWARD.checkMove(chessBoard, moveSettings));
+//        positions.addAll(MoveType.FORWARD_DIAGONAL_RIGHT.checkMove(chessBoard, moveSettings));
+//        return positions;
     }
 
     @Override
     public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
         Map<MoveType, Integer> limitPerMoveType = new HashMap<>();
-        limitPerMoveType.put(MoveType.FORWARD_DIAGONAL_LEFT, 1);
-        limitPerMoveType.put(MoveType.FORWARD_DIAGONAL_RIGHT, 1);
-        if ((currentPosition.getRank() == Rank._2 && piece.getPieceColor() == PieceColor.WHITE) || currentPosition.getRank() == Rank._7 && piece.getPieceColor() == PieceColor.BLACK) {
-            limitPerMoveType.put(MoveType.FORWARD, 2);
-        } else {
-            limitPerMoveType.put(MoveType.FORWARD, 1);
+
+        switch (piece.getPieceColor()) {
+
+            case WHITE:
+                limitPerMoveType.put(MoveType.FORWARD_DIAGONAL_LEFT, 1);
+                limitPerMoveType.put(MoveType.FORWARD_DIAGONAL_RIGHT, 1);
+                if (currentPosition.getRank() == Rank._2) {
+                    limitPerMoveType.put(MoveType.FORWARD, 2);
+                } else {
+                    limitPerMoveType.put(MoveType.FORWARD, 1);
+                }
+                break;
+            case BLACK:
+                limitPerMoveType.put(MoveType.BACKWARD_DIAGONAL_LEFT, 1);
+                limitPerMoveType.put(MoveType.BACKWARD_DIAGONAL_RIGHT, 1);
+                if (currentPosition.getRank() == Rank._7) {
+                    limitPerMoveType.put(MoveType.BACKWARD, 2);
+                } else {
+                    limitPerMoveType.put(MoveType.BACKWARD, 1);
+                }
+                break;
         }
         return new MoveSettings(currentPosition, piece, this, limitPerMoveType);
     }
 
     @Override
-    public List<Position> removeInvalidPositions(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece selectedPiece, List<Position> positions) {
+    public List<Position> removeInvalidPositions(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
         List<Position> validPositions = new ArrayList<>();
         switch (moveType) {
 
             case FORWARD_DIAGONAL_LEFT:
+            case BACKWARD_DIAGONAL_RIGHT:
                 //capturing move
                 // TODO EP move
                 return positions.stream().filter(position -> {
@@ -57,6 +85,7 @@ public class PawnMovingRule implements MovingRule {
                     return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
                 }).collect(Collectors.toList());
             case FORWARD:
+            case BACKWARD:
                 // move
                 for (Position position : positions) {
                     Piece piece = chessBoard.getModel().get(position);
@@ -68,6 +97,7 @@ public class PawnMovingRule implements MovingRule {
                 }
                 break;
             case FORWARD_DIAGONAL_RIGHT:
+            case BACKWARD_DIAGONAL_LEFT:
                 //capturing move
                 // TODO EP move
                 return positions.stream().filter(position -> {

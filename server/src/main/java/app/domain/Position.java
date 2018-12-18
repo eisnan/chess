@@ -69,6 +69,10 @@ public class Position implements Comparable<Position> {
 
     @Override
     public int compareTo(Position o) {
-        return 0;
+        if (this.file.ordinal() == o.file.ordinal()) {
+            return Integer.compare(this.rank.ordinal(), o.rank.ordinal());
+        } else {
+            return Integer.compare(this.file.ordinal(), o.file.ordinal());
+        }
     }
 }

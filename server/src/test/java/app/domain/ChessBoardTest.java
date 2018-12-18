@@ -3,6 +3,7 @@ package app.domain;
 import app.domain.moving.Mover;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -11,7 +12,7 @@ public class ChessBoardTest {
 
     @Test
     public void checkChessBoardModel() {
-        ChessBoard chessBoard =  new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard();
 
         chessBoard.initModel();
 
@@ -31,7 +32,7 @@ public class ChessBoardTest {
         Piece piece = positionPieceEntry.getValue();
         System.out.println(positionPieceEntry);
 
-        List<Position> availablePositions = new PositionResolver().getAvailablePositions(chessBoard, piece, positionPieceEntry.getKey());
+        List<Position> availablePositions = new ArrayList<>(new PositionResolver().getAvailablePositions(chessBoard, piece, positionPieceEntry.getKey()));
 
         model.put(positionPieceEntry.getKey(), null);
 

@@ -6,6 +6,7 @@ import app.domain.Piece;
 import app.domain.Position;
 import app.domain.moving.Mover;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -48,7 +49,7 @@ public class ConsoleGameStarter {
 
                 Position selectedPosition = engine.getPosition(positionLetter);
 
-                List<Position> availableMoves = engine.getAvailableMoves(chessBoard, selectedPiece, selectedPosition);
+                Collection<Position> availableMoves = engine.getAvailableMoves(chessBoard, selectedPiece, selectedPosition);
 
                 System.out.println("Your available moves are: ");
                 String availableMovesOutput = availableMoves.stream().map(Position::getAlgebraicNotation).collect(Collectors.joining(", "));

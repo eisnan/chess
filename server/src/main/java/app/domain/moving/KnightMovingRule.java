@@ -4,6 +4,7 @@ import app.domain.ChessBoard;
 import app.domain.Piece;
 import app.domain.Position;
 
+import java.util.Collection;
 import java.util.List;
 
 public class KnightMovingRule implements MovingRule {
@@ -18,7 +19,7 @@ public class KnightMovingRule implements MovingRule {
     }
 
     @Override
-    public List<Position> removeInvalidPositions(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece piece, List<Position> positions) {
+    public List<Position> removeInvalidPositions(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece piece, Collection<Position> positions) {
         return null;
     }
 }

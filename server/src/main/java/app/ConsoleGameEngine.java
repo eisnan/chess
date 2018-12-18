@@ -3,11 +3,12 @@ package app;
 import app.domain.*;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class ConsoleGameEngine {
 
-    public List<Position> getAvailableMoves(ChessBoard chessBoard, Piece piece, Position position) {
+    public Collection<Position> getAvailableMoves(ChessBoard chessBoard, Piece piece, Position position) {
         //validate
 //        validate(userInput);
 

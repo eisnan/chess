@@ -4,11 +4,12 @@ import app.domain.ChessBoard;
 import app.domain.Piece;
 import app.domain.Position;
 
+import java.util.Collection;
 import java.util.List;
 
 public class QueenMovingRule implements MovingRule {
     @Override
-    public List<Position> getPossiblePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
+    public Collection<Position> getPossiblePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
         return null;
     }
 
@@ -18,7 +19,7 @@ public class QueenMovingRule implements MovingRule {
     }
 
     @Override
-    public List<Position> removeInvalidPositions(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece piece, List<Position> positions) {
+    public Collection<Position> removeInvalidPositions(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece piece, Collection<Position> positions) {
         return null;
     }
 }
