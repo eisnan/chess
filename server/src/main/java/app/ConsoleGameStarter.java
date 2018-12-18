@@ -1,6 +1,9 @@
 package app;
 
-import app.domain.*;
+import app.domain.ChessBoard;
+import app.domain.ConsolePrinter;
+import app.domain.Piece;
+import app.domain.Position;
 import app.domain.moving.Mover;
 
 import java.util.List;
@@ -13,7 +16,7 @@ public class ConsoleGameStarter {
     public static void main(String[] args) {
         ConsoleGameEngine engine = new ConsoleGameEngine();
 
-        ChessBoard chessBoard = ChessBoard.INSTANCE;
+        ChessBoard chessBoard = new ChessBoard();
         chessBoard.initModel();
         chessBoard.arrangePiecesForStart();
         Piece[][] arrayModel = chessBoard.getArrayModel();
@@ -45,9 +48,9 @@ public class ConsoleGameStarter {
 
                 Position selectedPosition = engine.getPosition(positionLetter);
 
-                List<Position> availableMoves = engine.getAvailableMoves(selectedPiece, selectedPosition);
+                List<Position> availableMoves = engine.getAvailableMoves(chessBoard, selectedPiece, selectedPosition);
 
-                System.out.println("Your available moves are: " );
+                System.out.println("Your available moves are: ");
                 String availableMovesOutput = availableMoves.stream().map(Position::getAlgebraicNotation).collect(Collectors.joining(", "));
                 System.out.println(availableMovesOutput);
 

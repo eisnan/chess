@@ -11,7 +11,7 @@ public class Mover {
         chessBoard.getModel().put(toPosition, piece);
 
         if (piece.getPieceType() == PieceType.PAWN) {
-            boolean enPassant = new PawnMovingRule().isEnPassant(piece, fromPosition, toPosition);
+            boolean enPassant = new PawnMovingRule().isEnPassant(chessBoard, piece, fromPosition, toPosition);
 
             if (enPassant) {
                 Position epCapture;

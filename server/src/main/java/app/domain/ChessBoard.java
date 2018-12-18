@@ -2,28 +2,16 @@ package app.domain;
 
 import app.domain.moving.Move2;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
-public enum ChessBoard {
-
-    INSTANCE;
-//    private Position[][] model = new Position[8][8];
+public class ChessBoard {
 
     private Map<Position, Piece> model = new LinkedHashMap<>();
     private StartPositionResolver startPositionResolver = new HardCodedPositionResolver();
     private LinkedList<Move2> moves = new LinkedList<>();
-
-//    public Position[][] initModel() {
-//
-//        for (File file : File.values()) {
-//            for (Rank rank : Rank.values()) {
-//                model[file.ordinal()][rank.ordinal()] = new Position(new Tuple<>(file, rank));
-//            }
-//        }
-//
-//        return model;
-//    }
-
 
     public Map<Position, Piece> getModel() {
         return model;
@@ -48,21 +36,16 @@ public enum ChessBoard {
     }
 
     public void initModel() {
-
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
                 model.put(new Position(file, rank), null);
             }
         }
-
     }
 
     public void arrangePiecesForStart() {
-
         Map<Piece, Set<Position>> initialPositions = startPositionResolver.getInitialPositions();
-
         updateModel(initialPositions);
-
     }
 
     private void updateModel(Map<Piece, Set<Position>> initialPositions) {

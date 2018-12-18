@@ -1,16 +1,19 @@
 package app.domain.moving;
 
+import app.domain.ChessBoard;
 import app.domain.InvalidPositionException;
 import app.domain.Position;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+@Slf4j
 public enum MoveType implements MoveDescriber {
     FORWARD_DIAGONAL_LEFT {
         @Override
-        public List<Position> checkMove(MoveSettings moveSettings) {
+        public List<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
             List<Position> possiblePositions = new ArrayList<>();
             List<Position> validPositions = new ArrayList<>();
 
@@ -26,10 +29,12 @@ public enum MoveType implements MoveDescriber {
                                             currentPosition.getRank().ordinal() + integer);
                                     possiblePositions.add(position);
                                 } catch (InvalidPositionException ex) {
-                                    System.out.println(ex);
+                                    log.info("integer: " + integer);
+                                    log.info(ex.toString());
+                                    ;
                                 }
                             });
-                    validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+                    validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
                     break;
                 case BLACK:
                     Stream.iterate(1, x -> x + 1)
@@ -40,10 +45,10 @@ public enum MoveType implements MoveDescriber {
                                             currentPosition.getRank().ordinal() - integer);
                                     possiblePositions.add(position);
                                 } catch (InvalidPositionException ex) {
-                                    System.out.println(ex);
+                                    log.info(ex.toString());
                                 }
                             });
-                    validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+                    validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
                     break;
             }
             return validPositions;
@@ -53,7 +58,7 @@ public enum MoveType implements MoveDescriber {
     },
     FORWARD_DIAGONAL_RIGHT {
         @Override
-        public List<Position> checkMove(MoveSettings moveSettings) {
+        public List<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
             List<Position> possiblePositions = new ArrayList<>();
             List<Position> validPositions = new ArrayList<>();
             Position currentPosition = moveSettings.getCurrentPosition();
@@ -70,10 +75,10 @@ public enum MoveType implements MoveDescriber {
 
                                     possiblePositions.add(position);
                                 } catch (InvalidPositionException ex) {
-                                    System.out.println(ex);
+                                    log.info(ex.toString());
                                 }
                             });
-                    validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+                    validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
                     break;
                 case BLACK:
                     Stream.iterate(1, x -> x + 1)
@@ -86,10 +91,10 @@ public enum MoveType implements MoveDescriber {
 
                                     possiblePositions.add(position);
                                 } catch (InvalidPositionException ex) {
-                                    System.out.println(ex);
+                                    log.info(ex.toString());
                                 }
                             });
-                    validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+                    validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
                     break;
             }
             return validPositions;
@@ -97,7 +102,7 @@ public enum MoveType implements MoveDescriber {
     },
     FORWARD {
         @Override
-        public List<Position> checkMove(MoveSettings moveSettings) {
+        public List<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
             List<Position> possiblePositions = new ArrayList<>();
             List<Position> validPositions = new ArrayList<>();
             Position currentPosition = moveSettings.getCurrentPosition();
@@ -112,10 +117,10 @@ public enum MoveType implements MoveDescriber {
                                             currentPosition.getRank().ordinal() + integer);
                                     possiblePositions.add(position);
                                 } catch (InvalidPositionException ex) {
-                                    System.out.println(ex);
+                                    log.info(ex.toString());
                                 }
                             });
-                    validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+                    validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
                     break;
                 case BLACK:
                     Stream.iterate(1, x -> x + 1)
@@ -126,10 +131,10 @@ public enum MoveType implements MoveDescriber {
                                             currentPosition.getRank().ordinal() - integer);
                                     possiblePositions.add(position);
                                 } catch (InvalidPositionException ex) {
-                                    System.out.println(ex);
+                                    log.info(ex.toString());
                                 }
                             });
-                    validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+                    validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
                     break;
             }
             return validPositions;
@@ -137,51 +142,50 @@ public enum MoveType implements MoveDescriber {
     },
     BACKWARD_DIAGONAL_LEFT {
         @Override
-        public List<Position> checkMove(MoveSettings moveSettings) {
+        public List<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
             List<Position> validPositions = new ArrayList<>();
             MoveIterator moveIterator = new MoveIterator();
             List<Position> possiblePositions = moveIterator.iterate(moveSettings, this, (integer, integer2) -> integer - integer2, (integer, integer2) -> integer - integer2);
-            validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+            validPositions.addAll(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
             return validPositions;
         }
     },
     BACKWARD_DIAGONAL_RIGHT {
         @Override
-        public List<Position> checkMove(MoveSettings moveSettings) {
+        public List<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
             return null;
         }
     },
     BACKWARD {
         @Override
-        public List<Position> checkMove(MoveSettings moveSettings) {
+        public List<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
             MoveIterator moveIterator = new MoveIterator();
             List<Position> possiblePositions = moveIterator.iterate(moveSettings, this, (integer, integer2) -> integer, (integer, integer2) -> integer - integer2);
-            return new ArrayList<>(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+            return new ArrayList<>(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
         }
     },
     LEFT {
         @Override
-        public List<Position> checkMove(MoveSettings moveSettings) {
+        public List<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
             MoveIterator moveIterator = new MoveIterator();
             List<Position> possiblePositions = moveIterator.iterate(moveSettings, this, (integer, integer2) -> integer - integer2, (integer, integer2) -> integer);
-            return new ArrayList<>(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+            return new ArrayList<>(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
         }
     },
     RIGHT {
         @Override
-        public List<Position> checkMove(MoveSettings moveSettings) {
+        public List<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
             MoveIterator moveIterator = new MoveIterator();
             List<Position> possiblePositions = moveIterator.iterate(moveSettings, this, (integer, integer2) -> integer + integer2, (integer, integer2) -> integer);
-            return new ArrayList<>(moveSettings.getMovingRule().removeInvalidPositions(this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+            return new ArrayList<>(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
         }
     },
     KNIGHT {
         @Override
-        public List<Position> checkMove(MoveSettings moveSettings) {
+        public List<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
             return null;
         }
     };
-
 
 
 }

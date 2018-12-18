@@ -11,33 +11,33 @@ public class ChessBoardTest {
 
     @Test
     public void checkChessBoardModel() {
-        ChessBoard subject =  ChessBoard.INSTANCE;
+        ChessBoard chessBoard =  new ChessBoard();
 
-        subject.initModel();
+        chessBoard.initModel();
 
-        subject.getArrayModel();
+        chessBoard.getArrayModel();
 
-        Map<Position, Piece> model = subject.getModel();
+        Map<Position, Piece> model = chessBoard.getModel();
         System.out.println(model);
 
-        subject.arrangePiecesForStart();
+        chessBoard.arrangePiecesForStart();
 
-        subject.getArrayModel();
+        chessBoard.getArrayModel();
 
-//        System.out.println(subject.getModel().entrySet().stream().filter(positionPieceEntry -> positionPieceEntry.getValue() != null).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+//        System.out.println(chessBoard.getModel().entrySet().stream().filter(positionPieceEntry -> positionPieceEntry.getValue() != null).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 
         Optional<Map.Entry<Position, Piece>> first = model.entrySet().stream().filter(positionPieceEntry -> positionPieceEntry.getKey().equals(new Position(File.c, Rank._2))).findFirst();
         Map.Entry<Position, Piece> positionPieceEntry = first.get();
         Piece piece = positionPieceEntry.getValue();
         System.out.println(positionPieceEntry);
 
-        List<Position> availablePositions = new PositionResolver().getAvailablePositions(piece, positionPieceEntry.getKey());
+        List<Position> availablePositions = new PositionResolver().getAvailablePositions(chessBoard, piece, positionPieceEntry.getKey());
 
         model.put(positionPieceEntry.getKey(), null);
 
-        new Mover().move(subject, piece, null, availablePositions.get(1));
+        new Mover().move(chessBoard, piece, null, availablePositions.get(1));
 
-        Piece[][] arrayModel = subject.getArrayModel();
+        Piece[][] arrayModel = chessBoard.getArrayModel();
 
         ConsolePrinter.print(arrayModel);
 

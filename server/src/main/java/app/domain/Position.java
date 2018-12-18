@@ -20,15 +20,11 @@ public class Position implements Comparable<Position> {
     }
 
     public Position(int fileOrdinal, int rankOrdinal) {
-
-        if (fileOrdinal > 7 && rankOrdinal > 7) {
-
-        }
         try {
             this.file = File.values()[fileOrdinal];
             this.rank = Rank.values()[rankOrdinal];
         } catch (IndexOutOfBoundsException ex) {
-            throw  new InvalidPositionException("");
+            throw new InvalidPositionException("", fileOrdinal, rankOrdinal);
         }
     }
 

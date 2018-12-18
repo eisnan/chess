@@ -10,24 +10,24 @@ import java.util.stream.Collectors;
 
 public class PawnMovingRule implements MovingRule {
 
-    private PositionInvalidator invalidator = new PInvalidator();
+//    private PositionInvalidator invalidator = new PInvalidator();
 
     @Override
-    public List<Position> getPossiblePositions(Piece piece, Position currentPosition) {
+    public List<Position> getPossiblePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
 
 
-        List<Position> availableMoves = getAvailableMoves(getMoveSettings(currentPosition, piece));
+        List<Position> availableMoves = getAvailableMoves(chessBoard, getMoveSettings(currentPosition, piece));
 
 
         return availableMoves;
     }
 
-    private List<Position> getAvailableMoves(MoveSettings moveSettings) {
+    private List<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
 
 
-        List<Position> positions = MoveType.FORWARD_DIAGONAL_LEFT.checkMove(moveSettings);
-        positions.addAll(MoveType.FORWARD.checkMove(moveSettings));
-        positions.addAll(MoveType.FORWARD_DIAGONAL_RIGHT.checkMove(moveSettings));
+        List<Position> positions = MoveType.FORWARD_DIAGONAL_LEFT.checkMove(chessBoard, moveSettings);
+        positions.addAll(MoveType.FORWARD.checkMove(chessBoard, moveSettings));
+        positions.addAll(MoveType.FORWARD_DIAGONAL_RIGHT.checkMove(chessBoard, moveSettings));
         return positions;
     }
 
@@ -45,7 +45,7 @@ public class PawnMovingRule implements MovingRule {
     }
 
     @Override
-    public List<Position> removeInvalidPositions(MoveType moveType, Position currentPosition, Piece selectedPiece, List<Position> positions) {
+    public List<Position> removeInvalidPositions(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece selectedPiece, List<Position> positions) {
         List<Position> validPositions = new ArrayList<>();
         switch (moveType) {
 
@@ -53,13 +53,13 @@ public class PawnMovingRule implements MovingRule {
                 //capturing move
                 // TODO EP move
                 return positions.stream().filter(position -> {
-                    Piece piece = ChessBoard.INSTANCE.getModel().get(position);
-                    return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(selectedPiece, currentPosition, position));
+                    Piece piece = chessBoard.getModel().get(position);
+                    return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
                 }).collect(Collectors.toList());
             case FORWARD:
                 // move
                 for (Position position : positions) {
-                    Piece piece = ChessBoard.INSTANCE.getModel().get(position);
+                    Piece piece = chessBoard.getModel().get(position);
                     if (piece == null) {
                         validPositions.add(position);
                     } else {
@@ -71,14 +71,14 @@ public class PawnMovingRule implements MovingRule {
                 //capturing move
                 // TODO EP move
                 return positions.stream().filter(position -> {
-                    Piece piece = ChessBoard.INSTANCE.getModel().get(position);
-                    return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(selectedPiece, currentPosition, position));
+                    Piece piece = chessBoard.getModel().get(position);
+                    return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
                 }).collect(Collectors.toList());
         }
         return validPositions;
     }
 
-    public boolean isEnPassant(Piece currentPiece, Position currentPosition, Position evaluatedPosition) {
+    public boolean isEnPassant(ChessBoard chessBoard, Piece currentPiece, Position currentPosition, Position evaluatedPosition) {
         Move2 lastMove;
         boolean lastMoveMadeByPawn;
         boolean lastMoveWasDoubleStep;
@@ -86,7 +86,7 @@ public class PawnMovingRule implements MovingRule {
         switch (currentPiece.getPieceColor()) {
             case WHITE:
 
-                lastMove = ChessBoard.INSTANCE.getLastMove();
+                lastMove = chessBoard.getLastMove();
                 if (lastMove != null) {
                     lastMoveMadeByPawn = lastMove.getPiece().getPieceType() == PieceType.PAWN;
                     lastMoveWasDoubleStep = lastMove.getFromPosition().getRank().ordinal() - lastMove.getToPosition().getRank().ordinal() > 1;
@@ -95,7 +95,7 @@ public class PawnMovingRule implements MovingRule {
                 }
                 break;
             case BLACK:
-                lastMove = ChessBoard.INSTANCE.getLastMove();
+                lastMove = chessBoard.getLastMove();
                 if (lastMove != null) {
                     lastMoveMadeByPawn = lastMove.getPiece().getPieceType() == PieceType.PAWN;
                     lastMoveWasDoubleStep = lastMove.getFromPosition().getRank().ordinal() - lastMove.getToPosition().getRank().ordinal() < -1;
@@ -104,35 +104,6 @@ public class PawnMovingRule implements MovingRule {
                 }
                 break;
         }
-        return false;
-    }
-
-    //    @Override
-    public boolean removeInvalidPositions(MoveType moveType, Position currentPosition, Position... positions) {
-
-        for (Position position : positions) {
-            switch (moveType) {
-
-                case FORWARD_DIAGONAL_LEFT:
-                    Piece piece = ChessBoard.INSTANCE.getModel().get(position);
-                    return piece != null && (piece.getPieceColor() == PieceColor.BLACK);
-
-                case FORWARD:
-                    Piece piece1 = ChessBoard.INSTANCE.getModel().get(position);
-                    return piece1 == null;
-                case FORWARD_DIAGONAL_RIGHT:
-                    Piece piece2 = ChessBoard.INSTANCE.getModel().get(position);
-                    return piece2 != null && (piece2.getPieceColor() == PieceColor.BLACK);
-            }
-        }
-
-        return false;
-    }
-
-
-    private boolean validPosition(Position position) {
-
-
         return false;
     }
 }

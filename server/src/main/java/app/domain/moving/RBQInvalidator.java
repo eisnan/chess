@@ -9,10 +9,10 @@ import java.util.List;
 
 public class RBQInvalidator implements PositionInvalidator {
     @Override
-    public List<Position> invalidate(Position currentPosition, Piece selectedPiece, List<Position> positions) {
+    public List<Position> invalidate(ChessBoard chessBoard,Position currentPosition, Piece selectedPiece, List<Position> positions) {
         List<Position> validPositions = new ArrayList<>();
         for (Position position : positions) {
-            Piece piece = ChessBoard.INSTANCE.getModel().get(position);
+            Piece piece = chessBoard.getModel().get(position);
             if (piece == null) {
                 validPositions.add(position);
             } else if (selectedPiece.getPieceColor() != piece.getPieceColor()) {
@@ -26,7 +26,7 @@ public class RBQInvalidator implements PositionInvalidator {
     }
 
     @Override
-    public List<Position> invalidate(MoveType moveType, Position currentPosition, Piece selectedPiece, List<Position> positions) {
+    public List<Position> invalidate(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece selectedPiece, List<Position> positions) {
         throw new RuntimeException();
     }
 }

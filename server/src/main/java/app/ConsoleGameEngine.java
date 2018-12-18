@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ConsoleGameEngine {
 
-    public List<Position> getAvailableMoves(Piece piece, Position position) {
+    public List<Position> getAvailableMoves(ChessBoard chessBoard, Piece piece, Position position) {
         //validate
 //        validate(userInput);
 
@@ -15,7 +15,7 @@ public class ConsoleGameEngine {
 
         // map user input to piece
 
-        return new PositionResolver().getAvailablePositions(piece, position);
+        return new PositionResolver().getAvailablePositions(chessBoard, piece, position);
 
 //        // map user input to move
 //        new Mover().move(chessBoard, piece, positionFrom, positionTo);
