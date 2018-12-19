@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 public class MoveIterator {
 
 
-    public List<Position> iterate(MoveSettings moveSettings, MoveType moveType, BiFunction<Integer, Integer, Integer> fileFunction, BiFunction<Integer, Integer, Integer> rankFunction) {
+    public List<Position> iterate(MoveSettings moveSettings, MoveDescriber moveType, BiFunction<Integer, Integer, Integer> fileFunction, BiFunction<Integer, Integer, Integer> rankFunction) {
         List<Position> possiblePositions = new ArrayList<>();
         Position currentPosition = moveSettings.getCurrentPosition();
         Integer limit = moveSettings.getMaxLimit().get(moveType);

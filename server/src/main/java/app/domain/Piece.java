@@ -2,7 +2,7 @@ package app.domain;
 
 import java.util.Objects;
 
-public class Piece  {
+public class Piece {
 
     private PieceColor pieceColor;
     private PieceType pieceType;
@@ -52,6 +52,8 @@ public class Piece  {
         return pieceType;
     }
 
-
+    public boolean canBeCaptured() {
+        return pieceType != PieceType.KING;
+    }
 
 }

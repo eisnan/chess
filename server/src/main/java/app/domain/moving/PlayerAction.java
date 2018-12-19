@@ -2,10 +2,14 @@ package app.domain.moving;
 
 import app.domain.*;
 
-public class Mover {
+public class PlayerAction {
 
+    private PawnPromoter pawnPromoter = new PawnPromoter();
 
-    public void move(ChessBoard chessBoard, Piece piece, Position fromPosition, Position toPosition) {
+    public MoveType move(ChessBoard chessBoard, Piece piece, Position fromPosition, Position toPosition) {
+
+        // check for uncapturable pieces
+
 
         chessBoard.getModel().put(fromPosition, null);
         chessBoard.getModel().put(toPosition, piece);
@@ -22,7 +26,22 @@ public class Mover {
                 }
                 chessBoard.getModel().put(epCapture, null);
             }
+
+            switch (piece.getPieceColor()) {
+
+                case WHITE:
+                    if (toPosition.getRank() == Rank._8) {
+                        pawnPromoter.promote(chessBoard, piece);
+                    }
+                    break;
+                case BLACK:
+                    if (toPosition.getRank() == Rank._1) {
+                        pawnPromoter.promote(chessBoard, piece);
+                    }
+                    break;
+            }
         }
         chessBoard.addMove(new Move2(piece, fromPosition, toPosition));
+        return null;
     }
 }

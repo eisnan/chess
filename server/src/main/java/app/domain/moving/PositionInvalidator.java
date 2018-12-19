@@ -11,5 +11,5 @@ public interface PositionInvalidator {
 
     Collection<Position> invalidate(ChessBoard chessBoard,Position currentPosition, Piece selectedPiece, Collection<Position> positions);
 
-    Collection<Position> invalidate(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece selectedPiece, Collection<Position> positions);
+    Collection<Position> invalidate(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions);
 }

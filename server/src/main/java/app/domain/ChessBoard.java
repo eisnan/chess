@@ -2,10 +2,8 @@ package app.domain;
 
 import app.domain.moving.Move2;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -58,5 +56,10 @@ public class ChessBoard {
 
     public Move2 getLastMove() {
         return moves.isEmpty() ? null : moves.getLast();
+    }
+
+    private void observePromotionRanks() {
+        List<Position> collect = model.keySet().stream().filter(position -> position.getRank() == Rank._1 || position.getRank() == Rank._8).collect(Collectors.toList());
+        System.out.println(collect);
     }
 }

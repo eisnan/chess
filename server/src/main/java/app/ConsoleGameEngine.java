@@ -19,7 +19,7 @@ public class ConsoleGameEngine {
         return new PositionResolver().getAvailablePositions(chessBoard, piece, position);
 
 //        // map user input to move
-//        new Mover().move(chessBoard, piece, positionFrom, positionTo);
+//        new PlayerAction().move(chessBoard, piece, positionFrom, positionTo);
 
 //        return true;
     }

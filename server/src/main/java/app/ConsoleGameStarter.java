@@ -4,10 +4,9 @@ import app.domain.ChessBoard;
 import app.domain.ConsolePrinter;
 import app.domain.Piece;
 import app.domain.Position;
-import app.domain.moving.Mover;
+import app.domain.moving.PlayerAction;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -15,6 +14,7 @@ public class ConsoleGameStarter {
 
 
     public static void main(String[] args) {
+
         ConsoleGameEngine engine = new ConsoleGameEngine();
 
         ChessBoard chessBoard = new ChessBoard();
@@ -58,7 +58,10 @@ public class ConsoleGameStarter {
                 String positionSelection = sc.nextLine();
                 Position moveToPosition = engine.getPosition(positionSelection);
 
-                new Mover().move(chessBoard, selectedPiece, selectedPosition, moveToPosition);
+                new PlayerAction().move(chessBoard, selectedPiece, selectedPosition, moveToPosition);
+
+
+
 
 //                if (!successFullMove) {
 //                    System.out.println("Invalid input, please try again");

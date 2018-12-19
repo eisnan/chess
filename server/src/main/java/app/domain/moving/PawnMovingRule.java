@@ -1,6 +1,8 @@
 package app.domain.moving;
 
 import app.domain.*;
+import app.domain.moving.moves.*;
+import app.domain.util.Tuple;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -8,6 +10,17 @@ import java.util.stream.Collectors;
 public class PawnMovingRule implements MovingRule {
 
 //    private PositionInvalidator invalidator = new PInvalidator();
+
+    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveSettings = new HashMap<>();
+
+    public PawnMovingRule() {
+        moveSettings.put(PieceColor.WHITE, Arrays.asList(new Tuple<>(new ForwardMove(), 2),
+                new Tuple<>(new ForwardDiagonalLeft(), 1),
+                new Tuple<>(new ForwardDiagonalRight(), 1)));
+        moveSettings.put(PieceColor.BLACK, Arrays.asList(new Tuple<>(new BackwardMove(), 2),
+                new Tuple<>(new BackwardDiagonalLeft(), 1),
+                new Tuple<>(new BackwardDiagonalRight(), 1)));
+    }
 
     @Override
     public Collection<Position> getPossiblePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
@@ -20,93 +33,82 @@ public class PawnMovingRule implements MovingRule {
     }
 
     private Collection<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
-
-
         Collection<Position> positions = new TreeSet<>();
-        switch (moveSettings.getPiece().getPieceColor()) {
-            case WHITE:
-                positions.addAll(MoveType.FORWARD_DIAGONAL_LEFT.checkMove(chessBoard, moveSettings));
-                positions.addAll(MoveType.FORWARD.checkMove(chessBoard, moveSettings));
-                positions.addAll(MoveType.FORWARD_DIAGONAL_RIGHT.checkMove(chessBoard, moveSettings));
-                return positions;
-            case BLACK:
-                positions.addAll(MoveType.BACKWARD_DIAGONAL_LEFT.checkMove(chessBoard, moveSettings));
-                positions.addAll(MoveType.BACKWARD.checkMove(chessBoard, moveSettings));
-                positions.addAll(MoveType.BACKWARD_DIAGONAL_RIGHT.checkMove(chessBoard, moveSettings));
-                return positions;
+        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMaxLimit().entrySet()) {
+            positions.addAll(moveDescriber.getKey().checkMove(chessBoard, moveSettings));
         }
-
         return positions;
-//        Collection<Position> positions = MoveType.FORWARD_DIAGONAL_LEFT.checkMove(chessBoard, moveSettings);
-//        positions.addAll(MoveType.FORWARD.checkMove(chessBoard, moveSettings));
-//        positions.addAll(MoveType.FORWARD_DIAGONAL_RIGHT.checkMove(chessBoard, moveSettings));
-//        return positions;
+    }
+
+    public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
+        return new MoveSettings(currentPosition, piece, this, adapt(piece.getPieceColor(), moveSettings));
     }
 
     @Override
-    public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
-        Map<MoveType, Integer> limitPerMoveType = new HashMap<>();
+    public Collection<Position> removeInvalidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
+        List<Position> validPositions = new ArrayList<>();
 
-        switch (piece.getPieceColor()) {
+        switch (selectedPiece.getPieceColor()) {
 
             case WHITE:
-                limitPerMoveType.put(MoveType.FORWARD_DIAGONAL_LEFT, 1);
-                limitPerMoveType.put(MoveType.FORWARD_DIAGONAL_RIGHT, 1);
-                if (currentPosition.getRank() == Rank._2) {
-                    limitPerMoveType.put(MoveType.FORWARD, 2);
-                } else {
-                    limitPerMoveType.put(MoveType.FORWARD, 1);
+                if (moveDescriber instanceof ForwardDiagonalLeft) {
+                    return positions.stream().filter(position -> {
+                        Piece piece = chessBoard.getModel().get(position);
+                        return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor() && piece.canBeCaptured()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
+                    }).collect(Collectors.toList());
                 }
-                break;
-            case BLACK:
-                limitPerMoveType.put(MoveType.BACKWARD_DIAGONAL_LEFT, 1);
-                limitPerMoveType.put(MoveType.BACKWARD_DIAGONAL_RIGHT, 1);
-                if (currentPosition.getRank() == Rank._7) {
-                    limitPerMoveType.put(MoveType.BACKWARD, 2);
-                } else {
-                    limitPerMoveType.put(MoveType.BACKWARD, 1);
-                }
-                break;
-        }
-        return new MoveSettings(currentPosition, piece, this, limitPerMoveType);
-    }
-
-    @Override
-    public List<Position> removeInvalidPositions(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
-        List<Position> validPositions = new ArrayList<>();
-        switch (moveType) {
-
-            case FORWARD_DIAGONAL_LEFT:
-            case BACKWARD_DIAGONAL_RIGHT:
-                //capturing move
-                // TODO EP move
-                return positions.stream().filter(position -> {
-                    Piece piece = chessBoard.getModel().get(position);
-                    return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
-                }).collect(Collectors.toList());
-            case FORWARD:
-            case BACKWARD:
-                // move
-                for (Position position : positions) {
-                    Piece piece = chessBoard.getModel().get(position);
-                    if (piece == null) {
-                        validPositions.add(position);
-                    } else {
-                        break;
+                if (moveDescriber instanceof ForwardMove) {
+                    for (Position position : positions) {
+                        Piece piece = chessBoard.getModel().get(position);
+                        if (piece == null) {
+                            validPositions.add(position);
+                            if (currentPosition.getRank() != Rank._2) {
+                                break;
+                            }
+                        } else {
+                            break;
+                        }
                     }
                 }
+                if (moveDescriber instanceof ForwardDiagonalRight) {
+                    return positions.stream().filter(position -> {
+                        Piece piece = chessBoard.getModel().get(position);
+                        return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor() && piece.canBeCaptured()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
+                    }).collect(Collectors.toList());
+                }
                 break;
-            case FORWARD_DIAGONAL_RIGHT:
-            case BACKWARD_DIAGONAL_LEFT:
-                //capturing move
-                // TODO EP move
-                return positions.stream().filter(position -> {
-                    Piece piece = chessBoard.getModel().get(position);
-                    return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
-                }).collect(Collectors.toList());
+            case BLACK:
+                if (moveDescriber instanceof BackwardDiagonalRight) {
+                    return positions.stream().filter(position -> {
+                        Piece piece = chessBoard.getModel().get(position);
+                        return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor() && piece.canBeCaptured()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
+                    }).collect(Collectors.toList());
+                }
+                if (moveDescriber instanceof BackwardMove) {
+                    for (Position position : positions) {
+                        Piece piece = chessBoard.getModel().get(position);
+                        if (piece == null) {
+                            validPositions.add(position);
+                            if (currentPosition.getRank() != Rank._7) {
+                                break;
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                if (moveDescriber instanceof BackwardDiagonalLeft) {
+                    return positions.stream().filter(position -> {
+                        Piece piece = chessBoard.getModel().get(position);
+                        return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor() && piece.canBeCaptured()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
+                    }).collect(Collectors.toList());
+                }
+                break;
         }
+
         return validPositions;
     }
+
 
     public boolean isEnPassant(ChessBoard chessBoard, Piece currentPiece, Position currentPosition, Position evaluatedPosition) {
         Move2 lastMove;

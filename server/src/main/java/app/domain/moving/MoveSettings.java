@@ -12,13 +12,12 @@ public class MoveSettings {
     private Position currentPosition;
     private Piece piece;
     private MovingRule movingRule;
-    private Map<MoveType, Integer> maxLimit;
+    private Map<MoveDescriber, Integer> maxLimit;
 
-    public MoveSettings(Position currentPosition, Piece piece, MovingRule movingRule, Map<MoveType, Integer> maxLimit) {
+    public MoveSettings(Position currentPosition, Piece piece, MovingRule movingRule, Map<MoveDescriber, Integer> maxLimit) {
         this.currentPosition = currentPosition;
         this.piece = piece;
         this.movingRule = movingRule;
         this.maxLimit = maxLimit;
     }
-
 }

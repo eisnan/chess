@@ -14,12 +14,7 @@ public class KnightMovingRule implements MovingRule {
     }
 
     @Override
-    public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
-        return null;
-    }
-
-    @Override
-    public List<Position> removeInvalidPositions(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece piece, Collection<Position> positions) {
+    public List<Position> removeInvalidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece piece, Collection<Position> positions) {
         return null;
     }
 }

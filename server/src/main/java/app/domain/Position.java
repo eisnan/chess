@@ -4,7 +4,7 @@ import app.domain.util.Tuple;
 
 import java.util.Objects;
 
-public class Position implements Comparable<Position> {
+public class Position implements Comparable<Position>, Observable<Position> {
 
     private File file;
     private Rank rank;
@@ -75,4 +75,5 @@ public class Position implements Comparable<Position> {
             return Integer.compare(this.file.ordinal(), o.file.ordinal());
         }
     }
+
 }

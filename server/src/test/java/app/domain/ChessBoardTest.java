@@ -1,6 +1,6 @@
 package app.domain;
 
-import app.domain.moving.Mover;
+import app.domain.moving.PlayerAction;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class ChessBoardTest {
 
         model.put(positionPieceEntry.getKey(), null);
 
-        new Mover().move(chessBoard, piece, null, availablePositions.get(1));
+        new PlayerAction().move(chessBoard, piece, null, availablePositions.get(1));
 
         Piece[][] arrayModel = chessBoard.getArrayModel();
 

@@ -16,7 +16,7 @@ public class RBQInvalidator implements PositionInvalidator {
             Piece piece = chessBoard.getModel().get(position);
             if (piece == null) {
                 validPositions.add(position);
-            } else if (selectedPiece.getPieceColor() != piece.getPieceColor()) {
+            } else if (selectedPiece.getPieceColor() != piece.getPieceColor() && piece.canBeCaptured()) {
                 validPositions.add(position);
                 break;
             } else {
@@ -27,7 +27,7 @@ public class RBQInvalidator implements PositionInvalidator {
     }
 
     @Override
-    public Collection<Position> invalidate(ChessBoard chessBoard, MoveType moveType, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
+    public Collection<Position> invalidate(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
         throw new RuntimeException();
     }
 }
