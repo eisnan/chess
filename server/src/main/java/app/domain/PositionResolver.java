@@ -1,10 +1,9 @@
 package app.domain;
 
-import app.domain.moving.MovingRule;
-import app.domain.moving.MovingRules;
+import app.domain.moving.rules.MovingRule;
+import app.domain.moving.rules.MovingRules;
 
 import java.util.Collection;
-import java.util.List;
 
 public class PositionResolver {
 

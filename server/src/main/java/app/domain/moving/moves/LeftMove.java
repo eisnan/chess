@@ -3,7 +3,7 @@ package app.domain.moving.moves;
 import app.domain.ChessBoard;
 import app.domain.Position;
 import app.domain.moving.MoveDescriber;
-import app.domain.moving.MoveIterator;
+import app.domain.moving.DirectionIterator;
 import app.domain.moving.MoveSettings;
 
 import java.util.ArrayList;
@@ -13,15 +13,15 @@ import java.util.function.BiFunction;
 
 public class LeftMove implements MoveDescriber {
 
-    private final MoveIterator moveIterator;
+    private final DirectionIterator directionIterator;
 
     public LeftMove() {
-        moveIterator = new MoveIterator();
+        directionIterator = new DirectionIterator();
     }
 
     @Override
     public Collection<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
-        List<Position> possiblePositions = moveIterator.iterate(moveSettings, this, fileFunction(), rankFunction());
+        List<Position> possiblePositions = directionIterator.iterate(moveSettings, this, fileFunction(), rankFunction());
         return new ArrayList<>(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
     }
 

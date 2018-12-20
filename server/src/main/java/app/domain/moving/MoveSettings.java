@@ -2,6 +2,7 @@ package app.domain.moving;
 
 import app.domain.Piece;
 import app.domain.Position;
+import app.domain.moving.rules.MovingRule;
 import lombok.Getter;
 
 import java.util.Map;
@@ -12,12 +13,12 @@ public class MoveSettings {
     private Position currentPosition;
     private Piece piece;
     private MovingRule movingRule;
-    private Map<MoveDescriber, Integer> maxLimit;
+    private Map<MoveDescriber, Integer> maxSquares;
 
-    public MoveSettings(Position currentPosition, Piece piece, MovingRule movingRule, Map<MoveDescriber, Integer> maxLimit) {
+    public MoveSettings(Position currentPosition, Piece piece, MovingRule movingRule, Map<MoveDescriber, Integer> maxSquares) {
         this.currentPosition = currentPosition;
         this.piece = piece;
         this.movingRule = movingRule;
-        this.maxLimit = maxLimit;
+        this.maxSquares = maxSquares;
     }
 }

@@ -1,6 +1,9 @@
-package app.domain.moving;
+package app.domain.moving.rules;
 
 import app.domain.*;
+import app.domain.moving.Move2;
+import app.domain.moving.MoveDescriber;
+import app.domain.moving.MoveSettings;
 import app.domain.moving.moves.*;
 import app.domain.util.Tuple;
 
@@ -34,7 +37,7 @@ public class PawnMovingRule implements MovingRule {
 
     private Collection<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
         Collection<Position> positions = new TreeSet<>();
-        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMaxLimit().entrySet()) {
+        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMaxSquares().entrySet()) {
             positions.addAll(moveDescriber.getKey().checkMove(chessBoard, moveSettings));
         }
         return positions;

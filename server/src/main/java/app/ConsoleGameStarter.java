@@ -1,9 +1,6 @@
 package app;
 
-import app.domain.ChessBoard;
-import app.domain.ConsolePrinter;
-import app.domain.Piece;
-import app.domain.Position;
+import app.domain.*;
 import app.domain.moving.PlayerAction;
 
 import java.util.Collection;
@@ -60,7 +57,7 @@ public class ConsoleGameStarter {
 
                 new PlayerAction().move(chessBoard, selectedPiece, selectedPosition, moveToPosition);
 
-
+                new CheckRunner().isKingInCheck(chessBoard, selectedPiece.getPieceColor());
 
 
 //                if (!successFullMove) {

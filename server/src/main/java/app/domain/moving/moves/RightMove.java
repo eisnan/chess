@@ -3,7 +3,7 @@ package app.domain.moving.moves;
 import app.domain.ChessBoard;
 import app.domain.Position;
 import app.domain.moving.MoveDescriber;
-import app.domain.moving.MoveIterator;
+import app.domain.moving.DirectionIterator;
 import app.domain.moving.MoveSettings;
 
 import java.util.ArrayList;
@@ -14,8 +14,8 @@ public class RightMove implements MoveDescriber {
 
     @Override
     public List<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
-        MoveIterator moveIterator = new MoveIterator();
-        List<Position> possiblePositions = moveIterator.iterate(moveSettings, this, fileFunction(), rankFunction());
+        DirectionIterator directionIterator = new DirectionIterator();
+        List<Position> possiblePositions = directionIterator.iterate(moveSettings, this, fileFunction(), rankFunction());
         return new ArrayList<>(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
     }
 

@@ -1,9 +1,13 @@
-package app.domain.moving;
+package app.domain.moving.rules;
 
 import app.domain.ChessBoard;
 import app.domain.Piece;
 import app.domain.PieceColor;
 import app.domain.Position;
+import app.domain.moving.MoveDescriber;
+import app.domain.moving.MoveSettings;
+import app.domain.moving.PositionInvalidator;
+import app.domain.moving.RBQInvalidator;
 import app.domain.moving.moves.BackwardMove;
 import app.domain.moving.moves.ForwardMove;
 import app.domain.moving.moves.LeftMove;
@@ -40,14 +44,14 @@ public class RookMovingRule implements MovingRule {
 
     private Collection<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
         Collection<Position> positions = new TreeSet<>();
-        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMaxLimit().entrySet()) {
+        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMaxSquares().entrySet()) {
             positions.addAll(moveDescriber.getKey().checkMove(chessBoard, moveSettings));
         }
         return positions;
     }
 
-    @Override
     public Collection<Position> removeInvalidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
-        return invalidator.invalidate(chessBoard, currentPosition, selectedPiece, positions);
+//        return invalidator.invalidate(chessBoard, currentPosition, selectedPiece, positions);
+        return invalidator.invalidatePositions();
     }
 }

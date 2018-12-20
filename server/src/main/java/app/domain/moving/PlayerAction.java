@@ -1,6 +1,7 @@
 package app.domain.moving;
 
 import app.domain.*;
+import app.domain.moving.rules.PawnMovingRule;
 
 public class PlayerAction {
 
@@ -8,7 +9,14 @@ public class PlayerAction {
 
     public MoveType move(ChessBoard chessBoard, Piece piece, Position fromPosition, Position toPosition) {
 
-        // check for uncapturable pieces
+        // isKingInCheck for uncapturable pieces
+
+
+
+        // isKingInCheck if king is left in isKingInCheck
+
+
+
 
 
         chessBoard.getModel().put(fromPosition, null);

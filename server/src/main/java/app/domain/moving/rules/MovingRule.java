@@ -1,9 +1,10 @@
-package app.domain.moving;
+package app.domain.moving.rules;
 
 import app.domain.ChessBoard;
 import app.domain.Piece;
 import app.domain.PieceColor;
 import app.domain.Position;
+import app.domain.moving.MoveDescriber;
 import app.domain.util.Tuple;
 
 import java.util.Collection;

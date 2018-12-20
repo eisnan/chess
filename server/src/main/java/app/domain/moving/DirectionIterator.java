@@ -10,13 +10,13 @@ import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 @Slf4j
-public class MoveIterator {
+public class DirectionIterator {
 
 
     public List<Position> iterate(MoveSettings moveSettings, MoveDescriber moveType, BiFunction<Integer, Integer, Integer> fileFunction, BiFunction<Integer, Integer, Integer> rankFunction) {
         List<Position> possiblePositions = new ArrayList<>();
         Position currentPosition = moveSettings.getCurrentPosition();
-        Integer limit = moveSettings.getMaxLimit().get(moveType);
+        Integer limit = moveSettings.getMaxSquares().get(moveType);
         Stream.iterate(1, x -> x + 1)
                 .limit(limit)
                 .forEach(integer -> {

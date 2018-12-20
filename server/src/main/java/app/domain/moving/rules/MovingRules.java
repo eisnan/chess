@@ -1,4 +1,4 @@
-package app.domain.moving;
+package app.domain.moving.rules;
 
 import app.domain.PieceType;
 

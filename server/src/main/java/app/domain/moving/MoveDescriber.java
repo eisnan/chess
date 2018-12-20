@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.function.BiFunction;
 
-public interface MoveDescriber {
+public interface MoveDescriber  {
 
     Collection<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings);
 
