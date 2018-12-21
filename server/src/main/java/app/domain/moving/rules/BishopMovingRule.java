@@ -39,7 +39,7 @@ public class BishopMovingRule implements MovingRule {
     }
 
     @Override
-    public Collection<Position> removeInvalidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
+    public Collection<Position> removeInvalidPositions(ChessBoard chessBoard,  Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
 //        return invalidator.invalidate(chessBoard, currentPosition, selectedPiece, positions);
         return invalidator.invalidatePositions();
     }

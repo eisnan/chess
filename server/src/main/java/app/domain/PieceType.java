@@ -5,6 +5,7 @@ public enum PieceType {
 
     private String notationSymbol;
 
+
     PieceType(String notationSymbol) {
         this.notationSymbol = notationSymbol;
     }

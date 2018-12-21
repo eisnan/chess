@@ -15,7 +15,7 @@ public class BackwardDiagonalLeft implements MoveDescriber {
     public List<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
         DirectionIterator directionIterator = new DirectionIterator();
         List<Position> possiblePositions = directionIterator.iterate(moveSettings, this, fileFunction() , rankFunction());
-        return new ArrayList<>(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+        return new ArrayList<>(moveSettings.getMovingRule().removeInvalidPositions(chessBoard,  moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
     }
 
     @Override

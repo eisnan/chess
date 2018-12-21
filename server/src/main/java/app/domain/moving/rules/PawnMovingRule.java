@@ -4,13 +4,14 @@ import app.domain.*;
 import app.domain.moving.Move2;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.SpecialMovingRule;
 import app.domain.moving.moves.*;
 import app.domain.util.Tuple;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PawnMovingRule implements MovingRule {
+public class PawnMovingRule implements SpecialMovingRule {
 
 //    private PositionInvalidator invalidator = new PInvalidator();
 

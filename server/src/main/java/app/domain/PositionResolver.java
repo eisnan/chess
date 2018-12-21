@@ -14,6 +14,8 @@ public class PositionResolver {
         // get checkMove algorithm
         MovingRule movingRule = MovingRules.getMovingRule(piece.getPieceType());
 
+        
+
         // generate possible positions
         Collection<Position> possiblePositions = movingRule.getPossiblePositions(chessBoard, piece, currentPosition);
 

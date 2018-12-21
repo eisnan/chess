@@ -19,7 +19,7 @@ public class KnightMovingRule implements MovingRule {
         List<Position> aboveMoves = aboveMoves(currentPosition);
         aboveMoves.addAll(belowMoves(currentPosition));
 
-        Collection<Position> availableMoves = removeInvalidPositions(chessBoard, null, currentPosition, piece, aboveMoves);
+        Collection<Position> availableMoves = removeInvalidPositions(chessBoard,  currentPosition, piece, aboveMoves);
         return availableMoves;
     }
 
@@ -91,7 +91,7 @@ public class KnightMovingRule implements MovingRule {
     }
 
     @Override
-    public Collection<Position> removeInvalidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
+    public Collection<Position> removeInvalidPositions(ChessBoard chessBoard, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
         return positions.stream()
                 .filter(position -> {
                     Piece piece = chessBoard.getModel().get(position);

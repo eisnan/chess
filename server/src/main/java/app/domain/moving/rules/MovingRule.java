@@ -15,7 +15,7 @@ import java.util.Map;
 public interface MovingRule {
     Collection<Position> getPossiblePositions(ChessBoard chessBoard, Piece piece, Position currentPosition);
 
-    Collection<Position> removeInvalidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions);
+    Collection<Position> removeInvalidPositions(ChessBoard chessBoard, Position currentPosition, Piece selectedPiece, Collection<Position> positions);
 
 
 
