@@ -1,6 +1,7 @@
 package app.domain;
 
 import app.domain.util.Tuple;
+import javafx.geometry.Pos;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,6 +30,13 @@ public class CheckRunner {
             return false;
         } else {
             // check if knights attack the king
+            for (Tuple<Position, Piece> knigth: knights) {
+                Collection<Position> availablePositions = new PositionResolver().getAvailablePositions(chessBoard, knigth.getRight(), knigth.getLeft());
+                Collection<Position> availablePositions2 = new PositionResolver().getAvailablePositions(chessBoard, knigth.getRight(), knigth.getLeft());
+                return availablePositions.contains(kingPosition) || availablePositions2.contains(kingPosition);
+
+
+            }
         }
 
         return true;

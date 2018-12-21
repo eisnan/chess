@@ -4,14 +4,13 @@ import app.domain.*;
 import app.domain.moving.Move2;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
-import app.domain.moving.SpecialMovingRule;
 import app.domain.moving.moves.*;
 import app.domain.util.Tuple;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PawnMovingRule implements SpecialMovingRule {
+public class PawnMovingRule implements MovingRule {
 
 //    private PositionInvalidator invalidator = new PInvalidator();
 
@@ -58,7 +57,7 @@ public class PawnMovingRule implements SpecialMovingRule {
                 if (moveDescriber instanceof ForwardDiagonalLeft) {
                     return positions.stream().filter(position -> {
                         Piece piece = chessBoard.getModel().get(position);
-                        return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor() && piece.canBeCaptured()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
+                        return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
                     }).collect(Collectors.toList());
                 }
                 if (moveDescriber instanceof ForwardMove) {
@@ -77,7 +76,7 @@ public class PawnMovingRule implements SpecialMovingRule {
                 if (moveDescriber instanceof ForwardDiagonalRight) {
                     return positions.stream().filter(position -> {
                         Piece piece = chessBoard.getModel().get(position);
-                        return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor() && piece.canBeCaptured()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
+                        return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
                     }).collect(Collectors.toList());
                 }
                 break;
@@ -85,7 +84,7 @@ public class PawnMovingRule implements SpecialMovingRule {
                 if (moveDescriber instanceof BackwardDiagonalRight) {
                     return positions.stream().filter(position -> {
                         Piece piece = chessBoard.getModel().get(position);
-                        return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor() && piece.canBeCaptured()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
+                        return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
                     }).collect(Collectors.toList());
                 }
                 if (moveDescriber instanceof BackwardMove) {
@@ -104,7 +103,7 @@ public class PawnMovingRule implements SpecialMovingRule {
                 if (moveDescriber instanceof BackwardDiagonalLeft) {
                     return positions.stream().filter(position -> {
                         Piece piece = chessBoard.getModel().get(position);
-                        return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor() && piece.canBeCaptured()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
+                        return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : isEnPassant(chessBoard, selectedPiece, currentPosition, position));
                     }).collect(Collectors.toList());
                 }
                 break;

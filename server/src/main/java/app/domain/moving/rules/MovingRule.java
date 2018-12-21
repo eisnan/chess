@@ -9,14 +9,12 @@ import app.domain.util.Tuple;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public interface MovingRule {
     Collection<Position> getPossiblePositions(ChessBoard chessBoard, Piece piece, Position currentPosition);
 
-    Collection<Position> removeInvalidPositions(ChessBoard chessBoard, Position currentPosition, Piece selectedPiece, Collection<Position> positions);
-
+    Collection<Position> removeInvalidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions);
 
 
     default Map<MoveDescriber, Integer> adapt(PieceColor pieceColor, Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveSettings) {

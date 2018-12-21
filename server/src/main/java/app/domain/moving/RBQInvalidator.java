@@ -16,7 +16,7 @@ public class RBQInvalidator implements PositionInvalidator {
             Piece piece = chessBoard.getModel().get(position);
             if (piece == null) {
                 validPositions.add(position);
-            } else if (selectedPiece.getPieceColor() != piece.getPieceColor() && piece.canBeCaptured()) {
+            } else if (selectedPiece.getPieceColor() != piece.getPieceColor()) {
                 validPositions.add(position);
                 break;
             } else {

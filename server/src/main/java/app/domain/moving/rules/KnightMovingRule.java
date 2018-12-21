@@ -1,10 +1,11 @@
 package app.domain.moving.rules;
 
-import app.domain.*;
+import app.domain.ChessBoard;
+import app.domain.InvalidPositionException;
+import app.domain.Piece;
+import app.domain.Position;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
-import app.domain.moving.moves.*;
-import app.domain.util.Tuple;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -19,7 +20,7 @@ public class KnightMovingRule implements MovingRule {
         List<Position> aboveMoves = aboveMoves(currentPosition);
         aboveMoves.addAll(belowMoves(currentPosition));
 
-        Collection<Position> availableMoves = removeInvalidPositions(chessBoard,  currentPosition, piece, aboveMoves);
+        Collection<Position> availableMoves = removeInvalidPositions(chessBoard, null, currentPosition, piece, aboveMoves);
         return availableMoves;
     }
 
@@ -91,7 +92,7 @@ public class KnightMovingRule implements MovingRule {
     }
 
     @Override
-    public Collection<Position> removeInvalidPositions(ChessBoard chessBoard, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
+    public Collection<Position> removeInvalidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
         return positions.stream()
                 .filter(position -> {
                     Piece piece = chessBoard.getModel().get(position);
