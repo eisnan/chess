@@ -6,8 +6,8 @@ import app.domain.PieceColor;
 import app.domain.Position;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
-import app.domain.moving.PositionInvalidator;
-import app.domain.moving.RBQInvalidator;
+import app.domain.moving.PositionValidator;
+import app.domain.moving.RBQValidator;
 import app.domain.moving.moves.BackwardMove;
 import app.domain.moving.moves.ForwardMove;
 import app.domain.moving.moves.LeftMove;
@@ -20,7 +20,7 @@ public class RookMovingRule implements MovingRule {
 
     private static final int ROOK_LIMIT_POSITIONS = 8;
 
-    private PositionInvalidator invalidator = new RBQInvalidator();
+    private PositionValidator validator = new RBQValidator();
     private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveSettings = new HashMap<>();
 
     public RookMovingRule() {
@@ -34,24 +34,24 @@ public class RookMovingRule implements MovingRule {
     }
 
     @Override
-    public Collection<Position> getPossiblePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
+    public Collection<Position> getAvailablePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
         return getAvailableMoves(chessBoard, getMoveSettings(currentPosition, piece));
     }
 
     public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
-        return new MoveSettings(currentPosition, piece, this, adapt(piece.getPieceColor(), moveSettings));
+        return new MoveSettings(currentPosition, piece, this, adaptForPieceColor(piece.getPieceColor(), moveSettings));
     }
 
     private Collection<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
         Collection<Position> positions = new TreeSet<>();
-        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMaxSquares().entrySet()) {
+        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMovingSettings().entrySet()) {
             positions.addAll(moveDescriber.getKey().checkMove(chessBoard, moveSettings));
         }
         return positions;
     }
 
-    public Collection<Position> removeInvalidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
-//        return invalidator.invalidate(chessBoard, currentPosition, selectedPiece, positions);
-        return invalidator.invalidatePositions();
+    public Collection<Position> keepValidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
+//        return validator.invalidate(chessBoard, currentPosition, selectedPiece, positions);
+        return validator.keepValidPositions(chessBoard, getMoveSettings(currentPosition, selectedPiece), null);
     }
 }

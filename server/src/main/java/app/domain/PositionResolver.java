@@ -11,13 +11,14 @@ public class PositionResolver {
     public Collection<Position> getAvailablePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
 
 
-        // get checkMove algorithm
+        // get move algorithm
         MovingRule movingRule = MovingRules.getMovingRule(piece.getPieceType());
 
-        
+
 
         // generate possible positions
-        Collection<Position> possiblePositions = movingRule.getPossiblePositions(chessBoard, piece, currentPosition);
+        Collection<Position> possiblePositions = movingRule.getAvailablePositions(chessBoard, piece, currentPosition);
+
 
 
         return possiblePositions;

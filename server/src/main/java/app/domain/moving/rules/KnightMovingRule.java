@@ -15,19 +15,19 @@ import java.util.stream.Collectors;
 public class KnightMovingRule implements MovingRule {
 
     @Override
-    public Collection<Position> getPossiblePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
+    public Collection<Position> getAvailablePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
 
         List<Position> aboveMoves = aboveMoves(currentPosition);
         aboveMoves.addAll(belowMoves(currentPosition));
 
-        Collection<Position> availableMoves = removeInvalidPositions(chessBoard, null, currentPosition, piece, aboveMoves);
+        Collection<Position> availableMoves = keepValidPositions(chessBoard, null, currentPosition, piece, aboveMoves);
         return availableMoves;
     }
 
 
     private Collection<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
         Collection<Position> positions = new TreeSet<>();
-        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMaxSquares().entrySet()) {
+        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMovingSettings().entrySet()) {
             positions.addAll(moveDescriber.getKey().checkMove(chessBoard, moveSettings));
         }
         return positions;
@@ -91,8 +91,7 @@ public class KnightMovingRule implements MovingRule {
         return abovePositions;
     }
 
-    @Override
-    public Collection<Position> removeInvalidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
+    public Collection<Position> keepValidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
         return positions.stream()
                 .filter(position -> {
                     Piece piece = chessBoard.getModel().get(position);

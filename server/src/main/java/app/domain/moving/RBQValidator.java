@@ -7,8 +7,9 @@ import app.domain.Position;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
-public class RBQInvalidator implements PositionInvalidator {
+public class RBQValidator implements PositionValidator {
 //    @Override
     public Collection<Position> invalidate(ChessBoard chessBoard, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
         List<Position> validPositions = new ArrayList<>();
@@ -32,7 +33,7 @@ public class RBQInvalidator implements PositionInvalidator {
     }
 
     @Override
-    public List<Position> invalidatePositions() {
+    public Collection<Position> keepValidPositions(ChessBoard chessBoard, MoveSettings moveSettings, Map<MoveDescriber, Collection<Position>> possiblePositions) {
         return null;
     }
 }

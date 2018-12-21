@@ -16,7 +16,7 @@ public class DirectionIterator {
     public List<Position> iterate(MoveSettings moveSettings, MoveDescriber moveType, BiFunction<Integer, Integer, Integer> fileFunction, BiFunction<Integer, Integer, Integer> rankFunction) {
         List<Position> possiblePositions = new ArrayList<>();
         Position currentPosition = moveSettings.getCurrentPosition();
-        Integer limit = moveSettings.getMaxSquares().get(moveType);
+        Integer limit = moveSettings.getMovingSettings().get(moveType);
         Stream.iterate(1, x -> x + 1)
                 .limit(limit)
                 .forEach(integer -> {

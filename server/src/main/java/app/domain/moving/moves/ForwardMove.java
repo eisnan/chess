@@ -15,8 +15,7 @@ public class ForwardMove implements MoveDescriber {
     @Override
     public Collection<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
         DirectionIterator directionIterator = new DirectionIterator();
-        List<Position> possiblePositions = directionIterator.iterate(moveSettings, this, fileFunction(), rankFunction());
-        return new TreeSet<>(moveSettings.getMovingRule().removeInvalidPositions(chessBoard, this, moveSettings.getCurrentPosition(), moveSettings.getPiece(), possiblePositions));
+        return directionIterator.iterate(moveSettings, this, fileFunction(), rankFunction());
     }
 
     @Override
