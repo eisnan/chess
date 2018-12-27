@@ -1,9 +1,6 @@
 package app.domain.moving.rules;
 
-import app.domain.ChessBoard;
-import app.domain.Piece;
-import app.domain.PieceColor;
-import app.domain.Position;
+import app.domain.*;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
 import app.domain.moving.PositionValidator;
@@ -15,13 +12,16 @@ import app.domain.moving.moves.RightMove;
 import app.domain.util.Tuple;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static app.domain.moving.MoveDescriber.STRAIGHT_MOVE_DESCRIBERS;
 
 public class RookMovingRule implements MovingRule {
 
     private static final int ROOK_LIMIT_POSITIONS = 8;
 
     private PositionValidator validator = new RBQValidator();
-    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveSettings = new HashMap<>();
+    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
 
     public RookMovingRule() {
         Collection<Tuple<MoveDescriber, Integer>> legalMoves = Arrays.asList(
@@ -29,29 +29,30 @@ public class RookMovingRule implements MovingRule {
                 new Tuple<>(new BackwardMove(), ROOK_LIMIT_POSITIONS),
                 new Tuple<>(new LeftMove(), ROOK_LIMIT_POSITIONS),
                 new Tuple<>(new RightMove(), ROOK_LIMIT_POSITIONS));
-        moveSettings.put(PieceColor.WHITE, legalMoves);
-        moveSettings.put(PieceColor.BLACK, legalMoves);
+        moveParameters.put(PieceColor.WHITE, legalMoves);
+        moveParameters.put(PieceColor.BLACK, legalMoves);
     }
 
     @Override
-    public Collection<Position> getAvailablePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
-        return getAvailableMoves(chessBoard, getMoveSettings(currentPosition, piece));
+    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters() {
+        return moveParameters;
     }
 
-    public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
-        return new MoveSettings(currentPosition, piece, this, adaptForPieceColor(piece.getPieceColor(), moveSettings));
+    @Override
+    public Map<PieceColor, Collection<MoveDescriber>> getCapturingMoves() {
+        Map<PieceColor, Collection<MoveDescriber>> capturingMoves = new HashMap<>();
+        capturingMoves.put(PieceColor.WHITE, STRAIGHT_MOVE_DESCRIBERS);
+        capturingMoves.put(PieceColor.BLACK, STRAIGHT_MOVE_DESCRIBERS);
+        return capturingMoves;
     }
 
-    private Collection<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
-        Collection<Position> positions = new TreeSet<>();
-        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMovingSettings().entrySet()) {
-            positions.addAll(moveDescriber.getKey().checkMove(chessBoard, moveSettings));
-        }
-        return positions;
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.ROOK;
     }
 
-    public Collection<Position> keepValidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
-//        return validator.invalidate(chessBoard, currentPosition, selectedPiece, positions);
-        return validator.keepValidPositions(chessBoard, getMoveSettings(currentPosition, selectedPiece), null);
+    @Override
+    public PositionValidator getValidator() {
+        return validator;
     }
 }

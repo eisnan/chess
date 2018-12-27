@@ -1,11 +1,9 @@
 package app.domain.moving.rules;
 
-import app.domain.ChessBoard;
-import app.domain.Piece;
-import app.domain.PieceColor;
-import app.domain.Position;
+import app.domain.*;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.PawnValidator;
 import app.domain.moving.PositionValidator;
 import app.domain.moving.moves.*;
 import app.domain.util.Tuple;
@@ -37,16 +35,31 @@ public class PawnMovingRule implements MovingRule {
         return validator.keepValidPositions(chessBoard, moveSettings, possiblePositions);
     }
 
+    @Override
+    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters() {
+        return moveParameters;
+    }
 
-    private Map<MoveDescriber, Collection<Position>> getPossiblePositions(ChessBoard chessBoard, MoveSettings moveSettings) {
-        Map<MoveDescriber, Collection<Position>> positions = new HashMap<>();
-        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMovingSettings().entrySet()) {
-            Collection<Position> possiblePositions = moveDescriber.getKey().checkMove(chessBoard, moveSettings);
-            if (!possiblePositions.isEmpty()) {
-                positions.put(moveDescriber.getKey(), possiblePositions);
-            }
-        }
-        return positions;
+    @Override
+    public Map<PieceColor, Collection<MoveDescriber>> getCapturingMoves() {
+        Map<PieceColor, Collection<MoveDescriber>> capturingMoves = new HashMap<>();
+        capturingMoves.put(PieceColor.WHITE, Arrays.asList(
+                new ForwardDiagonalLeft(),
+                new ForwardDiagonalRight()));
+        capturingMoves.put(PieceColor.BLACK, Arrays.asList(
+                new BackwardDiagonalLeft(),
+                new BackwardDiagonalRight()));
+        return capturingMoves;
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.PAWN;
+    }
+
+    @Override
+    public PositionValidator getValidator() {
+        return validator;
     }
 
     public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {

@@ -2,6 +2,9 @@ package app.domain.moving.rules;
 
 import app.domain.PieceType;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 public class MovingRules {
     public static MovingRule getMovingRule(PieceType pieceType) {
         switch (pieceType) {
@@ -20,5 +23,9 @@ public class MovingRules {
             default:
                 throw new RuntimeException();
         }
+    }
+
+    public static Collection<MovingRule> getAllMovingRules() {
+        return Arrays.asList(new PawnMovingRule(), new KingMovingRule(), new QueenMovingRule(), new BishopMovingRule(), new KnightMovingRule(), new RookMovingRule());
     }
 }

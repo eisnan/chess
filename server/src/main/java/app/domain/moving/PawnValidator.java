@@ -1,24 +1,22 @@
-package app.domain.moving.rules;
+package app.domain.moving;
 
 import app.domain.*;
-import app.domain.moving.*;
 import app.domain.moving.moves.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class PawnValidator implements PositionValidator {
 
-    private Map<Class<? extends MoveDescriber>, SpecialMoveResolver> pawnSpecialMoves;
+    private Map<Class<? extends MoveDescriber>, MoveResolver> pawnMoves;
 
     public PawnValidator() {
-        this.pawnSpecialMoves = new HashMap<>();
-        this.pawnSpecialMoves.put(ForwardDiagonalLeft.class, new PawnDiagonalMoveResolver());
-        this.pawnSpecialMoves.put(ForwardDiagonalRight.class, new PawnDiagonalMoveResolver());
-        this.pawnSpecialMoves.put(BackwardDiagonalLeft.class, new PawnDiagonalMoveResolver());
-        this.pawnSpecialMoves.put(BackwardDiagonalRight.class, new PawnDiagonalMoveResolver());
-        this.pawnSpecialMoves.put(ForwardMove.class, new PawnStraightMoveResolver());
-        this.pawnSpecialMoves.put(BackwardMove.class, new PawnStraightMoveResolver());
+        this.pawnMoves = new HashMap<>();
+        this.pawnMoves.put(ForwardDiagonalLeft.class, new PawnDiagonalMoveResolver());
+        this.pawnMoves.put(ForwardDiagonalRight.class, new PawnDiagonalMoveResolver());
+        this.pawnMoves.put(BackwardDiagonalLeft.class, new PawnDiagonalMoveResolver());
+        this.pawnMoves.put(BackwardDiagonalRight.class, new PawnDiagonalMoveResolver());
+        this.pawnMoves.put(ForwardMove.class, new PawnStraightMoveResolver());
+        this.pawnMoves.put(BackwardMove.class, new PawnStraightMoveResolver());
 
     }
 
@@ -31,9 +29,9 @@ public class PawnValidator implements PositionValidator {
 
         possiblePositions.forEach((moveDescriber, positions) -> {
 
-            SpecialMoveResolver specialMoveResolver = pawnSpecialMoves.get(moveDescriber.getClass());
+            MoveResolver moveResolver = pawnMoves.get(moveDescriber.getClass());
 
-            validPositions.addAll(specialMoveResolver.validate(chessBoard,moveSettings, selectedPiece.getPieceColor(),  positions));
+            validPositions.addAll(moveResolver.validate(chessBoard,moveSettings, selectedPiece.getPieceColor(),  positions));
 
 //
 //                           switch (selectedPiece.getPieceColor()) {

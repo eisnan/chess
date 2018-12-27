@@ -1,8 +1,6 @@
 package app.domain.moving;
 
 import app.domain.*;
-import app.domain.moving.rules.PawnMovingRule;
-import app.domain.moving.rules.PawnValidator;
 
 public class PlayerAction {
 

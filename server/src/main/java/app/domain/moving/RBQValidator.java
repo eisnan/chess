@@ -10,8 +10,19 @@ import java.util.List;
 import java.util.Map;
 
 public class RBQValidator implements PositionValidator {
-//    @Override
-    public Collection<Position> invalidate(ChessBoard chessBoard, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
+
+    @Override
+    public Collection<Position> keepValidPositions(ChessBoard chessBoard, MoveSettings moveSettings, Map<MoveDescriber, Collection<Position>> possiblePositions) {
+        List<Position> validPositions = new ArrayList<>();
+        Piece selectedPiece = moveSettings.getPiece();
+
+        possiblePositions.forEach((moveDescriber, positions) -> {
+            validPositions.addAll(keepValid(chessBoard, selectedPiece, positions));
+        });
+        return validPositions;
+    }
+
+    private Collection<Position> keepValid(ChessBoard chessBoard, Piece selectedPiece, Collection<Position> positions) {
         List<Position> validPositions = new ArrayList<>();
         for (Position position : positions) {
             Piece piece = chessBoard.getModel().get(position);
@@ -25,15 +36,5 @@ public class RBQValidator implements PositionValidator {
             }
         }
         return validPositions;
-    }
-
-//    @Override
-    public Collection<Position> invalidate(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
-        throw new RuntimeException();
-    }
-
-    @Override
-    public Collection<Position> keepValidPositions(ChessBoard chessBoard, MoveSettings moveSettings, Map<MoveDescriber, Collection<Position>> possiblePositions) {
-        return null;
     }
 }

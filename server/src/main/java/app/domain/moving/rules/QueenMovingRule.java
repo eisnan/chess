@@ -1,9 +1,6 @@
 package app.domain.moving.rules;
 
-import app.domain.ChessBoard;
-import app.domain.Piece;
-import app.domain.PieceColor;
-import app.domain.Position;
+import app.domain.*;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
 import app.domain.moving.PositionValidator;
@@ -13,11 +10,13 @@ import app.domain.util.Tuple;
 
 import java.util.*;
 
+import static app.domain.moving.MoveDescriber.ALL_MOVE_DESCRIBERS;
+
 public class QueenMovingRule implements MovingRule {
 
     private static final Integer QUEEN_LIMIT_POSITIONS = 8;
-    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveSettings = new HashMap<>();
-    private PositionValidator invalidator = new RBQValidator();
+    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
+    private PositionValidator validator = new RBQValidator();
 
     public QueenMovingRule() {
         Collection<Tuple<MoveDescriber, Integer>> legalMoves = Arrays.asList(
@@ -29,8 +28,8 @@ public class QueenMovingRule implements MovingRule {
                 new Tuple<>(new ForwardDiagonalRight(), QUEEN_LIMIT_POSITIONS),
                 new Tuple<>(new BackwardDiagonalLeft(), QUEEN_LIMIT_POSITIONS),
                 new Tuple<>(new BackwardDiagonalRight(), QUEEN_LIMIT_POSITIONS));
-        moveSettings.put(PieceColor.WHITE, legalMoves);
-        moveSettings.put(PieceColor.BLACK, legalMoves);
+        moveParameters.put(PieceColor.WHITE, legalMoves);
+        moveParameters.put(PieceColor.BLACK, legalMoves);
     }
 
     @Override
@@ -38,15 +37,38 @@ public class QueenMovingRule implements MovingRule {
         return getAvailableMoves(chessBoard, getMoveSettings(currentPosition, piece));
     }
 
+    @Override
+    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters() {
+        return moveParameters;
+    }
+
+    @Override
+    public Map<PieceColor, Collection<MoveDescriber>> getCapturingMoves() {
+        Map<PieceColor, Collection<MoveDescriber>> capturingMoves = new HashMap<>();
+        capturingMoves.put(PieceColor.WHITE, ALL_MOVE_DESCRIBERS);
+        capturingMoves.put(PieceColor.BLACK, ALL_MOVE_DESCRIBERS);
+        return capturingMoves;
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.QUEEN;
+    }
+
+    @Override
+    public PositionValidator getValidator() {
+        return validator;
+    }
+
     public Collection<Position> keepValidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
-//        return invalidator.invalidate(chessBoard, currentPosition, selectedPiece, positions);
-        return invalidator.keepValidPositions(chessBoard, getMoveSettings(currentPosition, selectedPiece), null);
+//        return validator.invalidate(chessBoard, currentPosition, selectedPiece, positions);
+        return validator.keepValidPositions(chessBoard, getMoveSettings(currentPosition, selectedPiece), null);
 
     }
 
 
     public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
-        return new MoveSettings(currentPosition, piece, this, adaptForPieceColor(piece.getPieceColor(), moveSettings));
+        return new MoveSettings(currentPosition, piece, this, adaptForPieceColor(piece.getPieceColor(), moveParameters));
     }
 
     private Collection<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {

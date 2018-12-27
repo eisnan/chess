@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import java.util.function.BiFunction;
 
 public class ForwardMove implements MoveDescriber {
+
     @Override
     public Collection<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
         DirectionIterator directionIterator = new DirectionIterator();
