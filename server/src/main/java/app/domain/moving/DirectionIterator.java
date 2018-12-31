@@ -5,7 +5,9 @@ import app.domain.Position;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
@@ -13,10 +15,10 @@ import java.util.stream.Stream;
 public class DirectionIterator {
 
 
-    public List<Position> iterate(MoveSettings moveSettings, MoveDescriber moveType, BiFunction<Integer, Integer, Integer> fileFunction, BiFunction<Integer, Integer, Integer> rankFunction) {
-        List<Position> possiblePositions = new ArrayList<>();
+    public Collection<Position> iterate(MoveSettings moveSettings, MoveDescriber moveDescriber, BiFunction<Integer, Integer, Integer> fileFunction, BiFunction<Integer, Integer, Integer> rankFunction) {
+        Collection<Position> possiblePositions = new TreeSet<>(moveDescriber.getPositionComparator());
         Position currentPosition = moveSettings.getCurrentPosition();
-        Integer limit = moveSettings.getMovingSettings().get(moveType);
+        Integer limit = moveSettings.getMovingSettings().get(moveDescriber);
         Stream.iterate(1, x -> x + 1)
                 .limit(limit)
                 .forEach(integer -> {

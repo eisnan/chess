@@ -56,4 +56,12 @@ public class Piece {
         return pieceType != PieceType.KING;
     }
 
+    public boolean isWhitePiece() {
+        return pieceColor == PieceColor.WHITE;
+    }
+
+    public boolean isBlackPiece() {
+        return pieceColor == PieceColor.BLACK;
+    }
+
 }

@@ -31,7 +31,7 @@ public class PawnValidator implements PositionValidator {
 
             MoveResolver moveResolver = pawnMoves.get(moveDescriber.getClass());
 
-            validPositions.addAll(moveResolver.validate(chessBoard,moveSettings, selectedPiece.getPieceColor(),  positions));
+            validPositions.addAll(moveResolver.validate(chessBoard, moveDescriber, moveSettings, selectedPiece.getPieceColor(), positions));
 
 //
 //                           switch (selectedPiece.getPieceColor()) {

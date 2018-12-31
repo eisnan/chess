@@ -1,11 +1,11 @@
 package app.domain.moving.rules;
 
-import app.domain.ChessBoard;
-import app.domain.InvalidPositionException;
-import app.domain.Piece;
-import app.domain.Position;
+import app.domain.*;
 import app.domain.moving.MoveDescriber;
-import app.domain.moving.MoveSettings;
+import app.domain.moving.NValidator;
+import app.domain.moving.PositionValidator;
+import app.domain.moving.moves.KnightMove;
+import app.domain.util.Tuple;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -14,88 +14,34 @@ import java.util.stream.Collectors;
 @Slf4j
 public class KnightMovingRule implements MovingRule {
 
+    private PositionValidator validator = new NValidator();
+    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
+
+    public KnightMovingRule() {
+        moveParameters.put(PieceColor.WHITE, Arrays.asList(new Tuple<>(new KnightMove(), 0)));
+        moveParameters.put(PieceColor.BLACK, Arrays.asList(new Tuple<>(new KnightMove(), 0)));
+    }
+
     @Override
-    public Collection<Position> getAvailablePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
-
-        List<Position> aboveMoves = aboveMoves(currentPosition);
-        aboveMoves.addAll(belowMoves(currentPosition));
-
-        Collection<Position> availableMoves = keepValidPositions(chessBoard, null, currentPosition, piece, aboveMoves);
-        return availableMoves;
+    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters() {
+        return moveParameters;
     }
 
-
-    private Collection<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
-        Collection<Position> positions = new TreeSet<>();
-        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMovingSettings().entrySet()) {
-            positions.addAll(moveDescriber.getKey().checkMove(chessBoard, moveSettings));
-        }
-        return positions;
+    @Override
+    public Map<PieceColor, Collection<MoveDescriber>> getCapturingMoves() {
+        Map<PieceColor, Collection<MoveDescriber>> capturingMoves = new HashMap<>();
+        capturingMoves.put(PieceColor.WHITE, Arrays.asList(new KnightMove()));
+        capturingMoves.put(PieceColor.BLACK, Arrays.asList(new KnightMove()));
+        return capturingMoves;
     }
 
-    private List<Position> belowMoves(Position currentPosition) {
-        List<Position> belowPositions = new ArrayList<>();
-        int fileOrdinal = currentPosition.getFile().ordinal();
-        int rankOrdinal = currentPosition.getRank().ordinal();
-        // todo refactor this
-        try {
-            belowPositions.add(new Position(fileOrdinal - 2, rankOrdinal - 1));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-        try {
-            belowPositions.add(new Position(fileOrdinal - 1, rankOrdinal - 2));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-        try {
-            belowPositions.add(new Position(fileOrdinal + 2, rankOrdinal - 1));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-        try {
-            belowPositions.add(new Position(fileOrdinal + 1, rankOrdinal - 2));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-
-        return belowPositions;
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.KNIGHT;
     }
 
-    private List<Position> aboveMoves(Position currentPosition) {
-        List<Position> abovePositions = new ArrayList<>();
-        int fileOrdinal = currentPosition.getFile().ordinal();
-        int rankOrdinal = currentPosition.getRank().ordinal();
-        // todo refactor this
-        try {
-            abovePositions.add(new Position(fileOrdinal - 2, rankOrdinal + 1));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-        try {
-            abovePositions.add(new Position(fileOrdinal - 1, rankOrdinal + 2));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-        try {
-            abovePositions.add(new Position(fileOrdinal + 2, rankOrdinal + 1));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-        try {
-            abovePositions.add(new Position(fileOrdinal + 1, rankOrdinal + 2));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-
-        return abovePositions;
-    }
-
-    public Collection<Position> keepValidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
-        return positions.stream()
-                .filter(position -> {
-                    Piece piece = chessBoard.getModel().get(position);
-                    return piece == null || piece.getPieceColor() != selectedPiece.getPieceColor();
-                }).collect(Collectors.toCollection(TreeSet::new));
+    @Override
+    public PositionValidator getValidator() {
+        return validator;
     }
 }

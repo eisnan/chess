@@ -11,11 +11,7 @@ public class PlayerAction {
         // isKingInCheck for uncapturable pieces
 
 
-
         // isKingInCheck if king is left in isKingInCheck
-
-
-
 
 
         chessBoard.getModel().put(fromPosition, null);
@@ -26,7 +22,7 @@ public class PlayerAction {
 
             if (enPassant) {
                 Position epCapture;
-                if (piece.getPieceColor() == PieceColor.WHITE) {
+                if (piece.isWhitePiece()) {
                     epCapture = new Position(toPosition.getFile(), toPosition.getRank().previous());
                 } else {
                     epCapture = new Position(toPosition.getFile(), toPosition.getRank().next());
@@ -34,18 +30,11 @@ public class PlayerAction {
                 chessBoard.getModel().put(epCapture, null);
             }
 
-            switch (piece.getPieceColor()) {
-
-                case WHITE:
-                    if (toPosition.getRank() == Rank._8) {
-                        pawnPromoter.promote(chessBoard, piece);
-                    }
-                    break;
-                case BLACK:
-                    if (toPosition.getRank() == Rank._1) {
-                        pawnPromoter.promote(chessBoard, piece);
-                    }
-                    break;
+            if (piece.isWhitePiece() && toPosition.getRank() == Rank._8) {
+                pawnPromoter.promote(chessBoard, piece);
+            }
+            if (piece.isBlackPiece() && toPosition.getRank() == Rank._1) {
+                pawnPromoter.promote(chessBoard, piece);
             }
         }
         chessBoard.addMove(new Move2(piece, fromPosition, toPosition));

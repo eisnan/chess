@@ -13,12 +13,12 @@ public class PawnDiagonalMoveResolver implements MoveResolver {
 
 
     @Override
-    public Collection<Position> validate(ChessBoard chessBoard, MoveSettings moveSettings, PieceColor pieceColor, Collection<Position> positions) {
+    public Collection<Position> validate(ChessBoard chessBoard, MoveDescriber moveDescriber, MoveSettings moveSettings, PieceColor pieceColor, Collection<Position> positions) {
         Piece selectedPiece = moveSettings.getPiece();
         Position currentPosition = moveSettings.getCurrentPosition();
         return positions.stream().filter(position -> {
             Piece piece = chessBoard.getModel().get(position);
             return (piece != null ? (selectedPiece.getPieceColor() != piece.getPieceColor()) : PawnValidator.isEnPassant(chessBoard, selectedPiece, currentPosition, position));
-        }).collect(Collectors.toCollection(TreeSet::new));
+        }).collect(Collectors.toCollection(() -> new TreeSet<>(moveDescriber.getPositionComparator())));
     }
 }

@@ -3,21 +3,30 @@ package app.domain.moving.moves;
 import app.domain.ChessBoard;
 import app.domain.InvalidPositionException;
 import app.domain.Position;
+import app.domain.moving.AscendingPositionComparator;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiFunction;
 
 // TODO REFACTOR
 @Slf4j
 public class KnightMove implements MoveDescriber {
+
+    private Comparator<Position> positionComparator = new AscendingPositionComparator();
+
+
     @Override
     public Collection<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
-        return null;
+        List<Position> aboveMoves = aboveMoves(moveSettings.getCurrentPosition());
+        aboveMoves.addAll(belowMoves(moveSettings.getCurrentPosition()));
+
+        return aboveMoves;
     }
 
     @Override
@@ -28,6 +37,11 @@ public class KnightMove implements MoveDescriber {
     @Override
     public BiFunction<Integer, Integer, Integer> rankFunction() {
         return null;
+    }
+
+    @Override
+    public Comparator<Position> getPositionComparator() {
+        return positionComparator;
     }
 
     private List<Position> belowMoves(Position currentPosition) {

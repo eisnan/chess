@@ -1,11 +1,14 @@
 package app.domain;
 
 import app.domain.moving.MoveDescriber;
+import app.domain.moving.MoveSettings;
+import app.domain.moving.rules.KingMovingRule;
 import app.domain.moving.rules.MovingRule;
 import app.domain.moving.rules.MovingRules;
 import app.domain.util.Tuple;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -24,15 +27,30 @@ public class CheckRunner {
         Collection<Position> adjacentPositions = chessBoard.getAdjacentPositions(kingPosition);
         Predicate<Position> nullPositionOrOppositeColor = position -> chessBoard.getModel().get(position) == null ||
                 chessBoard.getModel().get(position).getPieceColor() == pieceColor.oppositeColor();
-        Set<Position> vulnerable = adjacentPositions.stream().filter(nullPositionOrOppositeColor).collect(Collectors.toSet());
+        Set<Position> openPositions = adjacentPositions.stream().filter(nullPositionOrOppositeColor).collect(Collectors.toSet());
 
 
-        System.out.println(vulnerable);
+        System.out.println(openPositions);
+
+        // based on open positions determine open (vulnerable) vectors/directions
+        Collection<MoveDescriber> openDirections = new PositionInterpreter().getAttackDirections(chessBoard, pieceColor, kingPosition, openPositions);
+
+        System.out.println(openDirections);
+
+
+        // follow those directions, see if encounter enemy piece
+
+        Map<MoveDescriber, Integer> movingSettings = MoveDescriber.ALL_MOVE_DESCRIBERS.stream().
+                filter(openDirections::contains).collect(Collectors.toMap(moveDescriber -> moveDescriber, movingPositions -> 8));
+        openDirections.forEach(moveDescriber -> {
+            Collection<Position> positions = moveDescriber.checkMove(chessBoard, new MoveSettings(kingPosition, king.getRight(), new KingMovingRule(), movingSettings));
+            System.out.println(positions);
+        });
 
         // isKingInCheck if there are enemy knights on the board
         Collection<Tuple<Position, Piece>> knights = chessBoard.getPieces(PieceType.KNIGHT, pieceColor.oppositeColor());
         //no vulnerable and no knights
-        if (vulnerable.isEmpty() && knights.isEmpty()) {
+        if (openPositions.isEmpty() && knights.isEmpty()) {
             return false;
         }
 
@@ -47,11 +65,10 @@ public class CheckRunner {
             return true;
         }
 
-        Collection<MoveDescriber> attackDirections = new PositionInterpreter().getAttackDirections(chessBoard, pieceColor, kingPosition, vulnerable);
 
         // look on these attack directions, see if any enemy piece is encountered and if it is, does it have this attack direction?
 
-        findAllPiecesWithAttackDirections(pieceColor, attackDirections);
+        findAllPiecesWithAttackDirections(pieceColor, openDirections);
 
         return true;
 
