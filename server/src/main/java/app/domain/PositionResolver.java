@@ -8,8 +8,9 @@ import java.util.Collection;
 public class PositionResolver {
 
 
-    public Collection<Position> getAvailablePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
+    public Collection<Position> getAvailablePositions(ChessBoard chessBoard, Position currentPosition) {
 
+        Piece piece = chessBoard.getModel().get(currentPosition);
 
         // get move algorithm
         MovingRule movingRule = MovingRules.getMovingRule(piece.getPieceType());
@@ -24,4 +25,7 @@ public class PositionResolver {
         return possiblePositions;
     }
 
+    public void resolveFromPosition(ChessBoard chessBoard, Piece piece, Position toPosition) {
+
+    }
 }

@@ -2,10 +2,10 @@ package app.domain;
 
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.moves.*;
+import app.domain.moving.rules.MovingRules;
+import app.domain.util.Tuple;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class PositionInterpreter {
 
@@ -48,9 +48,22 @@ public class PositionInterpreter {
             }
 
 
-
         });
 
         return attackDirections;
+    }
+
+    public Optional<Tuple<Position, Piece>> findFirstPieceOnDirection(ChessBoard chessBoard, MoveDescriber moveDescriber, Collection<Position> positions) {
+        Collection<Position> direction = new TreeSet<>(moveDescriber.getPositionComparator());
+        direction.addAll(positions);
+
+        Optional<Tuple<Position, Piece>> first = direction.stream().filter(position -> chessBoard.getModel().get(position) != null).map(position -> new Tuple<>(position,chessBoard.getModel().get(position))).findFirst();
+
+        return first;
+    }
+
+    public boolean isOnAttackingDirection(MoveDescriber moveDescriber, Piece attackingPiece) {
+        Collection<PieceType> pieceTypes = MovingRules.findWhichPiecesCanAttackOnThisDirection(moveDescriber);
+        return pieceTypes.contains(attackingPiece.getPieceType());
     }
 }

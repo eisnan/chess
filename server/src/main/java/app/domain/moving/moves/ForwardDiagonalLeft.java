@@ -2,10 +2,7 @@ package app.domain.moving.moves;
 
 import app.domain.ChessBoard;
 import app.domain.Position;
-import app.domain.moving.AscendingPositionComparator;
-import app.domain.moving.DirectionIterator;
-import app.domain.moving.MoveDescriber;
-import app.domain.moving.MoveSettings;
+import app.domain.moving.*;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -13,7 +10,7 @@ import java.util.function.BiFunction;
 
 public class ForwardDiagonalLeft implements MoveDescriber {
 
-    private Comparator<Position> positionComparator = new AscendingPositionComparator();
+    private Comparator<Position> positionComparator = new DescendingPositionComparator();
 
 
     @Override
@@ -40,5 +37,10 @@ public class ForwardDiagonalLeft implements MoveDescriber {
     @Override
     public boolean equals(Object obj) {
         return this.getClass().equals(obj.getClass());
+    }
+
+    @Override
+    public int hashCode() {
+        return 1;
     }
 }

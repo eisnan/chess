@@ -8,6 +8,16 @@ public enum PieceColor {
         return this.name().substring(0, 1).toLowerCase();
     }
 
+    public static PieceColor getByColorNotation(String symbol) {
+        for (PieceColor pieceColor : PieceColor.values()) {
+            if (symbol.equals(pieceColor.getColorNotation())) {
+                return pieceColor;
+            }
+        }
+        throw new IllegalArgumentException("Incorrect symbol for color");
+    }
+
+
     public boolean isOppositeColor(PieceColor pieceColor) {
         return this != pieceColor;
     }

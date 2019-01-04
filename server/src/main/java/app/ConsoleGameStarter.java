@@ -37,13 +37,16 @@ public class ConsoleGameStarter {
                 break;
             } else {
 
-
                 String pieceLetter = pieceSelection.substring(0, 1);
 
                 Piece selectedPiece = engine.getPiece(pieceLetter, color);
 
-                String positionLetter = pieceSelection.substring(1);
-
+                String positionLetter;
+                if (selectedPiece.getPieceType() != PieceType.PAWN) {
+                    positionLetter = pieceSelection.substring(1);
+                } else {
+                    positionLetter = pieceSelection;
+                }
                 Position selectedPosition = engine.getPosition(positionLetter);
 
                 Collection<Position> availableMoves = engine.getAvailableMoves(chessBoard, selectedPiece, selectedPosition);

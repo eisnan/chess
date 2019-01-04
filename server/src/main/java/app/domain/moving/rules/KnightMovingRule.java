@@ -28,11 +28,8 @@ public class KnightMovingRule implements MovingRule {
     }
 
     @Override
-    public Map<PieceColor, Collection<MoveDescriber>> getCapturingMoves() {
-        Map<PieceColor, Collection<MoveDescriber>> capturingMoves = new HashMap<>();
-        capturingMoves.put(PieceColor.WHITE, Arrays.asList(new KnightMove()));
-        capturingMoves.put(PieceColor.BLACK, Arrays.asList(new KnightMove()));
-        return capturingMoves;
+    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getCaptureParameters() {
+        return moveParameters;
     }
 
     @Override

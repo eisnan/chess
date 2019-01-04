@@ -33,6 +33,10 @@ public class Position {
         this.rank = Rank.getRank(String.valueOf(rank));
     }
 
+    public Position(String algebraicNotation) {
+        this(File.valueOf(algebraicNotation.substring(0,1)), Rank.getRank(algebraicNotation.substring(1,2)));
+    }
+
     public File getFile() {
         return file;
     }

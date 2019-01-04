@@ -1,7 +1,7 @@
 package app.datalayer.repo;
 
 import app.domain.*;
-import app.domain.moving.Move;
+import app.domain.moving.MoveEntity;
 import app.domain.util.Tuple;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,11 +31,11 @@ public class SanityTest {
         runningGameGameRepository.deleteAll();
 
         RunningGame game = new RunningGame(new Player("Gabs"), new Player("L"));
-        game.wMakeMove(new Move(PieceType.PAWN, new Tuple<>(File.a, Rank._3)));
+        game.wMakeMove(new MoveEntity(PieceType.PAWN, new Tuple<>(File.a, Rank._3)));
 
         entityManager.persist(game);
 
-        game.bMakeMove(new Move(PieceType.PAWN, new Tuple<>(File.a, Rank._6)));
+        game.bMakeMove(new MoveEntity(PieceType.PAWN, new Tuple<>(File.a, Rank._6)));
 
         entityManager.persist(game);
 

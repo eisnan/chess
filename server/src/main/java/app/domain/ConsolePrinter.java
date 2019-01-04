@@ -9,7 +9,7 @@ public class ConsolePrinter {
             for (int i = 0; i < File.values().length; i++) {
                 Piece piece = arrayModel[i][j];
                 if (piece != null) {
-                    System.out.print(piece.getNotation());
+                    System.out.print(piece.getNotation().length() == 2 ? piece.getNotation() : piece.getNotation() + " ");
                 } else {
                     System.out.print("  ");
                 }

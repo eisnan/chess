@@ -44,4 +44,10 @@ public class RightMove implements MoveDescriber {
     public boolean equals(Object obj) {
         return this.getClass().equals(obj.getClass());
     }
+
+
+    @Override
+    public int hashCode() {
+        return 1;
+    }
 }

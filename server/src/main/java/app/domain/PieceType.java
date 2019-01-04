@@ -1,7 +1,7 @@
 package app.domain;
 
 public enum PieceType {
-    PAWN("P"), KING("K"), QUEEN("Q"), BISHOP("B"), KNIGHT("N"), ROOK("R");
+    PAWN(""), KING("K"), QUEEN("Q"), BISHOP("B"), KNIGHT("N"), ROOK("R");
 
     private String notationSymbol;
 
@@ -20,6 +20,6 @@ public enum PieceType {
                 return pieceType;
             }
         }
-        throw new IllegalArgumentException();
+        return PAWN;
     }
 }

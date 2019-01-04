@@ -12,7 +12,7 @@ import java.util.Map;
 public class RBQValidator implements PositionValidator {
 
     @Override
-    public Collection<Position> keepValidPositions(ChessBoard chessBoard, MoveSettings moveSettings, Map<MoveDescriber, Collection<Position>> possiblePositions) {
+    public Collection<Position> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<MoveDescriber, Collection<Position>> possiblePositions) {
         List<Position> validPositions = new ArrayList<>();
         Piece selectedPiece = moveSettings.getPiece();
 
@@ -20,6 +20,11 @@ public class RBQValidator implements PositionValidator {
             validPositions.addAll(keepValid(chessBoard, selectedPiece, positions));
         });
         return validPositions;
+    }
+
+    @Override
+    public Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<MoveDescriber, Collection<Position>> possiblePositions) {
+        return keepValidPositionsToMove(chessBoard, moveSettings, possiblePositions);
     }
 
     private Collection<Position> keepValid(ChessBoard chessBoard, Piece selectedPiece, Collection<Position> positions) {

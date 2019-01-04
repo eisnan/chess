@@ -1,6 +1,9 @@
 package app.domain.moving.rules;
 
-import app.domain.*;
+import app.domain.Piece;
+import app.domain.PieceColor;
+import app.domain.PieceType;
+import app.domain.Position;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
 import app.domain.moving.PositionValidator;
@@ -8,9 +11,10 @@ import app.domain.moving.RBQValidator;
 import app.domain.moving.moves.*;
 import app.domain.util.Tuple;
 
-import java.util.*;
-
-import static app.domain.moving.MoveDescriber.ALL_MOVE_DESCRIBERS;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class QueenMovingRule implements MovingRule {
 
@@ -33,21 +37,13 @@ public class QueenMovingRule implements MovingRule {
     }
 
     @Override
-    public Collection<Position> getAvailablePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
-        return getAvailableMoves(chessBoard, getMoveSettings(currentPosition, piece));
-    }
-
-    @Override
     public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters() {
         return moveParameters;
     }
 
     @Override
-    public Map<PieceColor, Collection<MoveDescriber>> getCapturingMoves() {
-        Map<PieceColor, Collection<MoveDescriber>> capturingMoves = new HashMap<>();
-        capturingMoves.put(PieceColor.WHITE, ALL_MOVE_DESCRIBERS);
-        capturingMoves.put(PieceColor.BLACK, ALL_MOVE_DESCRIBERS);
-        return capturingMoves;
+    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getCaptureParameters() {
+        return moveParameters;
     }
 
     @Override
@@ -60,22 +56,7 @@ public class QueenMovingRule implements MovingRule {
         return validator;
     }
 
-    public Collection<Position> keepValidPositions(ChessBoard chessBoard, MoveDescriber moveDescriber, Position currentPosition, Piece selectedPiece, Collection<Position> positions) {
-//        return validator.invalidate(chessBoard, currentPosition, selectedPiece, positions);
-        return validator.keepValidPositions(chessBoard, getMoveSettings(currentPosition, selectedPiece), null);
-
-    }
-
-
     public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
         return new MoveSettings(currentPosition, piece, this, adaptForPieceColor(piece.getPieceColor(), moveParameters));
-    }
-
-    private Collection<Position> getAvailableMoves(ChessBoard chessBoard, MoveSettings moveSettings) {
-        Collection<Position> positions = new TreeSet<>();
-        for (Map.Entry<MoveDescriber, Integer> moveDescriber : moveSettings.getMovingSettings().entrySet()) {
-            positions.addAll(moveDescriber.getKey().checkMove(chessBoard, moveSettings));
-        }
-        return positions;
     }
 }

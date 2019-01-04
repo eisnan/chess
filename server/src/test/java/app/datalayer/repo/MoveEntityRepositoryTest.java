@@ -1,7 +1,7 @@
 package app.datalayer.repo;
 
 import app.domain.File;
-import app.domain.moving.Move;
+import app.domain.moving.MoveEntity;
 import app.domain.PieceType;
 import app.domain.Rank;
 import app.domain.util.Tuple;
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class MoveRepositoryTest {
+public class MoveEntityRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -25,12 +25,12 @@ public class MoveRepositoryTest {
     @Test
     public void testFindMove() {
 
-        Move move = new Move();
-        move.setPieceType(PieceType.PAWN);
-        move.setCoordinateFrom(new Tuple<>(File.a, Rank._3));
-        entityManager.persist(move);
+        MoveEntity moveEntity = new MoveEntity();
+        moveEntity.setPieceType(PieceType.PAWN);
+        moveEntity.setCoordinateFrom(new Tuple<>(File.a, Rank._3));
+        entityManager.persist(moveEntity);
 
-        Iterable<Move> all = moveRepository.findAll();
+        Iterable<MoveEntity> all = moveRepository.findAll();
 
         System.out.println(all);
 

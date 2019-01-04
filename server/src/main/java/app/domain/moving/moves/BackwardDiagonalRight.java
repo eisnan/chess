@@ -2,10 +2,7 @@ package app.domain.moving.moves;
 
 import app.domain.ChessBoard;
 import app.domain.Position;
-import app.domain.moving.AscendingPositionComparator;
-import app.domain.moving.MoveDescriber;
-import app.domain.moving.DirectionIterator;
-import app.domain.moving.MoveSettings;
+import app.domain.moving.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,5 +40,10 @@ public class BackwardDiagonalRight implements MoveDescriber {
     @Override
     public boolean equals(Object obj) {
         return this.getClass().equals(obj.getClass());
+    }
+
+    @Override
+    public int hashCode() {
+        return 1;
     }
 }

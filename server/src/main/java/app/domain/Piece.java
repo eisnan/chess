@@ -1,17 +1,24 @@
 package app.domain;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 
 public class Piece {
 
     private PieceColor pieceColor;
     private PieceType pieceType;
+    private Collection<Position> attackingPositions = Collections.emptySet();
 
     public Piece(PieceColor pieceColor, PieceType pieceType) {
         this.pieceColor = pieceColor;
         this.pieceType = pieceType;
     }
 
+    public Piece(String notation) {
+        this.pieceColor = PieceColor.getByColorNotation(notation.substring(0, 1));
+        this.pieceType = PieceType.getByNotationSymbol(notation.substring(1, 2));
+    }
 
     public static Piece getWhitePiece(PieceType pieceType) {
         return new Piece(PieceColor.WHITE, pieceType);
@@ -19,6 +26,14 @@ public class Piece {
 
     public static Piece getBlackPiece(PieceType pieceType) {
         return new Piece(PieceColor.BLACK, pieceType);
+    }
+
+    public Collection<Position> getAttackingPositions() {
+        return Collections.unmodifiableCollection(attackingPositions);
+    }
+
+    public void setAttackingPositions(Collection<Position> attackingPositions) {
+        this.attackingPositions = attackingPositions;
     }
 
     @Override

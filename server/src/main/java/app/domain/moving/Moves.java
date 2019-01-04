@@ -16,7 +16,7 @@ public class Moves {
     private Game game;
 
 //    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Collection<Move> moves;
+//    private Collection<MoveEntity> moves;
 
     public Moves() {
     }
@@ -38,12 +38,12 @@ public class Moves {
         return game;
     }
 
-//    public Move newMove(Move checkMove) {
+//    public MoveEntity newMove(MoveEntity checkMove) {
 //        moves.add(checkMove);
 //        return checkMove;
 //    }
 //
-//    public Collection<Move> getMoves() {
+//    public Collection<MoveEntity> getMoves() {
 //        return moves;
 //    }
 

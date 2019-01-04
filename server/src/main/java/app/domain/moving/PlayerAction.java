@@ -18,7 +18,7 @@ public class PlayerAction {
         chessBoard.getModel().put(toPosition, piece);
 
         if (piece.getPieceType() == PieceType.PAWN) {
-            boolean enPassant = new PawnValidator().isEnPassant(chessBoard, piece, fromPosition, toPosition);
+            boolean enPassant = PawnValidator.isEnPassant(chessBoard, piece, fromPosition, toPosition);
 
             if (enPassant) {
                 Position epCapture;
@@ -37,7 +37,14 @@ public class PlayerAction {
                 pawnPromoter.promote(chessBoard, piece);
             }
         }
-        chessBoard.addMove(new Move2(piece, fromPosition, toPosition));
+        chessBoard.addMove(new Move(piece, fromPosition, toPosition));
+
+        return null;
+    }
+
+    public MoveType move(ChessBoard chessBoard, Move move) {
+        move(chessBoard, move.getPiece(), move.getFromPosition(), move.getToPosition());
+
         return null;
     }
 }

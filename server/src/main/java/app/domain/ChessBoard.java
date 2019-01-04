@@ -1,6 +1,6 @@
 package app.domain;
 
-import app.domain.moving.Move2;
+import app.domain.moving.Move;
 import app.domain.util.Tuple;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +14,7 @@ public class ChessBoard {
     private static final Predicate<Map.Entry<Position, Piece>> POSITIONS_WITH_NO_PIECES = positionPieceEntry -> positionPieceEntry.getValue() != null;
     private Map<Position, Piece> model = new LinkedHashMap<>();
     private StartPositionResolver startPositionResolver = new HardCodedPositionResolver();
-    private LinkedList<Move2> moves = new LinkedList<>();
+    private LinkedList<Move> moves = new LinkedList<>();
 
     public Map<Position, Piece> getModel() {
         return model;
@@ -55,11 +55,11 @@ public class ChessBoard {
         initialPositions.forEach((piece, positions) -> positions.forEach(position -> model.put(position, piece)));
     }
 
-    public void addMove(Move2 move) {
+    public void addMove(Move move) {
         moves.add(move);
     }
 
-    public Move2 getLastMove() {
+    public Move getLastMove() {
         return moves.isEmpty() ? null : moves.getLast();
     }
 

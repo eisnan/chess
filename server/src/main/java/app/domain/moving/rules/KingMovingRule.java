@@ -33,23 +33,13 @@ public class KingMovingRule implements MovingRule {
     }
 
     @Override
-    public Collection<Position> getAvailablePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
-        MoveSettings moveSettings = getMoveSettings(currentPosition, piece);
-        Map<MoveDescriber, Collection<Position>> possiblePositions = getPossiblePositions(chessBoard, moveSettings);
-        return validator.keepValidPositions(chessBoard, moveSettings, possiblePositions);
-    }
-
-    @Override
     public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters() {
         return moveParameters;
     }
 
     @Override
-    public Map<PieceColor, Collection<MoveDescriber>> getCapturingMoves() {
-        Map<PieceColor, Collection<MoveDescriber>> capturingMoves = new HashMap<>();
-        capturingMoves.put(PieceColor.WHITE, ALL_MOVE_DESCRIBERS);
-        capturingMoves.put(PieceColor.BLACK, ALL_MOVE_DESCRIBERS);
-        return capturingMoves;
+    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getCaptureParameters() {
+        return moveParameters;
     }
 
     @Override

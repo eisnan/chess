@@ -34,11 +34,8 @@ public class BishopMovingRule implements MovingRule {
     }
 
     @Override
-    public Map<PieceColor, Collection<MoveDescriber>> getCapturingMoves() {
-        Map<PieceColor, Collection<MoveDescriber>> capturingMoves = new HashMap<>();
-        capturingMoves.put(PieceColor.WHITE, DIAGONAL_MOVE_DESCRIBERS);
-        capturingMoves.put(PieceColor.BLACK, DIAGONAL_MOVE_DESCRIBERS);
-        return capturingMoves;
+    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getCaptureParameters() {
+        return moveParameters;
     }
 
     @Override

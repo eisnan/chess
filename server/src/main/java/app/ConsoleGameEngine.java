@@ -2,9 +2,7 @@ package app;
 
 import app.domain.*;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 public class ConsoleGameEngine {
 
@@ -13,10 +11,9 @@ public class ConsoleGameEngine {
 //        validate(userInput);
 
 
-
         // map user input to piece
 
-        return new PositionResolver().getAvailablePositions(chessBoard, piece, position);
+        return new PositionResolver().getAvailablePositions(chessBoard, position);
 
 //        // map user input to move
 //        new PlayerAction().move(chessBoard, piece, positionFrom, positionTo);
@@ -38,6 +35,8 @@ public class ConsoleGameEngine {
 //        if (!Arrays.asList("WHITE", "BLACK").contains(color)) {
 //            throw new IllegalArgumentException();
 //        }
+
+
         return new Piece(PieceColor.valueOf(color), PieceType.getByNotationSymbol(pieceLetter));
     }
 

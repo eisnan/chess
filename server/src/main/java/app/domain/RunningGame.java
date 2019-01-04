@@ -1,7 +1,7 @@
 package app.domain;
 
 import app.datalayer.converters.JpaToStringConverter;
-import app.domain.moving.Move;
+import app.domain.moving.MoveEntity;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -18,13 +18,13 @@ public class RunningGame extends Game {
     private Player wPlayer;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<Move> wMoves;
+    private Collection<MoveEntity> wMoveEntities;
 
     @Convert(converter = JpaToStringConverter.class)
     private Player bPlayer;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<Move> bMoves;
+    private Collection<MoveEntity> bMoveEntities;
 
     public RunningGame() {
     }
@@ -32,8 +32,8 @@ public class RunningGame extends Game {
     public RunningGame(Player wPlayer, Player bPlayer) {
         this.wPlayer = wPlayer;
         this.bPlayer = bPlayer;
-        this.wMoves = new LinkedList<>();
-        this.bMoves = new LinkedList<>();
+        this.wMoveEntities = new LinkedList<>();
+        this.bMoveEntities = new LinkedList<>();
     }
 
     public Long getId() {
@@ -52,16 +52,16 @@ public class RunningGame extends Game {
         return bPlayer;
     }
 
-    public boolean wMakeMove(Move move) {
-        return wMoves.add(move);
+    public boolean wMakeMove(MoveEntity moveEntity) {
+        return wMoveEntities.add(moveEntity);
     }
 
-    public boolean bMakeMove(Move move) {
-        return bMoves.add(move);
+    public boolean bMakeMove(MoveEntity moveEntity) {
+        return bMoveEntities.add(moveEntity);
     }
 
     @Override
     public String toString() {
-        return "RunningGame{" + "id=" + id + ", wPlayer=" + wPlayer + ", wMoves=" + wMoves + ", bPlayer=" + bPlayer + ", bMoves=" + bMoves + '}';
+        return "RunningGame{" + "id=" + id + ", wPlayer=" + wPlayer + ", wMoveEntities=" + wMoveEntities + ", bPlayer=" + bPlayer + ", bMoveEntities=" + bMoveEntities + '}';
     }
 }

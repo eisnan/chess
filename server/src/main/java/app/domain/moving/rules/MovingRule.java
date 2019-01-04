@@ -13,20 +13,31 @@ import java.util.Map;
 public interface MovingRule {
     Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters();
 
-    Map<PieceColor, Collection<MoveDescriber>> getCapturingMoves();
+    Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getCaptureParameters();
 
     PieceType getPieceType();
 
     PositionValidator getValidator();
 
+
+    default Collection<Position> getAttackingPositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
+        MoveSettings moveSettings = getCaptureSettings(currentPosition, piece);
+        Map<MoveDescriber, Collection<Position>> attackingPositions = getPossiblePositions(chessBoard, moveSettings);
+        return getValidator().keepValidPositionsToAttack(chessBoard, moveSettings, attackingPositions);
+    }
+
     default Collection<Position> getAvailablePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
         MoveSettings moveSettings = getMoveSettings(currentPosition, piece);
         Map<MoveDescriber, Collection<Position>> possiblePositions = getPossiblePositions(chessBoard, moveSettings);
-        return getValidator().keepValidPositions(chessBoard, moveSettings, possiblePositions);
+        return getValidator().keepValidPositionsToMove(chessBoard, moveSettings, possiblePositions);
     }
 
     default MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
         return new MoveSettings(currentPosition, piece, this, adaptForPieceColor(piece.getPieceColor(), getMoveParameters()));
+    }
+
+    default MoveSettings getCaptureSettings(Position currentPosition, Piece piece) {
+        return new MoveSettings(currentPosition, piece, this, adaptForPieceColor(piece.getPieceColor(), getCaptureParameters()));
     }
 
     default Map<MoveDescriber, Collection<Position>> getPossiblePositions(ChessBoard chessBoard, MoveSettings moveSettings) {
