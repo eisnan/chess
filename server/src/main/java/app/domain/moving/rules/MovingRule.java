@@ -19,6 +19,7 @@ public interface MovingRule {
 
     PositionValidator getValidator();
 
+    Collection<MoveDescriber> getMoveDescribers();
 
     default Collection<Position> getAttackingPositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
         MoveSettings moveSettings = getCaptureSettings(currentPosition, piece);
@@ -26,7 +27,7 @@ public interface MovingRule {
         return getValidator().keepValidPositionsToAttack(chessBoard, moveSettings, attackingPositions);
     }
 
-    default Collection<Position> getAvailablePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
+    default Collection<Position> getMovePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
         MoveSettings moveSettings = getMoveSettings(currentPosition, piece);
         Map<MoveDescriber, Collection<Position>> possiblePositions = getPossiblePositions(chessBoard, moveSettings);
         return getValidator().keepValidPositionsToMove(chessBoard, moveSettings, possiblePositions);

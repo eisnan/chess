@@ -2,6 +2,7 @@ package app.domain;
 
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.SpecialMoveDescriber;
 import app.domain.moving.rules.KingMovingRule;
 import app.domain.moving.rules.MovingRules;
 import app.domain.util.Tuple;
@@ -59,8 +60,9 @@ public class CheckRunner {
 
 
         // follow those directions, see if encounter enemy piece
-        Map<MoveDescriber, Integer> movingSettings = MoveDescriber.ALL_MOVE_DESCRIBERS.stream().
-                filter(openDirections::contains).collect(Collectors.toMap(moveDescriber -> moveDescriber, movingPositions -> 8));
+        Map<MoveDescriber, Integer> movingSettings = MovingRules.getMovingRule(kingPiece.getPieceType()).getMoveDescribers().stream()
+                .filter(moveDescriber -> !(moveDescriber instanceof SpecialMoveDescriber))
+                .filter(openDirections::contains).collect(Collectors.toMap(moveDescriber -> moveDescriber, movingPositions -> 8));
 
         for (MoveDescriber moveDescriber : openDirections) {
             Collection<Position> positions = moveDescriber.checkMove(chessBoard, new MoveSettings(kingPosition, kingPiece, new KingMovingRule(), movingSettings));

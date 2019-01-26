@@ -19,14 +19,17 @@ public class PawnMovingRule implements MovingRule {
 
     private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
     private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> captureParameters = new HashMap<>();
+    private Collection<MoveDescriber> legalMoves = Arrays.asList(
+            new ForwardMove(),
+            new ForwardDiagonalLeft(),
+            new ForwardDiagonalRight(),
+            new BackwardMove(),
+            new BackwardDiagonalLeft(),
+            new BackwardDiagonalRight());
 
     public PawnMovingRule() {
-        moveParameters.put(PieceColor.WHITE, Arrays.asList(new Tuple<>(new ForwardMove(), 2),
-                new Tuple<>(new ForwardDiagonalLeft(), 1),
-                new Tuple<>(new ForwardDiagonalRight(), 1)));
-        moveParameters.put(PieceColor.BLACK, Arrays.asList(new Tuple<>(new BackwardMove(), 2),
-                new Tuple<>(new BackwardDiagonalLeft(), 1),
-                new Tuple<>(new BackwardDiagonalRight(), 1)));
+        moveParameters.put(PieceColor.WHITE, Arrays.asList(new Tuple<>(new ForwardMove(), 2)));
+        moveParameters.put(PieceColor.BLACK, Arrays.asList(new Tuple<>(new BackwardMove(), 2)));
 
         captureParameters.put(PieceColor.WHITE, Arrays.asList(new Tuple<>(new ForwardDiagonalLeft(), 1),
                 new Tuple<>(new ForwardDiagonalRight(), 1)));
@@ -53,6 +56,11 @@ public class PawnMovingRule implements MovingRule {
     @Override
     public PositionValidator getValidator() {
         return validator;
+    }
+
+    @Override
+    public Collection<MoveDescriber> getMoveDescribers() {
+        return legalMoves;
     }
 
     @Override

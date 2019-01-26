@@ -6,6 +6,7 @@ import app.domain.Position;
 import app.domain.moving.AscendingPositionComparator;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.SpecialMoveDescriber;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -14,12 +15,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiFunction;
 
-// TODO REFACTOR
 @Slf4j
-public class KnightMove implements MoveDescriber {
-
-    private Comparator<Position> positionComparator = new AscendingPositionComparator();
-
+public class KnightMove implements SpecialMoveDescriber {
 
     @Override
     public Collection<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
@@ -27,21 +24,6 @@ public class KnightMove implements MoveDescriber {
         aboveMoves.addAll(belowMoves(moveSettings.getCurrentPosition()));
 
         return aboveMoves;
-    }
-
-    @Override
-    public BiFunction<Integer, Integer, Integer> fileFunction() {
-        return null;
-    }
-
-    @Override
-    public BiFunction<Integer, Integer, Integer> rankFunction() {
-        return null;
-    }
-
-    @Override
-    public Comparator<Position> getPositionComparator() {
-        return positionComparator;
     }
 
     private List<Position> belowMoves(Position currentPosition) {

@@ -20,7 +20,7 @@ public class KnightMovingRuleTest {
     public void getPossiblePositions() {
         KnightMovingRule knightMovingRule = new KnightMovingRule();
 
-        Collection<Position> possiblePositions = knightMovingRule.getAvailablePositions(chessBoard, new Piece(PieceColor.WHITE, PieceType.KNIGHT), new Position(File.b, Rank._1));
+        Collection<Position> possiblePositions = knightMovingRule.getMovePositions(chessBoard, new Piece(PieceColor.WHITE, PieceType.KNIGHT), new Position(File.b, Rank._1));
 
         System.out.println(possiblePositions);
     }

@@ -1,6 +1,7 @@
 package app.domain.moving.rules;
 
-import app.domain.*;
+import app.domain.PieceColor;
+import app.domain.PieceType;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.NValidator;
 import app.domain.moving.PositionValidator;
@@ -9,17 +10,17 @@ import app.domain.util.Tuple;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class KnightMovingRule implements MovingRule {
 
     private PositionValidator validator = new NValidator();
     private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
+    private MoveDescriber legalMove = new KnightMove();
 
     public KnightMovingRule() {
-        moveParameters.put(PieceColor.WHITE, Arrays.asList(new Tuple<>(new KnightMove(), 0)));
-        moveParameters.put(PieceColor.BLACK, Arrays.asList(new Tuple<>(new KnightMove(), 0)));
+        moveParameters.put(PieceColor.WHITE, Collections.singletonList(new Tuple<>(legalMove, 0)));
+        moveParameters.put(PieceColor.BLACK, Collections.singletonList(new Tuple<>(legalMove, 0)));
     }
 
     @Override
@@ -40,5 +41,10 @@ public class KnightMovingRule implements MovingRule {
     @Override
     public PositionValidator getValidator() {
         return validator;
+    }
+
+    @Override
+    public Collection<MoveDescriber> getMoveDescribers() {
+        return Collections.singletonList(legalMove);
     }
 }

@@ -1,31 +1,41 @@
 package app.domain.moving.rules;
 
-import app.domain.*;
+import app.domain.Piece;
+import app.domain.PieceColor;
+import app.domain.PieceType;
+import app.domain.Position;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
 import app.domain.moving.PositionValidator;
 import app.domain.moving.RBQValidator;
-import app.domain.moving.moves.*;
+import app.domain.moving.moves.BackwardDiagonalLeft;
+import app.domain.moving.moves.BackwardDiagonalRight;
+import app.domain.moving.moves.ForwardDiagonalLeft;
+import app.domain.moving.moves.ForwardDiagonalRight;
 import app.domain.util.Tuple;
 
-import java.util.*;
-
-import static app.domain.moving.MoveDescriber.DIAGONAL_MOVE_DESCRIBERS;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BishopMovingRule implements MovingRule {
 
     private static final Integer BISHOP_LIMIT_POSITIONS = 8;
     private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
     private PositionValidator validator = new RBQValidator();
+    private Collection<MoveDescriber> legalMoves = Arrays.asList(
+            new ForwardDiagonalLeft(),
+            new ForwardDiagonalRight(),
+            new BackwardDiagonalLeft(),
+            new BackwardDiagonalRight());
 
     public BishopMovingRule() {
-        Collection<Tuple<MoveDescriber, Integer>> legalMoves = Arrays.asList(
-                new Tuple<>(new ForwardDiagonalLeft(), BISHOP_LIMIT_POSITIONS),
-                new Tuple<>(new ForwardDiagonalRight(), BISHOP_LIMIT_POSITIONS),
-                new Tuple<>(new BackwardDiagonalLeft(), BISHOP_LIMIT_POSITIONS),
-                new Tuple<>(new BackwardDiagonalRight(), BISHOP_LIMIT_POSITIONS));
-        moveParameters.put(PieceColor.WHITE, legalMoves);
-        moveParameters.put(PieceColor.BLACK, legalMoves);
+        Collection<Tuple<MoveDescriber, Integer>> legalMovesWithLimit = legalMoves
+                .stream().map(moveDescriber -> new Tuple<>(moveDescriber, BISHOP_LIMIT_POSITIONS)).collect(Collectors.toList());
+        moveParameters.put(PieceColor.WHITE, legalMovesWithLimit);
+        moveParameters.put(PieceColor.BLACK, legalMovesWithLimit);
     }
 
     @Override
@@ -46,6 +56,11 @@ public class BishopMovingRule implements MovingRule {
     @Override
     public PositionValidator getValidator() {
         return validator;
+    }
+
+    @Override
+    public Collection<MoveDescriber> getMoveDescribers() {
+        return legalMoves;
     }
 
     public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {

@@ -56,6 +56,11 @@ public class QueenMovingRule implements MovingRule {
         return validator;
     }
 
+    @Override
+    public Collection<MoveDescriber> getMoveDescribers() {
+        return null;
+    }
+
     public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
         return new MoveSettings(currentPosition, piece, this, adaptForPieceColor(piece.getPieceColor(), moveParameters));
     }

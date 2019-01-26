@@ -1,8 +1,8 @@
 package app.domain.moving.rules;
 
-import app.domain.*;
+import app.domain.PieceColor;
+import app.domain.PieceType;
 import app.domain.moving.MoveDescriber;
-import app.domain.moving.MoveSettings;
 import app.domain.moving.PositionValidator;
 import app.domain.moving.RBQValidator;
 import app.domain.moving.moves.BackwardMove;
@@ -11,10 +11,10 @@ import app.domain.moving.moves.LeftMove;
 import app.domain.moving.moves.RightMove;
 import app.domain.util.Tuple;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static app.domain.moving.MoveDescriber.STRAIGHT_MOVE_DESCRIBERS;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RookMovingRule implements MovingRule {
 
@@ -51,5 +51,10 @@ public class RookMovingRule implements MovingRule {
     @Override
     public PositionValidator getValidator() {
         return validator;
+    }
+
+    @Override
+    public Collection<MoveDescriber> getMoveDescribers() {
+        return null;
     }
 }

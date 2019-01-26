@@ -1,35 +1,39 @@
 package app.domain.moving.rules;
 
-import app.domain.*;
-import app.domain.moving.MoveDescriber;
-import app.domain.moving.MoveSettings;
-import app.domain.moving.PositionValidator;
-import app.domain.moving.RBQValidator;
+import app.domain.PieceColor;
+import app.domain.PieceType;
+import app.domain.moving.*;
 import app.domain.moving.moves.*;
 import app.domain.util.Tuple;
 
-import java.util.*;
-
-import static app.domain.moving.MoveDescriber.ALL_MOVE_DESCRIBERS;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class KingMovingRule implements MovingRule {
 
     private static final Integer KING_LIMIT_POSITIONS = 1;
     private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
     private PositionValidator validator = new RBQValidator();
+    private Collection<MoveDescriber> legalMoves = Arrays.asList(
+            new ForwardMove(),
+            new BackwardMove(),
+            new LeftMove(),
+            new RightMove(),
+            new ForwardDiagonalLeft(),
+            new ForwardDiagonalRight(),
+            new BackwardDiagonalLeft(),
+            new BackwardDiagonalRight(),
+            new QueenSideCastling(),
+            new KingSideCastling());
 
     public KingMovingRule() {
-        Collection<Tuple<MoveDescriber, Integer>> legalMovesList = Arrays.asList(
-                new Tuple<>(new ForwardMove(), KING_LIMIT_POSITIONS),
-                new Tuple<>(new BackwardMove(), KING_LIMIT_POSITIONS),
-                new Tuple<>(new LeftMove(), KING_LIMIT_POSITIONS),
-                new Tuple<>(new RightMove(), KING_LIMIT_POSITIONS),
-                new Tuple<>(new ForwardDiagonalLeft(), KING_LIMIT_POSITIONS),
-                new Tuple<>(new ForwardDiagonalRight(), KING_LIMIT_POSITIONS),
-                new Tuple<>(new BackwardDiagonalLeft(), KING_LIMIT_POSITIONS),
-                new Tuple<>(new BackwardDiagonalRight(), KING_LIMIT_POSITIONS));
-        this.moveParameters.put(PieceColor.WHITE, legalMovesList);
-        this.moveParameters.put(PieceColor.BLACK, legalMovesList);
+        Collection<Tuple<MoveDescriber, Integer>> legalMovesWithLimit = legalMoves
+                .stream().map(moveDescriber -> new Tuple<>(moveDescriber, KING_LIMIT_POSITIONS)).collect(Collectors.toList());
+        this.moveParameters.put(PieceColor.WHITE, legalMovesWithLimit);
+        this.moveParameters.put(PieceColor.BLACK, legalMovesWithLimit);
     }
 
     @Override
@@ -50,5 +54,10 @@ public class KingMovingRule implements MovingRule {
     @Override
     public PositionValidator getValidator() {
         return validator;
+    }
+
+    @Override
+    public Collection<MoveDescriber> getMoveDescribers() {
+        return legalMoves;
     }
 }

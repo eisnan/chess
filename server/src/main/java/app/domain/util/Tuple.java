@@ -11,6 +11,10 @@ public final class Tuple<LEFT, RIGHT> {
         this.right = right;
     }
 
+    public static <LEFT, RIGHT> Tuple<LEFT, RIGHT> of(LEFT left, RIGHT right) {
+        return new Tuple<>(left, right);
+    }
+
     public LEFT getLeft() {
         return left;
     }

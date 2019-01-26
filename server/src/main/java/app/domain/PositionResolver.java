@@ -3,6 +3,7 @@ package app.domain;
 import app.domain.moving.rules.MovingRule;
 import app.domain.moving.rules.MovingRules;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class PositionResolver {
@@ -18,7 +19,10 @@ public class PositionResolver {
 
 
         // generate possible positions
-        Collection<Position> possiblePositions = movingRule.getAvailablePositions(chessBoard, piece, currentPosition);
+        Collection<Position> movePositions = movingRule.getMovePositions(chessBoard, piece, currentPosition);
+        Collection<Position> possiblePositions = new ArrayList<>(movePositions);
+        Collection<Position> attackingPositions = movingRule.getAttackingPositions(chessBoard, piece, currentPosition);
+        possiblePositions.addAll(attackingPositions);
 
 
 
