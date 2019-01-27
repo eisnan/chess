@@ -1,6 +1,7 @@
 package app.domain.moving;
 
 import app.domain.*;
+import app.domain.moving.validators.PawnValidator;
 
 public class PlayerAction {
 

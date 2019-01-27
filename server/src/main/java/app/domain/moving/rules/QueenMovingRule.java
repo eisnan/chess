@@ -6,8 +6,8 @@ import app.domain.PieceType;
 import app.domain.Position;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
-import app.domain.moving.PositionValidator;
-import app.domain.moving.RBQValidator;
+import app.domain.moving.validators.PositionValidator;
+import app.domain.moving.validators.RBQValidator;
 import app.domain.moving.moves.*;
 import app.domain.util.Tuple;
 

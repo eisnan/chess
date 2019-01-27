@@ -4,6 +4,8 @@ import app.domain.PieceColor;
 import app.domain.PieceType;
 import app.domain.moving.*;
 import app.domain.moving.moves.*;
+import app.domain.moving.validators.PositionValidator;
+import app.domain.moving.validators.RBQValidator;
 import app.domain.util.Tuple;
 
 import java.util.Arrays;

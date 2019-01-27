@@ -1,8 +1,10 @@
-package app.domain.moving;
+package app.domain.moving.validators;
 
 import app.domain.ChessBoard;
 import app.domain.Piece;
 import app.domain.Position;
+import app.domain.moving.MoveDescriber;
+import app.domain.moving.MoveSettings;
 
 import java.util.ArrayList;
 import java.util.Collection;

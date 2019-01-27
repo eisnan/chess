@@ -4,6 +4,7 @@ import app.domain.ChessBoard;
 import app.domain.Piece;
 import app.domain.PieceColor;
 import app.domain.Position;
+import app.domain.moving.validators.PawnValidator;
 
 import java.util.Collection;
 import java.util.TreeSet;

@@ -3,8 +3,8 @@ package app.domain.moving.rules;
 import app.domain.*;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
-import app.domain.moving.PawnValidator;
-import app.domain.moving.PositionValidator;
+import app.domain.moving.validators.PawnValidator;
+import app.domain.moving.validators.PositionValidator;
 import app.domain.moving.moves.*;
 import app.domain.util.Tuple;
 
@@ -66,9 +66,9 @@ public class PawnMovingRule implements MovingRule {
     @Override
     public Collection<Position> getAttackingPositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
 
-        MoveSettings moveSettings = getMoveSettings(currentPosition, piece);
+        MoveSettings moveSettings = getCaptureSettings(currentPosition, piece);
         Map<MoveDescriber, Collection<Position>> possiblePositions = getPossiblePositions(chessBoard, moveSettings);
-        return validator.keepValidPositionsToMove(chessBoard, moveSettings, possiblePositions);
+        return validator.keepValidPositionsToAttack(chessBoard, moveSettings, possiblePositions);
 
     }
 }

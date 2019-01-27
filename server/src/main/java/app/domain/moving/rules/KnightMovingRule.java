@@ -4,7 +4,7 @@ import app.domain.PieceColor;
 import app.domain.PieceType;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.NValidator;
-import app.domain.moving.PositionValidator;
+import app.domain.moving.validators.PositionValidator;
 import app.domain.moving.moves.KnightMove;
 import app.domain.util.Tuple;
 import lombok.extern.slf4j.Slf4j;

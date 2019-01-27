@@ -3,7 +3,7 @@ package app.domain.moving.rules;
 import app.domain.*;
 import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
-import app.domain.moving.PositionValidator;
+import app.domain.moving.validators.PositionValidator;
 import app.domain.util.Tuple;
 
 import java.util.Collection;

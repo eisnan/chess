@@ -1,6 +1,7 @@
-package app.domain.moving;
+package app.domain.moving.validators;
 
 import app.domain.*;
+import app.domain.moving.*;
 import app.domain.moving.moves.*;
 
 import java.util.*;
