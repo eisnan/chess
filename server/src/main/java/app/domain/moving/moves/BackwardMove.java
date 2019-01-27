@@ -3,21 +3,19 @@ package app.domain.moving.moves;
 import app.domain.ChessBoard;
 import app.domain.Position;
 import app.domain.moving.DescendingPositionComparator;
-import app.domain.moving.MoveDescriber;
 import app.domain.moving.DirectionIterator;
 import app.domain.moving.MoveSettings;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
+import java.util.SortedSet;
 import java.util.function.BiFunction;
 
-public class BackwardMove implements MoveDescriber {
+public class BackwardMove implements Move {
     private Comparator<Position> positionComparator = new DescendingPositionComparator();
 
     @Override
-    public Collection<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
+    public SortedSet<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
         DirectionIterator directionIterator = new DirectionIterator();
         return directionIterator.iterate(moveSettings, this, fileFunction(), rankFunction());
     }

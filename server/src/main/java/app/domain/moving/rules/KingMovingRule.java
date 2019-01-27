@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 public class KingMovingRule implements MovingRule {
 
     private static final Integer KING_LIMIT_POSITIONS = 1;
-    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
+    private Map<PieceColor, Collection<Tuple<Move, Integer>>> moveParameters = new HashMap<>();
     private PositionValidator validator = new RBQValidator();
-    private Collection<MoveDescriber> legalMoves = Arrays.asList(
+    private Collection<Move> legalMoves = Arrays.asList(
             new ForwardMove(),
             new BackwardMove(),
             new LeftMove(),
@@ -32,19 +32,19 @@ public class KingMovingRule implements MovingRule {
             new KingSideCastling());
 
     public KingMovingRule() {
-        Collection<Tuple<MoveDescriber, Integer>> legalMovesWithLimit = legalMoves
+        Collection<Tuple<Move, Integer>> legalMovesWithLimit = legalMoves
                 .stream().map(moveDescriber -> new Tuple<>(moveDescriber, KING_LIMIT_POSITIONS)).collect(Collectors.toList());
         this.moveParameters.put(PieceColor.WHITE, legalMovesWithLimit);
         this.moveParameters.put(PieceColor.BLACK, legalMovesWithLimit);
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters() {
+    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters() {
         return moveParameters;
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getCaptureParameters() {
+    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getCaptureParameters() {
         return moveParameters;
     }
 
@@ -59,7 +59,7 @@ public class KingMovingRule implements MovingRule {
     }
 
     @Override
-    public Collection<MoveDescriber> getMoveDescribers() {
+    public Collection<Move> getMoveDescribers() {
         return legalMoves;
     }
 }

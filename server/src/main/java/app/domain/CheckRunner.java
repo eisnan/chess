@@ -1,8 +1,8 @@
 package app.domain;
 
-import app.domain.moving.MoveDescriber;
+import app.domain.moving.moves.Move;
 import app.domain.moving.MoveSettings;
-import app.domain.moving.SpecialMoveDescriber;
+import app.domain.moving.SpecialMove;
 import app.domain.moving.rules.KingMovingRule;
 import app.domain.moving.rules.MovingRules;
 import app.domain.util.Tuple;
@@ -54,20 +54,20 @@ public class CheckRunner {
 
 
         // based on open positions determine open (vulnerable) vectors/directions
-        Collection<MoveDescriber> openDirections = new PositionInterpreter().getAttackDirections(chessBoard, pieceColor, kingPosition, openPositions);
+        Collection<Move> openDirections = new PositionInterpreter().getAttackDirections(chessBoard, pieceColor, kingPosition, openPositions);
 
         System.out.println(openDirections);
 
 
         // follow those directions, see if encounter enemy piece
-        Map<MoveDescriber, Integer> movingSettings = MovingRules.getMovingRule(kingPiece.getPieceType()).getMoveDescribers().stream()
-                .filter(moveDescriber -> !(moveDescriber instanceof SpecialMoveDescriber))
+        Map<Move, Integer> movingSettings = MovingRules.getMovingRule(kingPiece.getPieceType()).getMoveDescribers().stream()
+                .filter(moveDescriber -> !(moveDescriber instanceof SpecialMove))
                 .filter(openDirections::contains).collect(Collectors.toMap(moveDescriber -> moveDescriber, movingPositions -> 8));
 
-        for (MoveDescriber moveDescriber : openDirections) {
-            Collection<Position> positions = moveDescriber.checkMove(chessBoard, new MoveSettings(kingPosition, kingPiece, new KingMovingRule(), movingSettings));
+        for (Move move : openDirections) {
+            Collection<Position> positions = move.checkMove(chessBoard, new MoveSettings(kingPosition, kingPiece, new KingMovingRule(), movingSettings));
             System.out.println(positions);
-            Optional<Tuple<Position, Piece>> firstPieceOnDirection = new PositionInterpreter().findFirstPieceOnDirection(chessBoard, moveDescriber, positions);
+            Optional<Tuple<Position, Piece>> firstPieceOnDirection = new PositionInterpreter().findFirstPieceOnDirection(chessBoard, move, positions);
             if (firstPieceOnDirection.isPresent() && kingPiece.getPieceColor().isOppositeColor(firstPieceOnDirection.get().getRight().getPieceColor())) {
                 Collection<Position> attackingPositions = MovingRules.getMovingRule(firstPieceOnDirection.get().getRight().getPieceType()).getAttackingPositions(chessBoard, firstPieceOnDirection.get().getRight(), firstPieceOnDirection.get().getLeft());
                 System.out.println(attackingPositions);
@@ -85,13 +85,13 @@ public class CheckRunner {
 
     }
 
-//    private Collection<Piece> findAllPiecesWithAttackDirections(PieceColor pieceColor, Collection<MoveDescriber> attackDirections) {
+//    private Collection<Piece> findAllPiecesWithAttackDirections(PieceColor pieceColor, Collection<Move> attackDirections) {
 //
 //        attackDirections.forEach(moveDescriber -> {
 //            Collection<MovingRule> allMovingRules = MovingRules.getAllMovingRules();
 //            allMovingRules.forEach(movingRule -> {
-//                Map<PieceColor, Collection<MoveDescriber>> capturingMoves = movingRule.getCaptureParameters();
-//                Collection<MoveDescriber> moveDescribers = capturingMoves.get(pieceColor);
+//                Map<PieceColor, Collection<Move>> capturingMoves = movingRule.getCaptureParameters();
+//                Collection<Move> moveDescribers = capturingMoves.get(pieceColor);
 //                if (moveDescribers.contains(moveDescriber)) {
 //                    PieceType pieceType = movingRule.getPieceType();
 //                    System.out.println(pieceType);

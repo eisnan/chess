@@ -3,31 +3,25 @@ package app.domain.moving.moves;
 import app.domain.ChessBoard;
 import app.domain.InvalidPositionException;
 import app.domain.Position;
-import app.domain.moving.AscendingPositionComparator;
-import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
-import app.domain.moving.SpecialMoveDescriber;
+import app.domain.moving.SpecialMove;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.function.BiFunction;
+import java.util.*;
 
 @Slf4j
-public class KnightMove implements SpecialMoveDescriber {
+public class KnightMove implements SpecialMove {
 
     @Override
-    public Collection<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
-        List<Position> aboveMoves = aboveMoves(moveSettings.getCurrentPosition());
+    public SortedSet<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
+        SortedSet<Position> aboveMoves = aboveMoves(moveSettings.getCurrentPosition());
         aboveMoves.addAll(belowMoves(moveSettings.getCurrentPosition()));
 
         return aboveMoves;
     }
 
-    private List<Position> belowMoves(Position currentPosition) {
-        List<Position> belowPositions = new ArrayList<>();
+    private SortedSet<Position> belowMoves(Position currentPosition) {
+        SortedSet<Position> belowPositions = new TreeSet<>(getPositionComparator());
         int fileOrdinal = currentPosition.getFile().ordinal();
         int rankOrdinal = currentPosition.getRank().ordinal();
         // todo refactor this
@@ -55,8 +49,8 @@ public class KnightMove implements SpecialMoveDescriber {
         return belowPositions;
     }
 
-    private List<Position> aboveMoves(Position currentPosition) {
-        List<Position> abovePositions = new ArrayList<>();
+    private SortedSet<Position> aboveMoves(Position currentPosition) {
+        SortedSet<Position> abovePositions = new TreeSet<>(getPositionComparator());
         int fileOrdinal = currentPosition.getFile().ordinal();
         int rankOrdinal = currentPosition.getRank().ordinal();
         // todo refactor this

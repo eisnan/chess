@@ -6,15 +6,16 @@ import app.domain.moving.*;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.SortedSet;
 import java.util.function.BiFunction;
 
-public class ForwardDiagonalLeft implements MoveDescriber {
+public class ForwardDiagonalLeft implements Move {
 
     private Comparator<Position> positionComparator = new DescendingPositionComparator();
 
 
     @Override
-    public Collection<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
+    public SortedSet<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
         DirectionIterator directionIterator = new DirectionIterator();
         return directionIterator.iterate(moveSettings, this, fileFunction(), rankFunction());
     }

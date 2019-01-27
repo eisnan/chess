@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class MoveEntityRepositoryTest {
+public class PlayerMoveEntityRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;

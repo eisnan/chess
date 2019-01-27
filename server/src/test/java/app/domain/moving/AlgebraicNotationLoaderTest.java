@@ -16,7 +16,7 @@ public class AlgebraicNotationLoaderTest {
         String fileContents = Resources.toString(Resources.getResource("game1.cn"), Charset.defaultCharset());
 
 
-        Collection<Move> moves = algebraicNotationLoader.loadFrom(fileContents);
+        Collection<PlayerMove> playerMoves = algebraicNotationLoader.loadFrom(fileContents);
 
         System.out.println();
 

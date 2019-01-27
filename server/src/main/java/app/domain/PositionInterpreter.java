@@ -1,6 +1,6 @@
 package app.domain;
 
-import app.domain.moving.MoveDescriber;
+import app.domain.moving.moves.Move;
 import app.domain.moving.moves.*;
 import app.domain.moving.rules.MovingRules;
 import app.domain.util.Tuple;
@@ -10,9 +10,9 @@ import java.util.*;
 public class PositionInterpreter {
 
 
-    public Collection<MoveDescriber> getAttackDirections(ChessBoard chessBoard, PieceColor pieceColor, Position kingPosition, Set<Position> vulnerablePositions) {
+    public Collection<Move> getAttackDirections(ChessBoard chessBoard, PieceColor pieceColor, Position kingPosition, Set<Position> vulnerablePositions) {
 
-        Collection<MoveDescriber> attackDirections = new HashSet<>();
+        Collection<Move> attackDirections = new HashSet<>();
         int fileOrdinal = kingPosition.getFile().ordinal();
         int rankOrdinal = kingPosition.getRank().ordinal();
 
@@ -53,8 +53,8 @@ public class PositionInterpreter {
         return attackDirections;
     }
 
-    public Optional<Tuple<Position, Piece>> findFirstPieceOnDirection(ChessBoard chessBoard, MoveDescriber moveDescriber, Collection<Position> positions) {
-        Collection<Position> direction = new TreeSet<>(moveDescriber.getPositionComparator());
+    public Optional<Tuple<Position, Piece>> findFirstPieceOnDirection(ChessBoard chessBoard, Move move, Collection<Position> positions) {
+        Collection<Position> direction = new TreeSet<>(move.getPositionComparator());
         direction.addAll(positions);
 
         Optional<Tuple<Position, Piece>> first = direction.stream().filter(position -> chessBoard.getModel().get(position) != null).map(position -> new Tuple<>(position,chessBoard.getModel().get(position))).findFirst();
@@ -62,8 +62,8 @@ public class PositionInterpreter {
         return first;
     }
 
-    public boolean isOnAttackingDirection(MoveDescriber moveDescriber, Piece attackingPiece) {
-        Collection<PieceType> pieceTypes = MovingRules.findWhichPiecesCanAttackOnThisDirection(moveDescriber);
+    public boolean isOnAttackingDirection(Move move, Piece attackingPiece) {
+        Collection<PieceType> pieceTypes = MovingRules.findWhichPiecesCanAttackOnThisDirection(move);
         return pieceTypes.contains(attackingPiece.getPieceType());
     }
 }

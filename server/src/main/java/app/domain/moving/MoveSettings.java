@@ -2,6 +2,7 @@ package app.domain.moving;
 
 import app.domain.Piece;
 import app.domain.Position;
+import app.domain.moving.moves.Move;
 import app.domain.moving.rules.MovingRule;
 import lombok.Getter;
 
@@ -13,12 +14,12 @@ public class MoveSettings {
     private Position currentPosition;
     private Piece piece;
     private MovingRule movingRule;
-    private Map<MoveDescriber, Integer> movingSettings;
+    private Map<Move, Integer> settings;
 
-    public MoveSettings(Position currentPosition, Piece piece, MovingRule movingRule, Map<MoveDescriber, Integer> movingSettings) {
+    public MoveSettings(Position currentPosition, Piece piece, MovingRule movingRule, Map<Move, Integer> settings) {
         this.currentPosition = currentPosition;
         this.piece = piece;
         this.movingRule = movingRule;
-        this.movingSettings = movingSettings;
+        this.settings = settings;
     }
 }

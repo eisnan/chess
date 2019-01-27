@@ -1,6 +1,7 @@
 package app.domain.moving;
 
 import app.domain.Position;
+import app.domain.moving.moves.Move;
 
 import java.util.Comparator;
 import java.util.function.BiFunction;
@@ -8,7 +9,7 @@ import java.util.function.BiFunction;
 /**
  * Marker interface for non-iterable moves
  */
-public interface SpecialMoveDescriber extends MoveDescriber {
+public interface SpecialMove extends Move {
 
     @Override
     default BiFunction<Integer, Integer, Integer> fileFunction() {

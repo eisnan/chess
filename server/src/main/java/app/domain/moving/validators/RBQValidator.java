@@ -3,18 +3,15 @@ package app.domain.moving.validators;
 import app.domain.ChessBoard;
 import app.domain.Piece;
 import app.domain.Position;
-import app.domain.moving.MoveDescriber;
+import app.domain.moving.moves.Move;
 import app.domain.moving.MoveSettings;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RBQValidator implements PositionValidator {
 
     @Override
-    public Collection<Position> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<MoveDescriber, Collection<Position>> possiblePositions) {
+    public Collection<Position> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, SortedSet<Position>> possiblePositions) {
         List<Position> validPositions = new ArrayList<>();
         Piece selectedPiece = moveSettings.getPiece();
 
@@ -25,7 +22,7 @@ public class RBQValidator implements PositionValidator {
     }
 
     @Override
-    public Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<MoveDescriber, Collection<Position>> possiblePositions) {
+    public Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, SortedSet<Position>> possiblePositions) {
         return keepValidPositionsToMove(chessBoard, moveSettings, possiblePositions);
     }
 

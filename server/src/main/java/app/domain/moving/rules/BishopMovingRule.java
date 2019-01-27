@@ -4,7 +4,7 @@ import app.domain.Piece;
 import app.domain.PieceColor;
 import app.domain.PieceType;
 import app.domain.Position;
-import app.domain.moving.MoveDescriber;
+import app.domain.moving.moves.Move;
 import app.domain.moving.MoveSettings;
 import app.domain.moving.validators.PositionValidator;
 import app.domain.moving.validators.RBQValidator;
@@ -23,28 +23,28 @@ import java.util.stream.Collectors;
 public class BishopMovingRule implements MovingRule {
 
     private static final Integer BISHOP_LIMIT_POSITIONS = 8;
-    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
+    private Map<PieceColor, Collection<Tuple<Move, Integer>>> moveParameters = new HashMap<>();
     private PositionValidator validator = new RBQValidator();
-    private Collection<MoveDescriber> legalMoves = Arrays.asList(
+    private Collection<Move> legalMoves = Arrays.asList(
             new ForwardDiagonalLeft(),
             new ForwardDiagonalRight(),
             new BackwardDiagonalLeft(),
             new BackwardDiagonalRight());
 
     public BishopMovingRule() {
-        Collection<Tuple<MoveDescriber, Integer>> legalMovesWithLimit = legalMoves
+        Collection<Tuple<Move, Integer>> legalMovesWithLimit = legalMoves
                 .stream().map(moveDescriber -> new Tuple<>(moveDescriber, BISHOP_LIMIT_POSITIONS)).collect(Collectors.toList());
         moveParameters.put(PieceColor.WHITE, legalMovesWithLimit);
         moveParameters.put(PieceColor.BLACK, legalMovesWithLimit);
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters() {
+    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters() {
         return moveParameters;
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getCaptureParameters() {
+    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getCaptureParameters() {
         return moveParameters;
     }
 
@@ -59,7 +59,7 @@ public class BishopMovingRule implements MovingRule {
     }
 
     @Override
-    public Collection<MoveDescriber> getMoveDescribers() {
+    public Collection<Move> getMoveDescribers() {
         return legalMoves;
     }
 

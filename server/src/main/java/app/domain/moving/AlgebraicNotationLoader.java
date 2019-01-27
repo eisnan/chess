@@ -19,25 +19,25 @@ public class AlgebraicNotationLoader {
         chessBoard.arrangePiecesForStart();
     }
 
-    public Collection<Move> loadFrom(String algebraicNotation) {
+    public Collection<PlayerMove> loadFrom(String algebraicNotation) {
 
-        Collection<Move> loadedMoves = new ArrayList<>();
+        Collection<PlayerMove> loadedPlayerMoves = new ArrayList<>();
 
         String[] split = algebraicNotation.split("(\\d+\\.)");
 
         Stream.of(split).filter(s -> s.length() > 0).map(String::trim).forEach(s -> {
             String[] moves = s.split(" ");
 
-            loadedMoves.add(parseMove(moves[0], PieceColor.WHITE));
-            loadedMoves.add(parseMove(moves[1], PieceColor.BLACK));
+            loadedPlayerMoves.add(parseMove(moves[0], PieceColor.WHITE));
+            loadedPlayerMoves.add(parseMove(moves[1], PieceColor.BLACK));
 
         });
 
 
-        return loadedMoves;
+        return loadedPlayerMoves;
     }
 
-    private Move parseMove(String move, PieceColor pieceColor) {
+    private PlayerMove parseMove(String move, PieceColor pieceColor) {
 
         PieceType pieceType = PieceType.getByNotationSymbol(move);
         Piece piece = new Piece(pieceColor, pieceType);
@@ -51,10 +51,10 @@ public class AlgebraicNotationLoader {
         } else { //other move
 
         }
-        return new Move(piece, null, toPosition);
+        return new PlayerMove(piece, null, toPosition);
     }
 
-    public Collection<Move> loadFrom(File notationFile) throws FileNotFoundException {
+    public Collection<PlayerMove> loadFrom(File notationFile) throws FileNotFoundException {
 
         BufferedReader reader = new BufferedReader(new FileReader(notationFile));
 

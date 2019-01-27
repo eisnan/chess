@@ -1,6 +1,6 @@
 package app.domain;
 
-import app.domain.moving.Move;
+import app.domain.moving.PlayerMove;
 import app.domain.util.Tuple;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +14,7 @@ public class ChessBoard {
     private static final Predicate<Map.Entry<Position, Piece>> POSITIONS_WITH_NO_PIECES = positionPieceEntry -> positionPieceEntry.getValue() != null;
     private Map<Position, Piece> model = new LinkedHashMap<>();
     private StartPositionResolver startPositionResolver = new HardCodedPositionResolver();
-    private LinkedList<Move> moves = new LinkedList<>();
+    private LinkedList<PlayerMove> playerMoves = new LinkedList<>();
 
     public Map<Position, Piece> getModel() {
         return model;
@@ -55,12 +55,12 @@ public class ChessBoard {
         initialPositions.forEach((piece, positions) -> positions.forEach(position -> model.put(position, piece)));
     }
 
-    public void addMove(Move move) {
-        moves.add(move);
+    public void addMove(PlayerMove playerMove) {
+        playerMoves.add(playerMove);
     }
 
-    public Move getLastMove() {
-        return moves.isEmpty() ? null : moves.getLast();
+    public PlayerMove getLastMove() {
+        return playerMoves.isEmpty() ? null : playerMoves.getLast();
     }
 
     private void observePromotionRanks() {
@@ -108,5 +108,13 @@ public class ChessBoard {
         }
 
         return positions;
+    }
+
+    public boolean isEmpty(Position position) {
+        return this.getModel().get(position) == null;
+    }
+
+    public boolean isNotEmpty(Position position) {
+        return !isEmpty(position);
     }
 }

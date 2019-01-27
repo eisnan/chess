@@ -4,7 +4,7 @@ import app.domain.Piece;
 import app.domain.PieceColor;
 import app.domain.PieceType;
 import app.domain.Position;
-import app.domain.moving.MoveDescriber;
+import app.domain.moving.moves.Move;
 import app.domain.moving.MoveSettings;
 import app.domain.moving.validators.PositionValidator;
 import app.domain.moving.validators.RBQValidator;
@@ -19,11 +19,11 @@ import java.util.Map;
 public class QueenMovingRule implements MovingRule {
 
     private static final Integer QUEEN_LIMIT_POSITIONS = 8;
-    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
+    private Map<PieceColor, Collection<Tuple<Move, Integer>>> moveParameters = new HashMap<>();
     private PositionValidator validator = new RBQValidator();
 
     public QueenMovingRule() {
-        Collection<Tuple<MoveDescriber, Integer>> legalMoves = Arrays.asList(
+        Collection<Tuple<Move, Integer>> legalMoves = Arrays.asList(
                 new Tuple<>(new ForwardMove(), QUEEN_LIMIT_POSITIONS),
                 new Tuple<>(new BackwardMove(), QUEEN_LIMIT_POSITIONS),
                 new Tuple<>(new LeftMove(), QUEEN_LIMIT_POSITIONS),
@@ -37,12 +37,12 @@ public class QueenMovingRule implements MovingRule {
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters() {
+    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters() {
         return moveParameters;
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getCaptureParameters() {
+    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getCaptureParameters() {
         return moveParameters;
     }
 
@@ -57,7 +57,7 @@ public class QueenMovingRule implements MovingRule {
     }
 
     @Override
-    public Collection<MoveDescriber> getMoveDescribers() {
+    public Collection<Move> getMoveDescribers() {
         return null;
     }
 

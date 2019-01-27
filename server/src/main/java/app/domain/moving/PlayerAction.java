@@ -38,13 +38,13 @@ public class PlayerAction {
                 pawnPromoter.promote(chessBoard, piece);
             }
         }
-        chessBoard.addMove(new Move(piece, fromPosition, toPosition));
+        chessBoard.addMove(new PlayerMove(piece, fromPosition, toPosition));
 
         return null;
     }
 
-    public MoveType move(ChessBoard chessBoard, Move move) {
-        move(chessBoard, move.getPiece(), move.getFromPosition(), move.getToPosition());
+    public MoveType move(ChessBoard chessBoard, PlayerMove playerMove) {
+        move(chessBoard, playerMove.getPiece(), playerMove.getFromPosition(), playerMove.getToPosition());
 
         return null;
     }

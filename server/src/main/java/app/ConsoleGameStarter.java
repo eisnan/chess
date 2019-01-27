@@ -60,8 +60,11 @@ public class ConsoleGameStarter {
 
                 new PlayerAction().move(chessBoard, selectedPiece, selectedPosition, moveToPosition);
 
-                boolean kingInCheck = new CheckRunner().isKingInCheck(chessBoard, selectedPiece.getPieceColor());
-                System.out.println(selectedPiece.getPieceColor() + " checks " + kingInCheck);
+//                boolean kingInCheck = new CheckRunner().isKingInCheck(chessBoard, selectedPiece.getPieceColor());
+//                System.out.println(selectedPiece.getPieceColor() + " checks " + kingInCheck);
+
+
+
 
 //                if (!successFullMove) {
 //                    System.out.println("Invalid input, please try again");

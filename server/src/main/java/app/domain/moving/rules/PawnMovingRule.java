@@ -1,25 +1,21 @@
 package app.domain.moving.rules;
 
 import app.domain.*;
-import app.domain.moving.MoveDescriber;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.moves.*;
 import app.domain.moving.validators.PawnValidator;
 import app.domain.moving.validators.PositionValidator;
-import app.domain.moving.moves.*;
 import app.domain.util.Tuple;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class PawnMovingRule implements MovingRule {
 
     private PositionValidator validator = new PawnValidator();
 
-    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
-    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> captureParameters = new HashMap<>();
-    private Collection<MoveDescriber> legalMoves = Arrays.asList(
+    private Map<PieceColor, Collection<Tuple<Move, Integer>>> moveParameters = new HashMap<>();
+    private Map<PieceColor, Collection<Tuple<Move, Integer>>> captureParameters = new HashMap<>();
+    private Collection<Move> legalMoves = Arrays.asList(
             new ForwardMove(),
             new ForwardDiagonalLeft(),
             new ForwardDiagonalRight(),
@@ -39,12 +35,12 @@ public class PawnMovingRule implements MovingRule {
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters() {
+    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters() {
         return moveParameters;
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getCaptureParameters() {
+    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getCaptureParameters() {
         return captureParameters;
     }
 
@@ -59,16 +55,16 @@ public class PawnMovingRule implements MovingRule {
     }
 
     @Override
-    public Collection<MoveDescriber> getMoveDescribers() {
+    public Collection<Move> getMoveDescribers() {
         return legalMoves;
     }
 
     @Override
     public Collection<Position> getAttackingPositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
 
-        MoveSettings moveSettings = getCaptureSettings(currentPosition, piece);
-        Map<MoveDescriber, Collection<Position>> possiblePositions = getPossiblePositions(chessBoard, moveSettings);
-        return validator.keepValidPositionsToAttack(chessBoard, moveSettings, possiblePositions);
+        MoveSettings captureSettings = getCaptureSettings(currentPosition, piece);
+        Map<Move, SortedSet<Position>> possiblePositions = getPossiblePositions(chessBoard, captureSettings);
+        return validator.keepValidPositionsToAttack(chessBoard, captureSettings, possiblePositions);
 
     }
 }

@@ -25,4 +25,12 @@ public enum PieceColor {
     public PieceColor oppositeColor() {
         return this == WHITE ? BLACK : WHITE;
     }
+
+    public boolean isFirstRank(Rank rank) {
+        if (this == WHITE) {
+            return rank == Rank._2;
+        } else {
+            return rank == Rank._7;
+        }
+    }
 }

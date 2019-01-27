@@ -2,7 +2,7 @@ package app.domain.moving.rules;
 
 import app.domain.PieceColor;
 import app.domain.PieceType;
-import app.domain.moving.MoveDescriber;
+import app.domain.moving.moves.Move;
 import app.domain.moving.NValidator;
 import app.domain.moving.validators.PositionValidator;
 import app.domain.moving.moves.KnightMove;
@@ -15,8 +15,8 @@ import java.util.*;
 public class KnightMovingRule implements MovingRule {
 
     private PositionValidator validator = new NValidator();
-    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
-    private MoveDescriber legalMove = new KnightMove();
+    private Map<PieceColor, Collection<Tuple<Move, Integer>>> moveParameters = new HashMap<>();
+    private Move legalMove = new KnightMove();
 
     public KnightMovingRule() {
         moveParameters.put(PieceColor.WHITE, Collections.singletonList(new Tuple<>(legalMove, 0)));
@@ -24,12 +24,12 @@ public class KnightMovingRule implements MovingRule {
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters() {
+    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters() {
         return moveParameters;
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getCaptureParameters() {
+    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getCaptureParameters() {
         return moveParameters;
     }
 
@@ -44,7 +44,7 @@ public class KnightMovingRule implements MovingRule {
     }
 
     @Override
-    public Collection<MoveDescriber> getMoveDescribers() {
+    public Collection<Move> getMoveDescribers() {
         return Collections.singletonList(legalMove);
     }
 }

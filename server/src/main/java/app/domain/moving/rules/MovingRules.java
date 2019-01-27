@@ -1,7 +1,7 @@
 package app.domain.moving.rules;
 
 import app.domain.PieceType;
-import app.domain.moving.MoveDescriber;
+import app.domain.moving.moves.Move;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +37,7 @@ public class MovingRules {
         return Arrays.asList(new PawnMovingRule(), new QueenMovingRule(), new BishopMovingRule(), new KnightMovingRule(), new RookMovingRule());
     }
 
-    public static Collection<PieceType> findWhichPiecesCanAttackOnThisDirection(MoveDescriber moveDescriber) {
+    public static Collection<PieceType> findWhichPiecesCanAttackOnThisDirection(Move move) {
         Collection<PieceType> pieceTypes = new ArrayList<>();
 
 

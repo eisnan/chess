@@ -2,7 +2,7 @@ package app.domain.moving.rules;
 
 import app.domain.PieceColor;
 import app.domain.PieceType;
-import app.domain.moving.MoveDescriber;
+import app.domain.moving.moves.Move;
 import app.domain.moving.validators.PositionValidator;
 import app.domain.moving.validators.RBQValidator;
 import app.domain.moving.moves.BackwardMove;
@@ -21,10 +21,10 @@ public class RookMovingRule implements MovingRule {
     private static final int ROOK_LIMIT_POSITIONS = 8;
 
     private PositionValidator validator = new RBQValidator();
-    private Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> moveParameters = new HashMap<>();
+    private Map<PieceColor, Collection<Tuple<Move, Integer>>> moveParameters = new HashMap<>();
 
     public RookMovingRule() {
-        Collection<Tuple<MoveDescriber, Integer>> legalMoves = Arrays.asList(
+        Collection<Tuple<Move, Integer>> legalMoves = Arrays.asList(
                 new Tuple<>(new ForwardMove(), ROOK_LIMIT_POSITIONS),
                 new Tuple<>(new BackwardMove(), ROOK_LIMIT_POSITIONS),
                 new Tuple<>(new LeftMove(), ROOK_LIMIT_POSITIONS),
@@ -34,12 +34,12 @@ public class RookMovingRule implements MovingRule {
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getMoveParameters() {
+    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters() {
         return moveParameters;
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<MoveDescriber, Integer>>> getCaptureParameters() {
+    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getCaptureParameters() {
         return moveParameters;
     }
 
@@ -54,7 +54,7 @@ public class RookMovingRule implements MovingRule {
     }
 
     @Override
-    public Collection<MoveDescriber> getMoveDescribers() {
+    public Collection<Move> getMoveDescribers() {
         return null;
     }
 }
