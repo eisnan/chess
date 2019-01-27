@@ -1,4 +1,9 @@
-package app.domain;
+package app.domain.start;
+
+import app.domain.File;
+import app.domain.PieceColor;
+import app.domain.Position;
+import app.domain.Rank;
 
 import java.util.HashMap;
 import java.util.List;

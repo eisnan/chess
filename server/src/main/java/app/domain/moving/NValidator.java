@@ -20,9 +20,4 @@ public class NValidator implements PositionValidator {
             return piece == null || piece.getPieceColor() != moveSettings.getPiece().getPieceColor();
         }).collect(Collectors.toCollection(() -> new TreeSet<>(new AscendingPositionComparator())));
     }
-
-    @Override
-    public Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, SortedSet<Position>> possiblePositions) {
-        return null;
-    }
 }

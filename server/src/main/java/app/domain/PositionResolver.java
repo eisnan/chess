@@ -5,6 +5,7 @@ import app.domain.moving.rules.MovingRules;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 public class PositionResolver {
 
@@ -20,7 +21,7 @@ public class PositionResolver {
 
         // generate possible positions
         Collection<Position> movePositions = movingRule.getMovePositions(chessBoard, piece, currentPosition);
-        Collection<Position> possiblePositions = new ArrayList<>(movePositions);
+        Collection<Position> possiblePositions = new HashSet<>(movePositions);
         Collection<Position> attackingPositions = movingRule.getAttackingPositions(chessBoard, piece, currentPosition);
         possiblePositions.addAll(attackingPositions);
 

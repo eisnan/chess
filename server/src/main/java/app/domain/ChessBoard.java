@@ -1,6 +1,8 @@
 package app.domain;
 
 import app.domain.moving.PlayerMove;
+import app.domain.start.HardCodedPositionResolver;
+import app.domain.start.StartPositionResolver;
 import app.domain.util.Tuple;
 import lombok.extern.slf4j.Slf4j;
 

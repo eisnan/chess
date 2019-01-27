@@ -19,7 +19,7 @@ public class PlayerAction {
         chessBoard.getModel().put(toPosition, piece);
 
         if (piece.getPieceType() == PieceType.PAWN) {
-            boolean enPassant = PawnValidator.isEnPassant(chessBoard, piece, fromPosition, toPosition);
+            boolean enPassant = new PawnValidator().isEnPassant(chessBoard, piece, fromPosition, toPosition);
 
             if (enPassant) {
                 Position epCapture;

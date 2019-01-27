@@ -1,4 +1,7 @@
-package app.domain;
+package app.domain.start;
+
+import app.domain.Piece;
+import app.domain.Position;
 
 import java.util.List;
 import java.util.Map;

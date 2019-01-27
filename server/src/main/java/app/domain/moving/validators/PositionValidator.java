@@ -15,6 +15,9 @@ public interface PositionValidator {
 
     Collection<Position> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, SortedSet<Position>> possiblePositions);
 
+    /**
+     * Default implementation returns the positions where there are enemy pieces.
+     */
     default Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, SortedSet<Position>> possiblePositions) {
         Piece selectedPiece = moveSettings.getPiece();
         return possiblePositions.values().stream().flatMap(SortedSet::stream)

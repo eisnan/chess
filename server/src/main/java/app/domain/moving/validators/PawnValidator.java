@@ -1,11 +1,14 @@
 package app.domain.moving.validators;
 
 import app.domain.*;
-import app.domain.moving.*;
-import app.domain.moving.moves.*;
+import app.domain.moving.MoveSettings;
+import app.domain.moving.PlayerMove;
+import app.domain.moving.moves.Move;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.util.SortedSet;
 
 public class PawnValidator implements PositionValidator {
 
@@ -34,6 +37,14 @@ public class PawnValidator implements PositionValidator {
 
 
         return validToMove;
+    }
+
+    @Override
+    public Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, SortedSet<Position>> possiblePositions) {
+        Collection<Position> validPositionsToAttack = PositionValidator.super.keepValidPositionsToAttack(chessBoard, moveSettings, possiblePositions);
+        possiblePositions.values().stream().flatMap(SortedSet::stream).filter(position -> isEnPassant(chessBoard, moveSettings.getPiece(), moveSettings.getCurrentPosition(), position))
+                .findFirst().ifPresent(validPositionsToAttack::add);
+        return validPositionsToAttack;
     }
 
     public boolean isEnPassant(ChessBoard chessBoard, Piece currentPiece, Position currentPosition, Position evaluatedPosition) {

@@ -1,5 +1,8 @@
-package app.domain;
+package app.domain.start;
 
+import app.domain.File;
+import app.domain.Position;
+import app.domain.Rank;
 import app.domain.util.Tuple;
 
 public class KingStartPositionResolver {

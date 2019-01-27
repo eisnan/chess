@@ -1,8 +1,15 @@
-package app.domain;
+package app.domain.start;
 
+import app.domain.Piece;
+import app.domain.PieceColor;
+import app.domain.PieceType;
+import app.domain.Position;
 import app.domain.util.Tuple;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class HardCodedPositionResolver implements StartPositionResolver {
 
@@ -10,7 +17,7 @@ public class HardCodedPositionResolver implements StartPositionResolver {
     private KingStartPositionResolver kingStartPositionResolver = new KingStartPositionResolver();
     private QueenStartPositionResolver queenStartPositionResolver = new QueenStartPositionResolver();
     private BishopStartPositionResolver bishopStartPositionResolver = new BishopStartPositionResolver();
-    private KnightStartPositionResolver knightStartPositionResolver =new KnightStartPositionResolver();
+    private KnightStartPositionResolver knightStartPositionResolver = new KnightStartPositionResolver();
     private RookStartPositionResolver rookStartPositionResolver = new RookStartPositionResolver();
 
 
@@ -28,20 +35,20 @@ public class HardCodedPositionResolver implements StartPositionResolver {
         initialPositions.put(Piece.getBlackPiece(PieceType.KING), Collections.singleton(kingsPosition.getRight()));
 
         //queens
-        Tuple<Position, Position> queensPosition =   queenStartPositionResolver.getQueensPosition();
+        Tuple<Position, Position> queensPosition = queenStartPositionResolver.getQueensPosition();
         initialPositions.put(Piece.getWhitePiece(PieceType.QUEEN), Collections.singleton(queensPosition.getLeft()));
         initialPositions.put(Piece.getBlackPiece(PieceType.QUEEN), Collections.singleton(queensPosition.getRight()));
 
         //bishops
-        Map<PieceColor, Set<Position>> bishopsPosition =   bishopStartPositionResolver.getBishopsPosition();
+        Map<PieceColor, Set<Position>> bishopsPosition = bishopStartPositionResolver.getBishopsPosition();
         bishopsPosition.forEach((pieceColor, positions) -> initialPositions.put(new Piece(pieceColor, PieceType.BISHOP), positions));
 
         //knights
-        Map<PieceColor, Set<Position>> knightsPosition=   knightStartPositionResolver.getKnightsPosition();
+        Map<PieceColor, Set<Position>> knightsPosition = knightStartPositionResolver.getKnightsPosition();
         knightsPosition.forEach((pieceColor, positions) -> initialPositions.put(new Piece(pieceColor, PieceType.KNIGHT), positions));
 
         //rooks
-        Map<PieceColor, Set<Position>> rooksPosition=   rookStartPositionResolver.getRooksPosition();
+        Map<PieceColor, Set<Position>> rooksPosition = rookStartPositionResolver.getRooksPosition();
         rooksPosition.forEach((pieceColor, positions) -> initialPositions.put(new Piece(pieceColor, PieceType.ROOK), positions));
 
         return initialPositions;
