@@ -2,9 +2,9 @@ package app.domain.moving.moves;
 
 import app.domain.ChessBoard;
 import app.domain.Position;
+import app.domain.comparators.AscendingPositionComparator;
 import app.domain.moving.*;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.function.BiFunction;

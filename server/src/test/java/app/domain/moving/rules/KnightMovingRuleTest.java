@@ -12,8 +12,6 @@ public class KnightMovingRuleTest {
 
     @Before
     public void setUp() {
-        chessBoard.initModel();
-        chessBoard.arrangePiecesForStart();
     }
 
     @Test

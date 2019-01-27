@@ -2,7 +2,6 @@ package app.domain.moving.rules;
 
 import app.domain.PieceColor;
 import app.domain.PieceType;
-import app.domain.moving.*;
 import app.domain.moving.moves.*;
 import app.domain.moving.validators.PositionValidator;
 import app.domain.moving.validators.RBQValidator;

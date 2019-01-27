@@ -3,13 +3,12 @@ package app.domain.moving;
 import app.domain.File;
 import app.domain.Position;
 import app.domain.Rank;
+import app.domain.comparators.DescendingPositionComparator;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.TreeSet;
-
-import static org.junit.Assert.*;
 
 public class DescendingPositionComparatorTest {
 

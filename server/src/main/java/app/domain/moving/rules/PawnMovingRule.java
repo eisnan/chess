@@ -1,13 +1,16 @@
 package app.domain.moving.rules;
 
-import app.domain.*;
-import app.domain.moving.MoveSettings;
+import app.domain.PieceColor;
+import app.domain.PieceType;
 import app.domain.moving.moves.*;
 import app.domain.moving.validators.PawnValidator;
 import app.domain.moving.validators.PositionValidator;
 import app.domain.util.Tuple;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PawnMovingRule implements MovingRule {
 
@@ -57,14 +60,5 @@ public class PawnMovingRule implements MovingRule {
     @Override
     public Collection<Move> getMoveDescribers() {
         return legalMoves;
-    }
-
-    @Override
-    public Collection<Position> getAttackingPositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
-
-        MoveSettings captureSettings = getCaptureSettings(currentPosition, piece);
-        Map<Move, SortedSet<Position>> possiblePositions = getPossiblePositions(chessBoard, captureSettings);
-        return validator.keepValidPositionsToAttack(chessBoard, captureSettings, possiblePositions);
-
     }
 }

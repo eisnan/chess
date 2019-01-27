@@ -1,7 +1,6 @@
 package app.datalayer.repo;
 
 import app.domain.*;
-import app.domain.moving.MoveEntity;
 import app.domain.util.Tuple;
 import org.junit.Test;
 import org.junit.runner.RunWith;

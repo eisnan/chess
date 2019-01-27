@@ -1,7 +1,7 @@
 package app.domain;
 
-import app.domain.moving.PlayerMove;
 import app.domain.moving.PlayerAction;
+import app.domain.moving.PlayerMove;
 import app.domain.util.Tuple;
 import app.domain.util.Util;
 import com.google.common.collect.Sets;
@@ -15,12 +15,11 @@ import static org.junit.Assert.assertTrue;
 
 public class ChessBoardTest {
 
-    private ChessBoard chessBoard = new ChessBoard();
+    private ChessBoard chessBoard;
 
     @Before
     public void setUp() {
-        chessBoard.initModel();
-        chessBoard.arrangePiecesForStart();
+        chessBoard = new ChessBoard();
     }
 
 
@@ -28,10 +27,10 @@ public class ChessBoardTest {
     public void testChessGame() {
 
         PlayerAction playerAction = new PlayerAction();
-        playerAction.move(chessBoard, new PlayerMove(new Piece("wP"), new Position("d2"), new Position("d4")));
-        playerAction.move(chessBoard, new PlayerMove(new Piece("bP"), new Position("e7"), new Position("e6")));
-        playerAction.move(chessBoard, new PlayerMove(new Piece("wN"), new Position("b1"), new Position("d2")));
-        playerAction.move(chessBoard, new PlayerMove(new Piece("bB"), new Position("f8"), new Position("b4")));
+//        playerAction.move(chessBoard, new PlayerMove(new Piece("wP"), new Position("d2"), new Position("d4")));
+//        playerAction.move(chessBoard, new PlayerMove(new Piece("bP"), new Position("e7"), new Position("e6")));
+//        playerAction.move(chessBoard, new PlayerMove(new Piece("wN"), new Position("b1"), new Position("d2")));
+//        playerAction.move(chessBoard, new PlayerMove(new Piece("bB"), new Position("f8"), new Position("b4")));
 
         Collection<Position> availablePositions = new PositionResolver().getAvailablePositions(chessBoard, new Position("d2"));
 
@@ -44,16 +43,11 @@ public class ChessBoardTest {
 
     @Test
     public void checkChessBoardModel() {
-        ChessBoard chessBoard = new ChessBoard();
-
-        chessBoard.initModel();
 
         chessBoard.getArrayModel();
 
         Map<Position, Piece> model = chessBoard.getModel();
         System.out.println(model);
-
-        chessBoard.arrangePiecesForStart();
 
         chessBoard.getArrayModel();
 
@@ -78,9 +72,6 @@ public class ChessBoardTest {
 
     @Test
     public void testGetKing() {
-        chessBoard.initModel();
-        chessBoard.arrangePiecesForStart();
-
         Tuple<Position, Piece> whiteKing = chessBoard.getKing(PieceColor.WHITE);
         assertEquals(whiteKing.getLeft(), new Position(File.e, Rank._1));
 

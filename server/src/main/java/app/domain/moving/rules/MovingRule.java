@@ -23,9 +23,9 @@ public interface MovingRule {
     Collection<Move> getMoveDescribers();
 
     default Collection<Position> getAttackingPositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
-        MoveSettings moveSettings = getCaptureSettings(currentPosition, piece);
-        Map<Move, SortedSet<Position>> attackingPositions = getPossiblePositions(chessBoard, moveSettings);
-        return getValidator().keepValidPositionsToAttack(chessBoard, moveSettings, attackingPositions);
+        MoveSettings captureSettings = getCaptureSettings(currentPosition, piece);
+        Map<Move, SortedSet<Position>> attackingPositions = getPossiblePositions(chessBoard, captureSettings);
+        return getValidator().keepValidPositionsToAttack(chessBoard, captureSettings, attackingPositions);
     }
 
     default Collection<Position> getMovePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {

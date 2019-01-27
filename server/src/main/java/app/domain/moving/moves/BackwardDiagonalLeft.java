@@ -2,7 +2,7 @@ package app.domain.moving.moves;
 
 import app.domain.ChessBoard;
 import app.domain.Position;
-import app.domain.moving.DescendingPositionComparator;
+import app.domain.comparators.DescendingPositionComparator;
 import app.domain.moving.DirectionIterator;
 import app.domain.moving.MoveSettings;
 

@@ -15,8 +15,6 @@ public class AlgebraicNotationLoader {
     private ChessBoard chessBoard = new ChessBoard();
 
     public AlgebraicNotationLoader() {
-        chessBoard.initModel();
-        chessBoard.arrangePiecesForStart();
     }
 
     public Collection<PlayerMove> loadFrom(String algebraicNotation) {

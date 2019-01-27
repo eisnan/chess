@@ -4,7 +4,7 @@ public class ConsolePrinter {
 
 
     public static void print(Piece[][] arrayModel) {
-
+        System.out.println();
         for (int j = Rank.values().length - 1; j >= 0; j--) {
             for (int i = 0; i < File.values().length; i++) {
                 Piece piece = arrayModel[i][j];

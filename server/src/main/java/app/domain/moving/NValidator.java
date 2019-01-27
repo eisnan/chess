@@ -3,6 +3,7 @@ package app.domain.moving;
 import app.domain.ChessBoard;
 import app.domain.Piece;
 import app.domain.Position;
+import app.domain.comparators.AscendingPositionComparator;
 import app.domain.moving.moves.Move;
 import app.domain.moving.validators.PositionValidator;
 

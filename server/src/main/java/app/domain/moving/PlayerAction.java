@@ -7,7 +7,7 @@ public class PlayerAction {
 
     private PawnPromoter pawnPromoter = new PawnPromoter();
 
-    public MoveType move(ChessBoard chessBoard, Piece piece, Position fromPosition, Position toPosition) {
+    public void move(ChessBoard chessBoard, Piece piece, Position fromPosition, Position toPosition) {
 
         // isKingInCheck for uncapturable pieces
 
@@ -40,12 +40,10 @@ public class PlayerAction {
         }
         chessBoard.addMove(new PlayerMove(piece, fromPosition, toPosition));
 
-        return null;
     }
 
-    public MoveType move(ChessBoard chessBoard, PlayerMove playerMove) {
+    public void move(ChessBoard chessBoard, PlayerMove playerMove) {
         move(chessBoard, playerMove.getPiece(), playerMove.getFromPosition(), playerMove.getToPosition());
 
-        return null;
     }
 }

@@ -1,4 +1,4 @@
-package app.domain.moving;
+package app.domain.comparators;
 
 import app.domain.Position;
 

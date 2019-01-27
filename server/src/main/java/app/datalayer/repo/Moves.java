@@ -1,4 +1,4 @@
-package app.domain.moving;
+package app.datalayer.repo;
 
 import app.domain.Game;
 

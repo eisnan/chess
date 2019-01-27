@@ -1,7 +1,9 @@
-package app.domain.moving;
+package app.domain.moving.moves;
 
 import app.domain.ChessBoard;
 import app.domain.Position;
+import app.domain.moving.MoveSettings;
+import app.domain.moving.SpecialMove;
 import app.domain.moving.moves.Move;
 
 import java.util.Collection;

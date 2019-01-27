@@ -1,7 +1,7 @@
 package app.domain;
 
 import app.datalayer.converters.JpaToStringConverter;
-import app.domain.moving.MoveEntity;
+import app.datalayer.repo.MoveEntity;
 
 import javax.persistence.*;
 import java.util.Collection;

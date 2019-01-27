@@ -17,9 +17,15 @@ public class ChessBoard {
     private Map<Position, Piece> model = new LinkedHashMap<>();
     private StartPositionResolver startPositionResolver = new HardCodedPositionResolver();
     private LinkedList<PlayerMove> playerMoves = new LinkedList<>();
+    private Map<PieceColor, Boolean> kingMoved;
 
     public Map<Position, Piece> getModel() {
         return model;
+    }
+
+    public ChessBoard() {
+        this.initModel();
+        this.arrangePiecesForStart();
     }
 
     /**
@@ -40,7 +46,7 @@ public class ChessBoard {
         return arrayModel;
     }
 
-    public void initModel() {
+    private void initModel() {
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
                 model.put(new Position(file, rank), null);
@@ -48,7 +54,7 @@ public class ChessBoard {
         }
     }
 
-    public void arrangePiecesForStart() {
+    private void arrangePiecesForStart() {
         Map<Piece, Set<Position>> initialPositions = startPositionResolver.getInitialPositions();
         updateModel(initialPositions);
     }
@@ -118,5 +124,9 @@ public class ChessBoard {
 
     public boolean isNotEmpty(Position position) {
         return !isEmpty(position);
+    }
+
+    public boolean hasKingMoved(PieceColor pieceColor) {
+        return kingMoved.get(pieceColor);
     }
 }

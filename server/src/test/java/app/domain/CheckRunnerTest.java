@@ -13,8 +13,6 @@ public class CheckRunnerTest {
 
     @Before
     public void setUp() {
-        chessBoard.initModel();
-        chessBoard.arrangePiecesForStart();
 
     }
 

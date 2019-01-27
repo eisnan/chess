@@ -1,7 +1,6 @@
 package app.datalayer.repo;
 
 import app.domain.File;
-import app.domain.moving.MoveEntity;
 import app.domain.PieceType;
 import app.domain.Rank;
 import app.domain.util.Tuple;

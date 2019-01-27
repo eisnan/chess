@@ -1,6 +1,7 @@
 package app.domain.moving;
 
 import app.domain.Position;
+import app.domain.comparators.AscendingPositionComparator;
 import app.domain.moving.moves.Move;
 
 import java.util.Comparator;

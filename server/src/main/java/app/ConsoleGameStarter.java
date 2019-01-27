@@ -15,8 +15,6 @@ public class ConsoleGameStarter {
         ConsoleGameEngine engine = new ConsoleGameEngine();
 
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.initModel();
-        chessBoard.arrangePiecesForStart();
         Piece[][] arrayModel = chessBoard.getArrayModel();
         ConsolePrinter.print(arrayModel);
 

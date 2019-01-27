@@ -22,9 +22,6 @@ public class ChessGame {
     public void startGame() {
       log.info("Starting game:" + gameId.getId());
 
-      chessBoard.initModel();
-      chessBoard.arrangePiecesForStart();
-
       log.info("Game started");
     }
 }
