@@ -8,18 +8,19 @@ import static junit.framework.TestCase.assertTrue;
 
 public class CheckRunnerTest {
 
-   private ChessBoard chessBoard = new ChessBoard();
-
+    private ChessBoard chessBoard;
+    private CheckRunner checkRunner;
+    private PlayerAction playerAction;
 
     @Before
     public void setUp() {
-
+        chessBoard = new ChessBoard();
+        checkRunner = new CheckRunner(chessBoard, PieceColor.WHITE);
+        playerAction = new PlayerAction();
     }
 
     @Test
     public void blackDirectlyChecksWhite() {
-        CheckRunner checkRunner = new CheckRunner();
-        PlayerAction playerAction = new PlayerAction();
 
         playerAction.move(chessBoard, new Piece(PieceColor.WHITE, PieceType.PAWN), new Position(File.d, Rank._2), new Position(File.d, Rank._4));
         playerAction.move(chessBoard, new Piece(PieceColor.BLACK, PieceType.PAWN), new Position(File.e, Rank._7), new Position(File.e, Rank._6));
@@ -28,7 +29,7 @@ public class CheckRunnerTest {
 
         ConsolePrinter.print(chessBoard.getArrayModel());
 
-        boolean kingInCheck = checkRunner.isKingInCheck(chessBoard, PieceColor.WHITE);
+        boolean kingInCheck = checkRunner.isKingInCheck();
 
         assertTrue(kingInCheck);
     }
