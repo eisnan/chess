@@ -1,10 +1,10 @@
 package app.domain;
 
 import app.domain.moving.MoveSettings;
-import app.domain.moving.SpecialMove;
+import app.domain.moving.moves.IterableMove;
 import app.domain.moving.moves.Move;
+import app.domain.moving.moves.SpecialMove;
 import app.domain.moving.rules.KingMovingRule;
-import app.domain.moving.rules.MovingRule;
 import app.domain.moving.rules.MovingRules;
 import app.domain.util.Tuple;
 
@@ -65,7 +65,7 @@ public class CheckRunner {
 
 
         // based on open positions determine open (vulnerable) vectors/directions
-        Collection<Move> openDirections = new PositionInterpreter().getAttackDirections(chessBoard, pieceColor, kingPosition, openPositions);
+        Collection<IterableMove> openDirections = new PositionInterpreter().getAttackDirections(chessBoard, pieceColor, kingPosition, openPositions);
 
         System.out.println(openDirections);
 
@@ -75,7 +75,7 @@ public class CheckRunner {
                 .filter(moveDescriber -> !(moveDescriber instanceof SpecialMove))
                 .filter(openDirections::contains).collect(Collectors.toMap(moveDescriber -> moveDescriber, movingPositions -> 8));
 
-        for (Move move : openDirections) {
+        for (IterableMove move : openDirections) {
             Collection<Position> positions = move.checkMove(chessBoard, new MoveSettings(kingPosition, kingPiece, new KingMovingRule(), movingSettings));
             System.out.println(positions);
             Optional<Tuple<Position, Piece>> firstPieceOnDirection = new PositionInterpreter().findFirstPieceOnDirection(chessBoard, move, positions);

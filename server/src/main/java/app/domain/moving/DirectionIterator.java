@@ -2,6 +2,7 @@ package app.domain.moving;
 
 import app.domain.InvalidPositionException;
 import app.domain.Position;
+import app.domain.moving.moves.IterableMove;
 import app.domain.moving.moves.Move;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,7 +14,7 @@ import java.util.stream.Stream;
 public class DirectionIterator {
 
 
-    public TreeSet<Position> iterate(MoveSettings moveSettings, Move move, BiFunction<Integer, Integer, Integer> fileFunction, BiFunction<Integer, Integer, Integer> rankFunction) {
+    public TreeSet<Position> iterate(MoveSettings moveSettings, IterableMove move, BiFunction<Integer, Integer, Integer> fileFunction, BiFunction<Integer, Integer, Integer> rankFunction) {
         TreeSet<Position> possiblePositions = new TreeSet<>(move.getPositionComparator());
         Position currentPosition = moveSettings.getCurrentPosition();
         Integer limit = moveSettings.getSettings().get(move);

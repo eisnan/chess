@@ -4,24 +4,26 @@ import app.domain.ChessBoard;
 import app.domain.InvalidPositionException;
 import app.domain.Position;
 import app.domain.moving.MoveSettings;
-import app.domain.moving.SpecialMove;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Slf4j
-public class KnightMove implements SpecialMove {
+public class KnightMove implements Move {
 
     @Override
-    public SortedSet<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
-        SortedSet<Position> aboveMoves = aboveMoves(moveSettings.getCurrentPosition());
+    public Set<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
+        Set<Position> aboveMoves = aboveMoves(moveSettings.getCurrentPosition());
         aboveMoves.addAll(belowMoves(moveSettings.getCurrentPosition()));
 
         return aboveMoves;
     }
 
-    private SortedSet<Position> belowMoves(Position currentPosition) {
-        SortedSet<Position> belowPositions = new TreeSet<>(getPositionComparator());
+    private Set<Position> belowMoves(Position currentPosition) {
+        Set<Position> belowPositions = new HashSet<>();
         int fileOrdinal = currentPosition.getFile().ordinal();
         int rankOrdinal = currentPosition.getRank().ordinal();
         // todo refactor this
@@ -49,8 +51,8 @@ public class KnightMove implements SpecialMove {
         return belowPositions;
     }
 
-    private SortedSet<Position> aboveMoves(Position currentPosition) {
-        SortedSet<Position> abovePositions = new TreeSet<>(getPositionComparator());
+    private Set<Position> aboveMoves(Position currentPosition) {
+        Set<Position> abovePositions = new HashSet<>();
         int fileOrdinal = currentPosition.getFile().ordinal();
         int rankOrdinal = currentPosition.getRank().ordinal();
         // todo refactor this

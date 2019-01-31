@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.function.BiFunction;
 
-public class ForwardDiagonalLeft implements Move {
+public class ForwardDiagonalLeft implements IterableMove {
 
     private Comparator<Position> positionComparator = new DescendingPositionComparator();
 

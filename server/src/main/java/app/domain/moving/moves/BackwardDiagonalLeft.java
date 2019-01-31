@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.function.BiFunction;
 
-public class BackwardDiagonalLeft implements Move {
+public class BackwardDiagonalLeft implements IterableMove {
     private Comparator<Position> positionComparator = new DescendingPositionComparator();
 
     @Override

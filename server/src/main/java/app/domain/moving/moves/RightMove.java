@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.function.BiFunction;
 
-public class RightMove implements Move {
+public class RightMove implements IterableMove {
 
     private Comparator<Position> positionComparator = new AscendingPositionComparator();
 

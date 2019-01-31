@@ -5,17 +5,14 @@ import app.domain.moving.MoveSettings;
 import app.domain.moving.PlayerMove;
 import app.domain.moving.moves.Move;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.SortedSet;
+import java.util.*;
 
 public class PawnValidator implements PositionValidator {
 
     private GameRulesValidator gameRulesValidator = new GameRulesValidator();
 
     @Override
-    public Collection<Position> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, SortedSet<Position>> possiblePositions) {
+    public Collection<Position> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<Position>> possiblePositions) {
         gameRulesValidator.pawnCanMoveOnlyToOneDirection(possiblePositions);
 
         Collection<Position> validToMove = new ArrayList<>();
@@ -40,9 +37,9 @@ public class PawnValidator implements PositionValidator {
     }
 
     @Override
-    public Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, SortedSet<Position>> possiblePositions) {
+    public Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<Position>> possiblePositions) {
         Collection<Position> validPositionsToAttack = PositionValidator.super.keepValidPositionsToAttack(chessBoard, moveSettings, possiblePositions);
-        possiblePositions.values().stream().flatMap(SortedSet::stream).filter(position -> isEnPassant(chessBoard, moveSettings.getPiece(), moveSettings.getCurrentPosition(), position))
+        possiblePositions.values().stream().flatMap(Set::stream).filter(position -> isEnPassant(chessBoard, moveSettings.getPiece(), moveSettings.getCurrentPosition(), position))
                 .findFirst().ifPresent(validPositionsToAttack::add);
         return validPositionsToAttack;
     }

@@ -11,7 +11,7 @@ import java.util.*;
 public class RBQValidator implements PositionValidator {
 
     @Override
-    public Collection<Position> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, SortedSet<Position>> possiblePositions) {
+    public Collection<Position> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<Position>> possiblePositions) {
         List<Position> validPositions = new ArrayList<>();
         Piece selectedPiece = moveSettings.getPiece();
 
@@ -22,7 +22,7 @@ public class RBQValidator implements PositionValidator {
     }
 
     @Override
-    public Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, SortedSet<Position>> possiblePositions) {
+    public Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<Position>> possiblePositions) {
         return keepValidPositionsToMove(chessBoard, moveSettings, possiblePositions);
     }
 

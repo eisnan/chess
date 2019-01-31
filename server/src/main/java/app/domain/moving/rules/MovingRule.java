@@ -6,10 +6,7 @@ import app.domain.moving.moves.Move;
 import app.domain.moving.validators.PositionValidator;
 import app.domain.util.Tuple;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedSet;
+import java.util.*;
 
 public interface MovingRule {
     Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters();
@@ -24,13 +21,13 @@ public interface MovingRule {
 
     default Collection<Position> getAttackingPositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
         MoveSettings captureSettings = getCaptureSettings(currentPosition, piece);
-        Map<Move, SortedSet<Position>> attackingPositions = getPossiblePositions(chessBoard, captureSettings);
+        Map<Move, Set<Position>> attackingPositions = getPossiblePositions(chessBoard, captureSettings);
         return getValidator().keepValidPositionsToAttack(chessBoard, captureSettings, attackingPositions);
     }
 
     default Collection<Position> getMovePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
         MoveSettings moveSettings = getMoveSettings(currentPosition, piece);
-        Map<Move, SortedSet<Position>> possiblePositions = getPossiblePositions(chessBoard, moveSettings);
+        Map<Move, Set<Position>> possiblePositions = getPossiblePositions(chessBoard, moveSettings);
         return getValidator().keepValidPositionsToMove(chessBoard, moveSettings, possiblePositions);
     }
 
@@ -42,10 +39,10 @@ public interface MovingRule {
         return new MoveSettings(currentPosition, piece, this, adaptForPieceColor(piece.getPieceColor(), getCaptureParameters()));
     }
 
-    default Map<Move, SortedSet<Position>> getPossiblePositions(ChessBoard chessBoard, MoveSettings moveSettings) {
-        Map<Move, SortedSet<Position>> positions = new HashMap<>();
+    default Map<Move, Set<Position>> getPossiblePositions(ChessBoard chessBoard, MoveSettings moveSettings) {
+        Map<Move, Set<Position>> positions = new HashMap<>();
         for (Map.Entry<Move, Integer> moveDescriber : moveSettings.getSettings().entrySet()) {
-            SortedSet<Position> possiblePositions = moveDescriber.getKey().checkMove(chessBoard, moveSettings);
+            Set<Position> possiblePositions = moveDescriber.getKey().checkMove(chessBoard, moveSettings);
             if (!possiblePositions.isEmpty()) {
                 positions.put(moveDescriber.getKey(), possiblePositions);
             }

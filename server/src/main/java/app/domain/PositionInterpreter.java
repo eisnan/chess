@@ -10,9 +10,9 @@ import java.util.*;
 public class PositionInterpreter {
 
 
-    public Collection<Move> getAttackDirections(ChessBoard chessBoard, PieceColor pieceColor, Position kingPosition, Set<Position> vulnerablePositions) {
+    public Collection<IterableMove> getAttackDirections(ChessBoard chessBoard, PieceColor pieceColor, Position kingPosition, Set<Position> vulnerablePositions) {
 
-        Collection<Move> attackDirections = new HashSet<>();
+        Collection<IterableMove> attackDirections = new HashSet<>();
         int fileOrdinal = kingPosition.getFile().ordinal();
         int rankOrdinal = kingPosition.getRank().ordinal();
 
@@ -53,7 +53,7 @@ public class PositionInterpreter {
         return attackDirections;
     }
 
-    public Optional<Tuple<Position, Piece>> findFirstPieceOnDirection(ChessBoard chessBoard, Move move, Collection<Position> positions) {
+    public Optional<Tuple<Position, Piece>> findFirstPieceOnDirection(ChessBoard chessBoard, IterableMove move, Collection<Position> positions) {
         Collection<Position> direction = new TreeSet<>(move.getPositionComparator());
         direction.addAll(positions);
 
