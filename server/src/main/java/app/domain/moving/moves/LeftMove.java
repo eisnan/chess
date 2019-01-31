@@ -3,7 +3,8 @@ package app.domain.moving.moves;
 import app.domain.ChessBoard;
 import app.domain.Position;
 import app.domain.comparators.DescendingPositionComparator;
-import app.domain.moving.*;
+import app.domain.moving.DirectionIterator;
+import app.domain.moving.MoveSettings;
 
 import java.util.Comparator;
 import java.util.SortedSet;
@@ -11,12 +12,8 @@ import java.util.function.BiFunction;
 
 public class LeftMove implements IterableMove {
 
-    private final DirectionIterator directionIterator;
+    private DirectionIterator directionIterator = new DirectionIterator();
     private Comparator<Position> positionComparator = new DescendingPositionComparator();
-
-    public LeftMove() {
-        directionIterator = new DirectionIterator();
-    }
 
     @Override
     public SortedSet<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {

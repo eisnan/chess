@@ -6,7 +6,10 @@ import app.domain.moving.moves.Move;
 import app.domain.moving.validators.PositionValidator;
 import app.domain.util.Tuple;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public interface MovingRule {
     Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters();
@@ -32,11 +35,11 @@ public interface MovingRule {
     }
 
     default MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
-        return new MoveSettings(currentPosition, piece, this, adaptForPieceColor(piece.getPieceColor(), getMoveParameters()));
+        return new MoveSettings(currentPosition, piece, adaptForPieceColor(piece.getPieceColor(), getMoveParameters()));
     }
 
     default MoveSettings getCaptureSettings(Position currentPosition, Piece piece) {
-        return new MoveSettings(currentPosition, piece, this, adaptForPieceColor(piece.getPieceColor(), getCaptureParameters()));
+        return new MoveSettings(currentPosition, piece, adaptForPieceColor(piece.getPieceColor(), getCaptureParameters()));
     }
 
     default Map<Move, Set<Position>> getPossiblePositions(ChessBoard chessBoard, MoveSettings moveSettings) {

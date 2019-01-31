@@ -4,7 +4,6 @@ import app.domain.moving.MoveSettings;
 import app.domain.moving.moves.IterableMove;
 import app.domain.moving.moves.Move;
 import app.domain.moving.moves.SpecialMove;
-import app.domain.moving.rules.KingMovingRule;
 import app.domain.moving.rules.MovingRules;
 import app.domain.util.Tuple;
 
@@ -63,7 +62,6 @@ public class CheckRunner {
         boolean knightsAttackKing = kingInCheckStrategy.getLeft().knightsAttackKing(chessBoard, pieceColor, kingPosition);
 
 
-
         // based on open positions determine open (vulnerable) vectors/directions
         Collection<IterableMove> openDirections = new PositionInterpreter().getAttackDirections(chessBoard, pieceColor, kingPosition, openPositions);
 
@@ -76,7 +74,7 @@ public class CheckRunner {
                 .filter(openDirections::contains).collect(Collectors.toMap(moveDescriber -> moveDescriber, movingPositions -> 8));
 
         for (IterableMove move : openDirections) {
-            Collection<Position> positions = move.checkMove(chessBoard, new MoveSettings(kingPosition, kingPiece, new KingMovingRule(), movingSettings));
+            Collection<Position> positions = move.checkMove(chessBoard, new MoveSettings(kingPosition, kingPiece, movingSettings));
             System.out.println(positions);
             Optional<Tuple<Position, Piece>> firstPieceOnDirection = new PositionInterpreter().findFirstPieceOnDirection(chessBoard, move, positions);
             if (firstPieceOnDirection.isPresent() && kingPiece.getPieceColor().isOppositeColor(firstPieceOnDirection.get().getRight().getPieceColor())) {

@@ -13,11 +13,10 @@ import java.util.function.BiFunction;
 public class RightMove implements IterableMove {
 
     private Comparator<Position> positionComparator = new AscendingPositionComparator();
-
+    private DirectionIterator directionIterator = new DirectionIterator();
 
     @Override
     public SortedSet<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
-        DirectionIterator directionIterator = new DirectionIterator();
         return directionIterator.iterate(moveSettings, this, fileFunction(), rankFunction());
     }
 

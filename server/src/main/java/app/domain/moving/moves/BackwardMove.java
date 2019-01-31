@@ -12,10 +12,10 @@ import java.util.function.BiFunction;
 
 public class BackwardMove implements IterableMove {
     private Comparator<Position> positionComparator = new DescendingPositionComparator();
+    private DirectionIterator directionIterator = new DirectionIterator();
 
     @Override
     public SortedSet<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
-        DirectionIterator directionIterator = new DirectionIterator();
         return directionIterator.iterate(moveSettings, this, fileFunction(), rankFunction());
     }
 

@@ -4,14 +4,10 @@ import app.domain.Piece;
 import app.domain.PieceColor;
 import app.domain.PieceType;
 import app.domain.Position;
-import app.domain.moving.moves.Move;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.moves.*;
 import app.domain.moving.validators.PositionValidator;
 import app.domain.moving.validators.RBQValidator;
-import app.domain.moving.moves.BackwardDiagonalLeft;
-import app.domain.moving.moves.BackwardDiagonalRight;
-import app.domain.moving.moves.ForwardDiagonalLeft;
-import app.domain.moving.moves.ForwardDiagonalRight;
 import app.domain.util.Tuple;
 
 import java.util.Arrays;
@@ -64,6 +60,6 @@ public class BishopMovingRule implements MovingRule {
     }
 
     public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
-        return new MoveSettings(currentPosition, piece, this, adaptForPieceColor(piece.getPieceColor(), moveParameters));
+        return new MoveSettings(currentPosition, piece, adaptForPieceColor(piece.getPieceColor(), moveParameters));
     }
 }

@@ -13,13 +13,11 @@ public class MoveSettings {
 
     private Position currentPosition;
     private Piece piece;
-    private MovingRule movingRule;
     private Map<Move, Integer> settings;
 
-    public MoveSettings(Position currentPosition, Piece piece, MovingRule movingRule, Map<Move, Integer> settings) {
+    public MoveSettings(Position currentPosition, Piece piece, Map<Move, Integer> settings) {
         this.currentPosition = currentPosition;
         this.piece = piece;
-        this.movingRule = movingRule;
         this.settings = settings;
     }
 }
