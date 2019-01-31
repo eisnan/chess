@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class KingMovingRule implements MovingRule {
 
     private static final Integer KING_LIMIT_POSITIONS = 1;
+    private static final Integer CASTLING_POSITIONS = 2;
     private Map<PieceColor, Collection<Tuple<Move, Integer>>> moveParameters = new HashMap<>();
     private PositionValidator validator = new RBQValidator();
     private Collection<Move> legalMoves = Arrays.asList(
@@ -32,9 +33,13 @@ public class KingMovingRule implements MovingRule {
 
     public KingMovingRule() {
         Collection<Tuple<Move, Integer>> legalMovesWithLimit = legalMoves
-                .stream().map(moveDescriber -> new Tuple<>(moveDescriber, KING_LIMIT_POSITIONS)).collect(Collectors.toList());
+                .stream().map(moveDescriber -> new Tuple<>(moveDescriber, getLimitPositions(moveDescriber))).collect(Collectors.toList());
         this.moveParameters.put(PieceColor.WHITE, legalMovesWithLimit);
         this.moveParameters.put(PieceColor.BLACK, legalMovesWithLimit);
+    }
+
+    private Integer getLimitPositions(Move moveDescriber) {
+        return moveDescriber instanceof IterableMove ? KING_LIMIT_POSITIONS : moveDescriber instanceof SpecialMove ? CASTLING_POSITIONS : 0;
     }
 
     @Override
