@@ -5,17 +5,19 @@ import app.domain.Position;
 import app.domain.comparators.DescendingPositionComparator;
 import app.domain.moving.DirectionIterator;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.PlayerAction;
+import app.domain.moving.PlayerMove;
 
 import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.function.BiFunction;
 
 public class BackwardDiagonalLeft implements IterableMove {
-    private Comparator<Position> positionComparator = new DescendingPositionComparator();
+    private Comparator<PlayerMove> positionComparator = new DescendingPositionComparator();
     private DirectionIterator directionIterator = new DirectionIterator();
 
     @Override
-    public SortedSet<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
+    public SortedSet<PlayerMove> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
         return directionIterator.iterate(moveSettings, this, fileFunction() , rankFunction());
     }
 
@@ -30,7 +32,7 @@ public class BackwardDiagonalLeft implements IterableMove {
     }
 
     @Override
-    public Comparator<Position> getPositionComparator() {
+    public Comparator<PlayerMove> getPositionComparator() {
         return positionComparator;
     }
 

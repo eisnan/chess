@@ -3,6 +3,7 @@ package app.domain.moving.validators;
 import app.domain.ChessBoard;
 import app.domain.Position;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.PlayerMove;
 import app.domain.moving.moves.Move;
 
 import java.util.Collection;
@@ -14,12 +15,12 @@ import java.util.Set;
  */
 public class KPositionValidator implements PositionValidator {
     @Override
-    public Collection<Position> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<Position>> possiblePositions) {
+    public Collection<PlayerMove> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<PlayerMove>> possiblePositions) {
         return null;
     }
 
     @Override
-    public Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<Position>> possiblePositions) {
+    public Collection<PlayerMove> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<PlayerMove>> possiblePositions) {
         return null;
     }
 }

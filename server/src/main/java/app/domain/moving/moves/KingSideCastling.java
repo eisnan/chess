@@ -7,6 +7,7 @@ import app.domain.comparators.AscendingPositionComparator;
 import app.domain.comparators.DescendingPositionComparator;
 import app.domain.moving.DirectionIterator;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.PlayerMove;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -18,18 +19,18 @@ import java.util.Set;
  */
 public class KingSideCastling implements SpecialMove {
 
-    private Comparator<Position> blackPositionComparator = new AscendingPositionComparator();
-    private Comparator<Position> whitePositionComparator = new DescendingPositionComparator();
+    private Comparator<PlayerMove> blackPositionComparator = new AscendingPositionComparator();
+    private Comparator<PlayerMove> whitePositionComparator = new DescendingPositionComparator();
 
     @Override
-    public Set<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
+    public Set<PlayerMove> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
         DirectionIterator directionIterator = new DirectionIterator();
         RightMove rightMove = new RightMove();
         return directionIterator.iterate(moveSettings, rightMove, rightMove.fileFunction(), rightMove.rankFunction());
     }
 
     @Override
-    public Comparator<Position> getPositionComparator(PieceColor pieceColor) {
+    public Comparator<PlayerMove> getPositionComparator(PieceColor pieceColor) {
         return pieceColor == PieceColor.WHITE ? blackPositionComparator : whitePositionComparator;
     }
 }

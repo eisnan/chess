@@ -1,8 +1,10 @@
 package app;
 
 import app.domain.*;
+import app.domain.moving.PlayerMove;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class ConsoleGameEngine {
 
@@ -13,7 +15,8 @@ public class ConsoleGameEngine {
 
         // map user input to piece
 
-        return new PositionResolver().getAvailablePositions(chessBoard, position);
+        Collection<PlayerMove> availablePositions = new PositionResolver().getAvailablePositions(chessBoard, position);
+        return availablePositions.stream().map(playerMove -> playerMove.getToPosition()).collect(Collectors.toSet());
 
 //        // map user input to move
 //        new PlayerAction().move(chessBoard, piece, positionFrom, positionTo);

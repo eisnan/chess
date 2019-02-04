@@ -1,11 +1,14 @@
 package app.domain;
 
-import app.domain.moving.moves.Move;
+import app.domain.moving.PlayerMove;
 import app.domain.moving.moves.*;
 import app.domain.moving.rules.MovingRules;
 import app.domain.util.Tuple;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 public class PositionInterpreter {
 
@@ -53,13 +56,14 @@ public class PositionInterpreter {
         return attackDirections;
     }
 
-    public Optional<Tuple<Position, Piece>> findFirstPieceOnDirection(ChessBoard chessBoard, IterableMove move, Collection<Position> positions) {
-        Collection<Position> direction = new TreeSet<>(move.getPositionComparator());
-        direction.addAll(positions);
-
-        Optional<Tuple<Position, Piece>> first = direction.stream().filter(position -> chessBoard.getModel().get(position) != null).map(position -> new Tuple<>(position,chessBoard.getModel().get(position))).findFirst();
-
-        return first;
+    public Optional<Tuple<Position, Piece>> findFirstPieceOnDirection(ChessBoard chessBoard, IterableMove move, Collection<PlayerMove> positions) {
+//        Collection<PlayerMove> direction = new TreeSet<>(move.getPositionComparator());
+//        direction.addAll(positions);
+//
+//        Optional<Tuple<Position, Piece>> first = direction.stream().filter(position -> chessBoard.getModel().get(position) != null).map(position -> new Tuple<>(position,chessBoard.getModel().get(position))).findFirst();
+//
+//        return first;
+        return null;
     }
 
     public boolean isOnAttackingDirection(Move move, Piece attackingPiece) {

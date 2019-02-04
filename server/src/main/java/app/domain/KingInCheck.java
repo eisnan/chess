@@ -1,17 +1,19 @@
 package app.domain;
 
+import app.domain.moving.PlayerMove;
 import app.domain.moving.rules.MovingRule;
 import app.domain.moving.rules.MovingRules;
 import app.domain.util.Tuple;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by Gabs on 1/27/2019.
  */
 public interface KingInCheck {
 
-    boolean isKingInCheck(ChessBoard chessBoard, PieceColor pieceColor);
+    boolean isKingInCheck(ChessBoard chessBoard, PieceColor pieceColor, Set<Position> openPositions);
 
     default boolean knightsAttackKing(ChessBoard chessBoard, PieceColor pieceColor, Position kingPosition) {
 
@@ -27,7 +29,7 @@ public interface KingInCheck {
 
         for (Tuple<Position, Piece> knight : knights) {
             MovingRule movingRule = MovingRules.getMovingRule(knight.getRight().getPieceType());
-            Collection<Position> attackingPositionsOfKnight = movingRule.getAttackingPositions(chessBoard, knight.getRight(), knight.getLeft());
+            Collection<PlayerMove> attackingPositionsOfKnight = movingRule.getAttackingPositions(chessBoard, knight.getRight(), knight.getLeft());
 
             knightsCheckKing |= attackingPositionsOfKnight.contains(kingPosition);
         }

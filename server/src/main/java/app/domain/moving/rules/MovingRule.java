@@ -2,6 +2,7 @@ package app.domain.moving.rules;
 
 import app.domain.*;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.PlayerMove;
 import app.domain.moving.moves.Move;
 import app.domain.moving.validators.PositionValidator;
 import app.domain.util.Tuple;
@@ -22,15 +23,15 @@ public interface MovingRule {
 
     Collection<Move> getMoveDescribers();
 
-    default Collection<Position> getAttackingPositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
+    default Collection<PlayerMove> getAttackingPositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
         MoveSettings captureSettings = getCaptureSettings(currentPosition, piece);
-        Map<Move, Set<Position>> attackingPositions = getPossiblePositions(chessBoard, captureSettings);
+        Map<Move, Set<PlayerMove>> attackingPositions = getPossiblePositions(chessBoard, captureSettings);
         return getValidator().keepValidPositionsToAttack(chessBoard, captureSettings, attackingPositions);
     }
 
-    default Collection<Position> getMovePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
+    default Collection<PlayerMove> getMovePositions(ChessBoard chessBoard, Piece piece, Position currentPosition) {
         MoveSettings moveSettings = getMoveSettings(currentPosition, piece);
-        Map<Move, Set<Position>> possiblePositions = getPossiblePositions(chessBoard, moveSettings);
+        Map<Move, Set<PlayerMove>> possiblePositions = getPossiblePositions(chessBoard, moveSettings);
         return getValidator().keepValidPositionsToMove(chessBoard, moveSettings, possiblePositions);
     }
 
@@ -42,10 +43,10 @@ public interface MovingRule {
         return new MoveSettings(currentPosition, piece, adaptForPieceColor(piece.getPieceColor(), getCaptureParameters()));
     }
 
-    default Map<Move, Set<Position>> getPossiblePositions(ChessBoard chessBoard, MoveSettings moveSettings) {
-        Map<Move, Set<Position>> positions = new HashMap<>();
+    default Map<Move, Set<PlayerMove>> getPossiblePositions(ChessBoard chessBoard, MoveSettings moveSettings) {
+        Map<Move, Set<PlayerMove>> positions = new HashMap<>();
         for (Map.Entry<Move, Integer> moveDescriber : moveSettings.getSettings().entrySet()) {
-            Set<Position> possiblePositions = moveDescriber.getKey().checkMove(chessBoard, moveSettings);
+            Set<PlayerMove> possiblePositions = moveDescriber.getKey().checkMove(chessBoard, moveSettings);
             if (!possiblePositions.isEmpty()) {
                 positions.put(moveDescriber.getKey(), possiblePositions);
             }

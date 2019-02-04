@@ -2,27 +2,28 @@ package app.domain.moving.moves;
 
 import app.domain.ChessBoard;
 import app.domain.InvalidPositionException;
+import app.domain.Piece;
 import app.domain.Position;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.PlayerMove;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class KnightMove implements Move {
 
     @Override
-    public Set<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
-        Set<Position> aboveMoves = aboveMoves(moveSettings.getCurrentPosition());
-        aboveMoves.addAll(belowMoves(moveSettings.getCurrentPosition()));
+    public Set<PlayerMove> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
+        Set<PlayerMove> aboveMoves = aboveMoves(moveSettings.getCurrentPosition(), moveSettings.getPiece());
+        aboveMoves.addAll(belowMoves(moveSettings.getCurrentPosition(), moveSettings.getPiece()));
 
         return aboveMoves;
     }
 
-    private Set<Position> belowMoves(Position currentPosition) {
+    private Set<PlayerMove> belowMoves(Position currentPosition, Piece piece) {
         Set<Position> belowPositions = new HashSet<>();
         int fileOrdinal = currentPosition.getFile().ordinal();
         int rankOrdinal = currentPosition.getRank().ordinal();
@@ -48,10 +49,12 @@ public class KnightMove implements Move {
             log.info(ex.toString());
         }
 
-        return belowPositions;
+        return belowPositions.stream()
+                .map(position -> new PlayerMove(piece, currentPosition, position))
+                .collect(Collectors.toSet());
     }
 
-    private Set<Position> aboveMoves(Position currentPosition) {
+    private Set<PlayerMove> aboveMoves(Position currentPosition, Piece piece) {
         Set<Position> abovePositions = new HashSet<>();
         int fileOrdinal = currentPosition.getFile().ordinal();
         int rankOrdinal = currentPosition.getRank().ordinal();
@@ -77,6 +80,8 @@ public class KnightMove implements Move {
             log.info(ex.toString());
         }
 
-        return abovePositions;
+        return abovePositions.stream()
+                .map(position -> new PlayerMove(piece, currentPosition, position))
+                .collect(Collectors.toSet());
     }
 }

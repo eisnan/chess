@@ -4,6 +4,8 @@ import app.domain.PieceColor;
 import app.domain.Position;
 import app.domain.comparators.AscendingPositionComparator;
 import app.domain.comparators.DescendingPositionComparator;
+import app.domain.moving.PlayerAction;
+import app.domain.moving.PlayerMove;
 
 import java.util.Comparator;
 
@@ -12,5 +14,5 @@ import java.util.Comparator;
  */
 public interface SpecialMove extends Move {
 
-    Comparator<Position> getPositionComparator(PieceColor pieceColor);
+    Comparator<PlayerMove> getPositionComparator(PieceColor pieceColor);
 }

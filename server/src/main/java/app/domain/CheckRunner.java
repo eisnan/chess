@@ -1,6 +1,7 @@
 package app.domain;
 
 import app.domain.moving.MoveSettings;
+import app.domain.moving.PlayerMove;
 import app.domain.moving.moves.IterableMove;
 import app.domain.moving.moves.Move;
 import app.domain.moving.moves.SpecialMove;
@@ -49,48 +50,7 @@ public class CheckRunner {
 
     public boolean isKingInCheck() {
 
-        Position kingPosition = king.getLeft();
-        Piece kingPiece = king.getRight();
-
-        boolean isKingInCheck = false;
-
-        KingInCheck kingInCheck = kingInCheckStrategy.getLeft();
-        Set<Position> openPositions = kingInCheckStrategy.getRight();
-
-        System.out.println(openPositions);
-
-        boolean knightsAttackKing = kingInCheckStrategy.getLeft().knightsAttackKing(chessBoard, pieceColor, kingPosition);
-
-
-        // based on open positions determine open (vulnerable) vectors/directions
-        Collection<IterableMove> openDirections = new PositionInterpreter().getAttackDirections(chessBoard, pieceColor, kingPosition, openPositions);
-
-        System.out.println(openDirections);
-
-
-        // follow those directions, see if encounter enemy piece
-        Map<Move, Integer> movingSettings = MovingRules.getMovingRule(kingPiece.getPieceType()).getMoveDescribers().stream()
-                .filter(moveDescriber -> !(moveDescriber instanceof SpecialMove))
-                .filter(openDirections::contains).collect(Collectors.toMap(moveDescriber -> moveDescriber, movingPositions -> 8));
-
-        for (IterableMove move : openDirections) {
-            Collection<Position> positions = move.checkMove(chessBoard, new MoveSettings(kingPosition, kingPiece, movingSettings));
-            System.out.println(positions);
-            Optional<Tuple<Position, Piece>> firstPieceOnDirection = new PositionInterpreter().findFirstPieceOnDirection(chessBoard, move, positions);
-            if (firstPieceOnDirection.isPresent() && kingPiece.getPieceColor().isOppositeColor(firstPieceOnDirection.get().getRight().getPieceColor())) {
-                Collection<Position> attackingPositions = MovingRules.getMovingRule(firstPieceOnDirection.get().getRight().getPieceType()).getAttackingPositions(chessBoard, firstPieceOnDirection.get().getRight(), firstPieceOnDirection.get().getLeft());
-                System.out.println(attackingPositions);
-                if (attackingPositions.contains(kingPosition)) {
-                    return true;
-                }
-            }
-        }
-
-        // look on these attack directions, see if any enemy piece is encountered and if it is, does it have this attack direction?
-
-//        findAllPiecesWithAttackDirections(pieceColor, openDirections);
-
-        return false;
+        return this.kingInCheckStrategy.getLeft().isKingInCheck(chessBoard, pieceColor, kingInCheckStrategy.getRight());
 
     }
 

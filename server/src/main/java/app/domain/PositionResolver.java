@@ -1,5 +1,6 @@
 package app.domain;
 
+import app.domain.moving.PlayerMove;
 import app.domain.moving.rules.MovingRule;
 import app.domain.moving.rules.MovingRules;
 
@@ -10,7 +11,7 @@ import java.util.HashSet;
 public class PositionResolver {
 
 
-    public Collection<Position> getAvailablePositions(ChessBoard chessBoard, Position currentPosition) {
+    public Collection<PlayerMove> getAvailablePositions(ChessBoard chessBoard, Position currentPosition) {
 
         Piece piece = chessBoard.getModel().get(currentPosition);
 
@@ -20,9 +21,9 @@ public class PositionResolver {
 
 
         // generate possible positions
-        Collection<Position> movePositions = movingRule.getMovePositions(chessBoard, piece, currentPosition);
-        Collection<Position> possiblePositions = new HashSet<>(movePositions);
-        Collection<Position> attackingPositions = movingRule.getAttackingPositions(chessBoard, piece, currentPosition);
+        Collection<PlayerMove> movePositions = movingRule.getMovePositions(chessBoard, piece, currentPosition);
+        Collection<PlayerMove> possiblePositions = new HashSet<>(movePositions);
+        Collection<PlayerMove> attackingPositions = movingRule.getAttackingPositions(chessBoard, piece, currentPosition);
         possiblePositions.addAll(attackingPositions);
 
 

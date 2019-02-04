@@ -3,6 +3,7 @@ package app.domain.moving.validators;
 import app.domain.ChessBoard;
 import app.domain.Piece;
 import app.domain.Position;
+import app.domain.moving.PlayerMove;
 import app.domain.moving.moves.Move;
 import app.domain.moving.MoveSettings;
 
@@ -11,8 +12,8 @@ import java.util.*;
 public class RBQValidator implements PositionValidator {
 
     @Override
-    public Collection<Position> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<Position>> possiblePositions) {
-        List<Position> validPositions = new ArrayList<>();
+    public Collection<PlayerMove> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<PlayerMove>> possiblePositions) {
+        List<PlayerMove> validPositions = new ArrayList<>();
         Piece selectedPiece = moveSettings.getPiece();
 
         possiblePositions.forEach((moveDescriber, positions) -> {
@@ -22,23 +23,23 @@ public class RBQValidator implements PositionValidator {
     }
 
     @Override
-    public Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<Position>> possiblePositions) {
+    public Collection<PlayerMove> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<PlayerMove>> possiblePositions) {
         return keepValidPositionsToMove(chessBoard, moveSettings, possiblePositions);
     }
 
-    private Collection<Position> keepValid(ChessBoard chessBoard, Piece selectedPiece, Collection<Position> positions) {
-        List<Position> validPositions = new ArrayList<>();
-        for (Position position : positions) {
-            Piece piece = chessBoard.getModel().get(position);
+    private Collection<PlayerMove> keepValid(ChessBoard chessBoard, Piece selectedPiece, Collection<PlayerMove> playerMoves) {
+        List<PlayerMove> validPlayerMoves = new ArrayList<>();
+        for (PlayerMove playerMove : playerMoves) {
+            Piece piece = chessBoard.getModel().get(playerMove.getToPosition());
             if (piece == null) {
-                validPositions.add(position);
+                validPlayerMoves.add(playerMove);
             } else if (selectedPiece.getPieceColor() != piece.getPieceColor()) {
-                validPositions.add(position);
+                validPlayerMoves.add(playerMove);
                 break;
             } else {
                 break;
             }
         }
-        return validPositions;
+        return validPlayerMoves;
     }
 }

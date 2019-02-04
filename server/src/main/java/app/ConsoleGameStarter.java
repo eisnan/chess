@@ -58,7 +58,7 @@ public class ConsoleGameStarter {
 
                 new PlayerAction().move(chessBoard, selectedPiece, selectedPosition, moveToPosition);
 
-//                boolean kingInCheck = new CheckRunner().isKingInCheck(chessBoard, selectedPiece.getPieceColor());
+                boolean kingInCheck = new CheckRunner(chessBoard, selectedPiece.getPieceColor()).isKingInCheck();
 //                System.out.println(selectedPiece.getPieceColor() + " checks " + kingInCheck);
 
 

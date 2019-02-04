@@ -4,6 +4,8 @@ import app.domain.ChessBoard;
 import app.domain.Piece;
 import app.domain.Position;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.MoveType;
+import app.domain.moving.PlayerMove;
 import app.domain.moving.moves.Move;
 
 import java.util.Collection;
@@ -14,16 +16,17 @@ import java.util.stream.Collectors;
 
 public interface PositionValidator {
 
-    Collection<Position> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<Position>> possiblePositions);
+    Collection<PlayerMove> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<PlayerMove>> possiblePositions);
 
     /**
      * Default implementation returns the positions where there are enemy pieces.
      */
-    default Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<Position>> possiblePositions) {
+    default Collection<PlayerMove> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<PlayerMove>> possiblePositions) {
         Piece selectedPiece = moveSettings.getPiece();
         return possiblePositions.values().stream().flatMap(Set::stream)
-                .filter(chessBoard::isNotEmpty)
-                .filter(position -> chessBoard.getModel().get(position).getPieceColor().isOppositeColor(selectedPiece.getPieceColor()))
+                .filter(playerMove -> chessBoard.isNotEmpty(playerMove.getToPosition()))
+                .filter(playerMovePredicate -> chessBoard.getModel().get(playerMovePredicate.getToPosition()).getPieceColor().isOppositeColor(selectedPiece.getPieceColor()))
+                .map(playerMove -> new PlayerMove(playerMove, MoveType.CAPTURE))
                 .collect(Collectors.toList());
     }
 }

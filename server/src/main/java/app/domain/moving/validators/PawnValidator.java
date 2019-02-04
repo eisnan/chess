@@ -2,27 +2,29 @@ package app.domain.moving.validators;
 
 import app.domain.*;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.MoveType;
 import app.domain.moving.PlayerMove;
 import app.domain.moving.moves.Move;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PawnValidator implements PositionValidator {
 
     private GameRulesValidator gameRulesValidator = new GameRulesValidator();
 
     @Override
-    public Collection<Position> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<Position>> possiblePositions) {
+    public Collection<PlayerMove> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<PlayerMove>> possiblePositions) {
         gameRulesValidator.pawnCanMoveOnlyToOneDirection(possiblePositions);
 
-        Collection<Position> validToMove = new ArrayList<>();
+        Collection<PlayerMove> validToMove = new HashSet<>();
         Position currentPosition = moveSettings.getCurrentPosition();
         boolean firstRankForColor = moveSettings.getPiece().getPieceColor().isFirstRank(currentPosition.getRank());
 
-        possiblePositions.forEach((moveDescriber, positions) -> {
-            for (Position position : positions) {
-                if (chessBoard.isEmpty(position)) {
-                    validToMove.add(position);
+        possiblePositions.forEach((moveDescriber, playerMoves) -> {
+            for (PlayerMove playerMove : playerMoves) {
+                if (chessBoard.isEmpty(playerMove.getToPosition())) {
+                    validToMove.add(playerMove);
                     if (!firstRankForColor) {
                         break;
                     }
@@ -31,15 +33,13 @@ public class PawnValidator implements PositionValidator {
                 }
             }
         });
-
-
-        return validToMove;
+        return validToMove.stream().map(playerMove -> new PlayerMove(playerMove, MoveType.NORMAL)).collect(Collectors.toSet());
     }
 
     @Override
-    public Collection<Position> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<Position>> possiblePositions) {
-        Collection<Position> validPositionsToAttack = PositionValidator.super.keepValidPositionsToAttack(chessBoard, moveSettings, possiblePositions);
-        possiblePositions.values().stream().flatMap(Set::stream).filter(position -> isEnPassant(chessBoard, moveSettings.getPiece(), moveSettings.getCurrentPosition(), position))
+    public Collection<PlayerMove> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<PlayerMove>> possiblePositions) {
+        Collection<PlayerMove> validPositionsToAttack = PositionValidator.super.keepValidPositionsToAttack(chessBoard, moveSettings, possiblePositions);
+        possiblePositions.values().stream().flatMap(Set::stream).filter(playerMove -> isEnPassant(chessBoard, moveSettings.getPiece(), moveSettings.getCurrentPosition(), playerMove.getToPosition()))
                 .findFirst().ifPresent(validPositionsToAttack::add);
         return validPositionsToAttack;
     }

@@ -1,15 +1,15 @@
 package app.domain.moving.moves;
 
 import app.domain.ChessBoard;
-import app.domain.Position;
 import app.domain.moving.MoveSettings;
+import app.domain.moving.PlayerAction;
+import app.domain.moving.PlayerMove;
 
 import java.util.Set;
-import java.util.SortedSet;
 
 public interface Move {
 
-    Set<Position> checkMove(ChessBoard chessBoard, MoveSettings moveSettings);
+    Set<PlayerMove> checkMove(ChessBoard chessBoard, MoveSettings moveSettings);
 
 
 }
