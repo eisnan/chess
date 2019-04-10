@@ -23,6 +23,14 @@ public class ChessBoard {
         return model;
     }
 
+    public Piece get(Position position) {
+        return model.get(position);
+    }
+
+    public List<Position> get(Piece piece) {
+        return null;
+    }
+
     public ChessBoard() {
         this.initModel();
         this.arrangePiecesForStart();

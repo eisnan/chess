@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Gabs on 1/27/2019.
  */
-public class ProtectedKingInCheck implements KingInCheck{
+public class ProtectedKingInCheck implements KingInCheck {
     @Override
     public boolean isKingInCheck(ChessBoard chessBoard, PieceColor pieceColor, Set<Position> openPositions) {
 
@@ -44,7 +44,7 @@ public class ProtectedKingInCheck implements KingInCheck{
         for (IterableMove move : openDirections) {
             Collection<PlayerMove> positions = move.checkMove(chessBoard, new MoveSettings(kingPosition, kingPiece, movingSettings));
             System.out.println(positions);
-            Optional<Tuple<Position, Piece>> firstPieceOnDirection = new PositionInterpreter().findFirstPieceOnDirection(chessBoard, move, positions);
+            Optional<Tuple<Position, Piece>> firstPieceOnDirection = new PositionInterpreter().findFirstPieceOnDirection(chessBoard, move, kingPiece, kingPosition);
             if (firstPieceOnDirection.isPresent() && kingPiece.getPieceColor().isOppositeColor(firstPieceOnDirection.get().getRight().getPieceColor())) {
                 Collection<PlayerMove> attackingPositions = MovingRules.getMovingRule(firstPieceOnDirection.get().getRight().getPieceType()).getAttackingPositions(chessBoard, firstPieceOnDirection.get().getRight(), firstPieceOnDirection.get().getLeft());
                 System.out.println(attackingPositions);

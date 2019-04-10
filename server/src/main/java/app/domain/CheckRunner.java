@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 public class CheckRunner {
 
+    public static final int PROTECTED_BY_HOW_MANY_PIECES = 4;
     private final ChessBoard chessBoard;
     private final PieceColor pieceColor;
     private final Tuple<Position, Piece> king;
@@ -41,7 +42,7 @@ public class CheckRunner {
                 chessBoard.getModel().get(position).getPieceColor() == pieceColor.oppositeColor();
         Set<Position> openPositions = adjacentPositions.stream().filter(nullPositionOrOppositeColor).collect(Collectors.toSet());
 
-        if (openPositions.size() >= 4) {
+        if (openPositions.size() >= PROTECTED_BY_HOW_MANY_PIECES) {
             return Tuple.of(new UnprotectedKingInCheck(), openPositions);
         } else {
             return Tuple.of(new ProtectedKingInCheck(), openPositions);

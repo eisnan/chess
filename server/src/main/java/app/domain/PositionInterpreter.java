@@ -1,5 +1,6 @@
 package app.domain;
 
+import app.domain.moving.MoveSettings;
 import app.domain.moving.PlayerMove;
 import app.domain.moving.moves.*;
 import app.domain.moving.rules.MovingRules;
@@ -56,14 +57,12 @@ public class PositionInterpreter {
         return attackDirections;
     }
 
-    public Optional<Tuple<Position, Piece>> findFirstPieceOnDirection(ChessBoard chessBoard, IterableMove move, Collection<PlayerMove> positions) {
-//        Collection<PlayerMove> direction = new TreeSet<>(move.getPositionComparator());
-//        direction.addAll(positions);
-//
-//        Optional<Tuple<Position, Piece>> first = direction.stream().filter(position -> chessBoard.getModel().get(position) != null).map(position -> new Tuple<>(position,chessBoard.getModel().get(position))).findFirst();
-//
-//        return first;
-        return null;
+    public Optional<Tuple<Position, Piece>> findFirstPieceOnDirection(ChessBoard chessBoard, IterableMove move, Piece piece, Position startingPosition) {
+        return move.checkMove(chessBoard, MoveSettings.getMaxSettings(startingPosition, piece, move)).stream()
+                .map(PlayerMove::getToPosition)
+                .filter(position -> chessBoard.get(position) != null)
+                .map(position -> Tuple.of(position, chessBoard.get(position)))
+                .findFirst();
     }
 
     public boolean isOnAttackingDirection(Move move, Piece attackingPiece) {
