@@ -1,6 +1,6 @@
 package app.datalayer.repo;
 
-import app.domain.Game;
+import app.entity.Game;
 
 import javax.persistence.*;
 

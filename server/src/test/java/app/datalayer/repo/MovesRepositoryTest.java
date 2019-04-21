@@ -1,6 +1,5 @@
 package app.datalayer.repo;
 
-import app.datalayer.repo.MovesRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,8 @@ public class MovesRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
-    @Autowired
-    private MovesRepository movesRepository;
+//    @Autowired
+//    private MovesRepository movesRepository;
 
     @Test
     public void testFindByGame() {

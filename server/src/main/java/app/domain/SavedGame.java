@@ -1,5 +1,7 @@
 package app.domain;
 
+import app.entity.Game;
+
 import javax.persistence.*;
 import java.util.Objects;
 

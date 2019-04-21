@@ -2,6 +2,7 @@ package app.domain;
 
 import app.datalayer.converters.JpaToStringConverter;
 import app.datalayer.repo.MoveEntity;
+import app.entity.Game;
 
 import javax.persistence.*;
 import java.util.Collection;

@@ -15,6 +15,7 @@
         <module>server</module>
         <module>ai</module>
         <module>common</module>
+        <module>jgui</module>
     </modules>
 
 

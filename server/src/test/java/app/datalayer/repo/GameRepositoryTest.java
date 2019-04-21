@@ -1,7 +1,6 @@
 package app.datalayer.repo;
 
-import app.datalayer.repo.GameRepository;
-import app.domain.Game;
+import app.entity.Game;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,8 @@ public class GameRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
-    @Autowired
-    private GameRepository gameRepository;
+//    @Autowired
+//    private GameRepository gameRepository;
 
     @Test
     public void testFindByUUID() {
