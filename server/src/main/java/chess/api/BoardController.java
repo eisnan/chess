@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/board")
 public class BoardController {
 
-    @Autowired
     private ChessBoardMapper mapper;
+
+    @Autowired
+    public BoardController(ChessBoardMapper mapper) {
+        this.mapper = mapper;
+    }
 
     @GetMapping
     public ChessBoardDto getBoard() {

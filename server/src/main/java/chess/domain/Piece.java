@@ -15,11 +15,6 @@ public class Piece {
         this.pieceType = pieceType;
     }
 
-    public Piece(String notation) {
-        this.pieceColor = PieceColor.getByColorNotation(notation.substring(0, 1));
-        this.pieceType = PieceType.getByNotationSymbol(notation.substring(1, 2));
-    }
-
     public static Piece getWhitePiece(PieceType pieceType) {
         return new Piece(PieceColor.WHITE, pieceType);
     }
