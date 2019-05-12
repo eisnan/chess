@@ -1,8 +1,12 @@
 package chess.api;
 
 import chess.api.dto.ChessBoardDto;
+import chess.api.dto.PieceColorDto;
 import chess.domain.ChessBoard;
+import chess.domain.File;
+import chess.domain.Rank;
 import chess.mapper.ChessBoardMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +21,16 @@ public class BoardController {
     @Autowired
     public BoardController(ChessBoardMapper mapper) {
         this.mapper = mapper;
+    }
+
+    @RequestMapping("/getFiles")
+    public File[] getFiles() {
+        return File.values();
+    }
+
+    @RequestMapping("/getRanks")
+    public String[] getRanks() {
+        return Rank.stringValues();
     }
 
     @GetMapping

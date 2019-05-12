@@ -51,7 +51,7 @@ public class Piece {
     }
 
     public String getNotation() {
-        return pieceColor.getColorNotation() + pieceType.getNotationSymbol();
+        return pieceColor.getColorNotation() + pieceType.getTypeNotation();
     }
 
     public PieceColor getPieceColor() {

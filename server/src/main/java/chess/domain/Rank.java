@@ -44,4 +44,13 @@ public enum Rank {
     public String toString() {
         return this.getCoordinate();
     }
+
+    public static String[] stringValues() {
+        String[] stringValues = new String[8];
+        int i = 0;
+        for (Rank rank : values()) {
+            stringValues[i++] = rank.coordinate;
+        }
+        return stringValues;
+    }
 }

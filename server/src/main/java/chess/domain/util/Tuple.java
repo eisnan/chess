@@ -39,6 +39,6 @@ public final class Tuple<LEFT, RIGHT> {
 
     @Override
     public String toString() {
-        return "Tuple{" + "left=" + left + ", right=" + right + '}';
+        return left + "," + right;
     }
 }
