@@ -3,6 +3,7 @@ package chess.api.dto.serializers;
 import chess.api.dto.ChessBoardDto;
 import chess.api.dto.PieceDto;
 import chess.api.dto.PositionDto;
+import chess.api.dto.SquareDto;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -17,9 +18,9 @@ public class ChessBoardSerializer extends JsonSerializer<ChessBoardDto> {
         gen.writeStartObject();
         gen.writeStringField("id", chessBoard.getBoardId());
         gen.writeArrayFieldStart("model");
-        for (Map.Entry<PositionDto, PieceDto> entry : chessBoard.getModel().entrySet()) {
+        for (SquareDto[] squareDto : chessBoard.getModel()) {
             gen.writeStartObject();
-            gen.writeObjectField(entry.getKey().getNotation(), entry.getValue() != null ? entry.getValue().getNotation() : null);
+            gen.writeObject(squareDto);
             gen.writeEndObject();
         }
         gen.writeEndArray();

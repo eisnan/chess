@@ -4,6 +4,7 @@ import chess.domain.moving.PlayerMove;
 import chess.domain.start.HardCodedPositionResolver;
 import chess.domain.start.StartPositionResolver;
 import chess.domain.util.Tuple;
+import com.google.inject.internal.util.Lists;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -55,8 +56,12 @@ public class ChessBoard {
     }
 
     private void initModel() {
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
+        List<Rank> ranks = Lists.newArrayList(Rank.values());
+        Collections.reverse(ranks);
+        for (Rank rank : ranks) {
+            for (File file : File.values()) {
+
+                log.info("Position[" + file + "," + rank + "]");
                 model.put(new Position(file, rank), null);
             }
         }

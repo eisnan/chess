@@ -123,8 +123,10 @@
                 <configuration>
                     <jsonLibrary>jackson2</jsonLibrary>
                     <classes>
-                        <class>chess.domain.Piece</class>
                         <class>chess.api.dto.ChessBoardDto</class>
+                        <class>chess.api.dto.SquareDto</class>
+                        <class>chess.api.dto.PositionDto</class>
+                        <class>chess.api.dto.PieceDto</class>
                     </classes>
                     <outputKind>module</outputKind>
                 </configuration>

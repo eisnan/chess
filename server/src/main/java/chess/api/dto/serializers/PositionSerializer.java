@@ -14,7 +14,7 @@ public class PositionSerializer extends JsonSerializer<PositionDto> {
     @Override
     public void serialize(PositionDto positionDto, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
-        gen.writeObjectField("abc",positionDto.getFile().name() + positionDto.getRank().getNotation());
+        gen.writeString(positionDto.getFile().name() + positionDto.getRank().getNotation());
         gen.writeEndObject();
     }
 }
