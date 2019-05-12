@@ -11,7 +11,7 @@ public class PieceSerializer extends JsonSerializer<PieceDto> {
     @Override
     public void serialize(PieceDto pieceDto, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
-        gen.writeString(pieceDto.getPieceColor().name() + pieceDto.getPieceType().name());
+        gen.writeObjectField("zxc", pieceDto.getPieceColor().name() + pieceDto.getPieceType().name());
         gen.writeEndObject();
     }
 }

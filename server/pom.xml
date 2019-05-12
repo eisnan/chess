@@ -124,6 +124,7 @@
                     <jsonLibrary>jackson2</jsonLibrary>
                     <classes>
                         <class>chess.domain.Piece</class>
+                        <class>chess.api.dto.ChessBoardDto</class>
                     </classes>
                     <outputKind>module</outputKind>
                 </configuration>

@@ -13,7 +13,7 @@ public interface ChessBoardMapper {
     default ChessBoardDto toDto(ChessBoard chessBoard) {
         Map<Position, Piece> model = chessBoard.getModel();
         ChessBoardDto chessBoardDto = new ChessBoardDto();
-        model.entrySet().stream().forEach(positionPieceEntry -> chessBoardDto.getModel().put(toDto(positionPieceEntry.getKey()), toDto(positionPieceEntry.getValue())));
+        model.forEach((position, piece) -> chessBoardDto.getModel().put(toDto(position), toDto(piece)));
         return chessBoardDto;
     };
 

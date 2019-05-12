@@ -6,6 +6,7 @@ import chess.api.dto.PositionDto;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Map;
@@ -16,11 +17,11 @@ public class ChessBoardSerializer extends JsonSerializer<ChessBoardDto> {
         gen.writeStartObject();
         gen.writeStringField("id", chessBoard.getBoardId());
         gen.writeArrayFieldStart("model");
-        gen.writeStartObject();
         for (Map.Entry<PositionDto, PieceDto> entry : chessBoard.getModel().entrySet()) {
-            gen.writeStringField(entry.getKey().getNotation(), entry.getValue() != null ? entry.getValue().getNotation() : null);
+            gen.writeStartObject();
+            gen.writeObjectField(entry.getKey().getNotation(), entry.getValue() != null ? entry.getValue().getNotation() : null);
+            gen.writeEndObject();
         }
-        gen.writeEndObject();
         gen.writeEndArray();
         gen.writeEndObject();
     }

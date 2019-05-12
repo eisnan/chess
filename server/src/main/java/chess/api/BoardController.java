@@ -2,11 +2,13 @@ package chess.api;
 
 import chess.api.dto.ChessBoardDto;
 import chess.api.dto.PieceColorDto;
+import chess.api.dto.serializers.ChessBoardSerializer;
 import chess.domain.ChessBoard;
 import chess.domain.File;
 import chess.domain.Rank;
 import chess.mapper.ChessBoardMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +38,6 @@ public class BoardController {
     @GetMapping
     public ChessBoardDto getBoard() {
         ChessBoard chessBoard = new ChessBoard();
-        return mapper.toDto(chessBoard);
+       return mapper.toDto(chessBoard);
     }
 }

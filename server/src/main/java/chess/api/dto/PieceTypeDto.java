@@ -5,5 +5,4 @@ package chess.api.dto;
  */
 public enum PieceTypeDto {
     P, K, Q, B, N, R;
-
 }
