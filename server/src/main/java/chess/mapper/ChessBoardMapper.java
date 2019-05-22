@@ -9,6 +9,9 @@ import java.util.Map;
 @Mapper(componentModel = "spring")
 public interface ChessBoardMapper {
 
+    /**
+     * Returns the board snapshot in a handwriting manner
+     */
     default ChessBoardDto toDto(ChessBoard chessBoard) {
         Map<Position, Piece> model = chessBoard.getModel();
         ChessBoardDto chessBoardDto = new ChessBoardDto();
