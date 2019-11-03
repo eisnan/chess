@@ -2,17 +2,17 @@ package chess.domain.util;
 
 import java.util.Objects;
 
-public final class Tuple<LEFT, RIGHT> {
+public final class Pair<LEFT, RIGHT> {
     private LEFT left;
     private RIGHT right;
 
-    public Tuple(LEFT left, RIGHT right) {
+    public Pair(LEFT left, RIGHT right) {
         this.left = left;
         this.right = right;
     }
 
-    public static <LEFT, RIGHT> Tuple<LEFT, RIGHT> of(LEFT left, RIGHT right) {
-        return new Tuple<>(left, right);
+    public static <LEFT, RIGHT> Pair<LEFT, RIGHT> of(LEFT left, RIGHT right) {
+        return new Pair<>(left, right);
     }
 
     public LEFT getLeft() {
@@ -27,9 +27,9 @@ public final class Tuple<LEFT, RIGHT> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Tuple<?, ?> tuple = (Tuple<?, ?>) o;
-        return Objects.equals(left, tuple.left) &&
-                Objects.equals(right, tuple.right);
+        Pair<?, ?> pair = (Pair<?, ?>) o;
+        return Objects.equals(left, pair.left) &&
+                Objects.equals(right, pair.right);
     }
 
     @Override

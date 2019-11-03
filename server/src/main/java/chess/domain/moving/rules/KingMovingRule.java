@@ -4,7 +4,7 @@ import chess.domain.PieceColor;
 import chess.domain.PieceType;
 import chess.domain.moving.validators.PositionValidator;
 import chess.domain.moving.validators.RBQValidator;
-import chess.domain.util.Tuple;
+import chess.domain.util.Pair;
 import chess.domain.moving.moves.*;
 
 import java.util.Arrays;
@@ -17,7 +17,7 @@ public class KingMovingRule implements MovingRule {
 
     private static final Integer KING_LIMIT_POSITIONS = 1;
     private static final Integer CASTLING_POSITIONS = 2;
-    private Map<PieceColor, Collection<Tuple<Move, Integer>>> moveParameters = new HashMap<>();
+    private Map<PieceColor, Collection<Pair<Move, Integer>>> moveParameters = new HashMap<>();
     private PositionValidator validator = new RBQValidator();
     private Collection<Move> legalMoves = Arrays.asList(
             new ForwardMove(),
@@ -32,8 +32,8 @@ public class KingMovingRule implements MovingRule {
             new KingSideCastling());
 
     public KingMovingRule() {
-        Collection<Tuple<Move, Integer>> legalMovesWithLimit = legalMoves
-                .stream().map(moveDescriber -> new Tuple<>(moveDescriber, getLimitPositions(moveDescriber))).collect(Collectors.toList());
+        Collection<Pair<Move, Integer>> legalMovesWithLimit = legalMoves
+                .stream().map(moveDescriber -> new Pair<>(moveDescriber, getLimitPositions(moveDescriber))).collect(Collectors.toList());
         this.moveParameters.put(PieceColor.WHITE, legalMovesWithLimit);
         this.moveParameters.put(PieceColor.BLACK, legalMovesWithLimit);
     }
@@ -43,12 +43,12 @@ public class KingMovingRule implements MovingRule {
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters() {
+    public Map<PieceColor, Collection<Pair<Move, Integer>>> getMoveParameters() {
         return moveParameters;
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getCaptureParameters() {
+    public Map<PieceColor, Collection<Pair<Move, Integer>>> getCaptureParameters() {
         return moveParameters;
     }
 

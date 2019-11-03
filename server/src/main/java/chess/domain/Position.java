@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.util.Tuple;
+import chess.domain.util.Pair;
 import lombok.Getter;
 
 import java.util.Objects;
@@ -18,7 +18,7 @@ public class Position {
         this.squareColor = determineColor(file, rank);
     }
 
-    public Position(Tuple<File, Rank> coordinate) {
+    public Position(Pair<File, Rank> coordinate) {
         this.file = coordinate.getLeft();
         this.rank = coordinate.getRight();
         this.squareColor = determineColor(file, rank);

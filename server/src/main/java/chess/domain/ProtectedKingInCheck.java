@@ -6,7 +6,7 @@ import chess.domain.moving.moves.IterableMove;
 import chess.domain.moving.moves.Move;
 import chess.domain.moving.moves.SpecialMove;
 import chess.domain.moving.rules.MovingRules;
-import chess.domain.util.Tuple;
+import chess.domain.util.Pair;
 
 import java.util.Collection;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class ProtectedKingInCheck implements KingInCheck {
     @Override
     public boolean isKingInCheck(ChessBoard chessBoard, PieceColor pieceColor, Set<Position> openPositions) {
 
-        Tuple<Position, Piece> king = chessBoard.getKing(pieceColor);
+        Pair<Position, Piece> king = chessBoard.getKing(pieceColor);
         Position kingPosition = king.getLeft();
         Piece kingPiece = king.getRight();
 
@@ -44,7 +44,7 @@ public class ProtectedKingInCheck implements KingInCheck {
         for (IterableMove move : openDirections) {
             Collection<PlayerMove> positions = move.checkMove(chessBoard, new MoveSettings(kingPosition, kingPiece, movingSettings));
             System.out.println(positions);
-            Optional<Tuple<Position, Piece>> firstPieceOnDirection = new PositionInterpreter().findFirstPieceOnDirection(chessBoard, move, kingPiece, kingPosition);
+            Optional<Pair<Position, Piece>> firstPieceOnDirection = new PositionInterpreter().findFirstPieceOnDirection(chessBoard, move, kingPiece, kingPosition);
             if (firstPieceOnDirection.isPresent() && kingPiece.getPieceColor().isOppositeColor(firstPieceOnDirection.get().getRight().getPieceColor())) {
                 Collection<PlayerMove> attackingPositions = MovingRules.getMovingRule(firstPieceOnDirection.get().getRight().getPieceType()).getAttackingPositions(chessBoard, firstPieceOnDirection.get().getRight(), firstPieceOnDirection.get().getLeft());
                 System.out.println(attackingPositions);

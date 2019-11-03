@@ -3,7 +3,7 @@ package chess.domain;
 import chess.domain.moving.MoveSettings;
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.rules.MovingRules;
-import chess.domain.util.Tuple;
+import chess.domain.util.Pair;
 import chess.domain.moving.moves.*;
 
 import java.util.Collection;
@@ -57,11 +57,11 @@ public class PositionInterpreter {
         return attackDirections;
     }
 
-    public Optional<Tuple<Position, Piece>> findFirstPieceOnDirection(ChessBoard chessBoard, IterableMove move, Piece piece, Position startingPosition) {
+    public Optional<Pair<Position, Piece>> findFirstPieceOnDirection(ChessBoard chessBoard, IterableMove move, Piece piece, Position startingPosition) {
         return move.checkMove(chessBoard, MoveSettings.getMaxSettings(startingPosition, piece, move)).stream()
                 .map(PlayerMove::getToPosition)
                 .filter(position -> chessBoard.get(position) != null)
-                .map(position -> Tuple.of(position, chessBoard.get(position)))
+                .map(position -> Pair.of(position, chessBoard.get(position)))
                 .findFirst();
     }
 

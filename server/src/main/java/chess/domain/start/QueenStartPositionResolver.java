@@ -3,7 +3,7 @@ package chess.domain.start;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.domain.util.Tuple;
+import chess.domain.util.Pair;
 
 public class QueenStartPositionResolver {
 
@@ -13,7 +13,7 @@ public class QueenStartPositionResolver {
     /**
      * Left tuple is white queen, right tuple is black queen
      */
-    public Tuple<Position, Position> getQueensPosition() {
-        return new Tuple<>(new Position(QUEEN_FILE, Rank._1), new Position(QUEEN_FILE, Rank._8));
+    public Pair<Position, Position> getQueensPosition() {
+        return new Pair<>(new Position(QUEEN_FILE, Rank._1), new Position(QUEEN_FILE, Rank._8));
     }
 }

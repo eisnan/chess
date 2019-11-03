@@ -8,7 +8,7 @@ import chess.domain.moving.MoveSettings;
 import chess.domain.moving.moves.*;
 import chess.domain.moving.validators.PositionValidator;
 import chess.domain.moving.validators.RBQValidator;
-import chess.domain.util.Tuple;
+import chess.domain.util.Pair;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class BishopMovingRule implements MovingRule {
 
     private static final Integer BISHOP_LIMIT_POSITIONS = 8;
-    private Map<PieceColor, Collection<Tuple<Move, Integer>>> moveParameters = new HashMap<>();
+    private Map<PieceColor, Collection<Pair<Move, Integer>>> moveParameters = new HashMap<>();
     private PositionValidator validator = new RBQValidator();
     private Collection<Move> legalMoves = Arrays.asList(
             new ForwardDiagonalLeft(),
@@ -28,19 +28,19 @@ public class BishopMovingRule implements MovingRule {
             new BackwardDiagonalRight());
 
     public BishopMovingRule() {
-        Collection<Tuple<Move, Integer>> legalMovesWithLimit = legalMoves
-                .stream().map(moveDescriber -> new Tuple<>(moveDescriber, BISHOP_LIMIT_POSITIONS)).collect(Collectors.toList());
+        Collection<Pair<Move, Integer>> legalMovesWithLimit = legalMoves
+                .stream().map(moveDescriber -> new Pair<>(moveDescriber, BISHOP_LIMIT_POSITIONS)).collect(Collectors.toList());
         moveParameters.put(PieceColor.WHITE, legalMovesWithLimit);
         moveParameters.put(PieceColor.BLACK, legalMovesWithLimit);
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters() {
+    public Map<PieceColor, Collection<Pair<Move, Integer>>> getMoveParameters() {
         return moveParameters;
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getCaptureParameters() {
+    public Map<PieceColor, Collection<Pair<Move, Integer>>> getCaptureParameters() {
         return moveParameters;
     }
 

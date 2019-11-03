@@ -3,7 +3,7 @@ package chess.domain;
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.rules.MovingRule;
 import chess.domain.moving.rules.MovingRules;
-import chess.domain.util.Tuple;
+import chess.domain.util.Pair;
 
 import java.util.Collection;
 import java.util.Set;
@@ -18,7 +18,7 @@ public interface KingInCheck {
     default boolean knightsAttackKing(ChessBoard chessBoard, PieceColor pieceColor, Position kingPosition) {
 
         // isKingInCheck if there are enemy knights on the board
-        Collection<Tuple<Position, Piece>> knights = chessBoard.getPieces(PieceType.KNIGHT, pieceColor.oppositeColor());
+        Collection<Pair<Position, Piece>> knights = chessBoard.getPieces(PieceType.KNIGHT, pieceColor.oppositeColor());
         //no vulnerable and no knights
         if (knights.isEmpty()) {
             return false;
@@ -27,7 +27,7 @@ public interface KingInCheck {
         // check if knights attack the king
         boolean knightsCheckKing = false;
 
-        for (Tuple<Position, Piece> knight : knights) {
+        for (Pair<Position, Piece> knight : knights) {
             MovingRule movingRule = MovingRules.getMovingRule(knight.getRight().getPieceType());
             Collection<PlayerMove> attackingPositionsOfKnight = movingRule.getAttackingPositions(chessBoard, knight.getRight(), knight.getLeft());
 

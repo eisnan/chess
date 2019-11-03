@@ -9,7 +9,7 @@ import chess.domain.moving.moves.BackwardMove;
 import chess.domain.moving.moves.ForwardMove;
 import chess.domain.moving.moves.LeftMove;
 import chess.domain.moving.moves.RightMove;
-import chess.domain.util.Tuple;
+import chess.domain.util.Pair;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,25 +21,25 @@ public class RookMovingRule implements MovingRule {
     private static final int ROOK_LIMIT_POSITIONS = 8;
 
     private PositionValidator validator = new RBQValidator();
-    private Map<PieceColor, Collection<Tuple<Move, Integer>>> moveParameters = new HashMap<>();
+    private Map<PieceColor, Collection<Pair<Move, Integer>>> moveParameters = new HashMap<>();
 
     public RookMovingRule() {
-        Collection<Tuple<Move, Integer>> legalMoves = Arrays.asList(
-                new Tuple<>(new ForwardMove(), ROOK_LIMIT_POSITIONS),
-                new Tuple<>(new BackwardMove(), ROOK_LIMIT_POSITIONS),
-                new Tuple<>(new LeftMove(), ROOK_LIMIT_POSITIONS),
-                new Tuple<>(new RightMove(), ROOK_LIMIT_POSITIONS));
+        Collection<Pair<Move, Integer>> legalMoves = Arrays.asList(
+                new Pair<>(new ForwardMove(), ROOK_LIMIT_POSITIONS),
+                new Pair<>(new BackwardMove(), ROOK_LIMIT_POSITIONS),
+                new Pair<>(new LeftMove(), ROOK_LIMIT_POSITIONS),
+                new Pair<>(new RightMove(), ROOK_LIMIT_POSITIONS));
         moveParameters.put(PieceColor.WHITE, legalMoves);
         moveParameters.put(PieceColor.BLACK, legalMoves);
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters() {
+    public Map<PieceColor, Collection<Pair<Move, Integer>>> getMoveParameters() {
         return moveParameters;
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getCaptureParameters() {
+    public Map<PieceColor, Collection<Pair<Move, Integer>>> getCaptureParameters() {
         return moveParameters;
     }
 

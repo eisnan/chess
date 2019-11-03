@@ -5,7 +5,7 @@ import chess.domain.moving.MoveSettings;
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.moves.Move;
 import chess.domain.moving.validators.PositionValidator;
-import chess.domain.util.Tuple;
+import chess.domain.util.Pair;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,9 +13,9 @@ import java.util.Map;
 import java.util.Set;
 
 public interface MovingRule {
-    Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters();
+    Map<PieceColor, Collection<Pair<Move, Integer>>> getMoveParameters();
 
-    Map<PieceColor, Collection<Tuple<Move, Integer>>> getCaptureParameters();
+    Map<PieceColor, Collection<Pair<Move, Integer>>> getCaptureParameters();
 
     PieceType getPieceType();
 
@@ -54,18 +54,18 @@ public interface MovingRule {
         return positions;
     }
 
-    default Map<Move, Integer> adaptForPieceColor(PieceColor pieceColor, Map<PieceColor, Collection<Tuple<Move, Integer>>> moveSettings) {
+    default Map<Move, Integer> adaptForPieceColor(PieceColor pieceColor, Map<PieceColor, Collection<Pair<Move, Integer>>> moveSettings) {
         Map<Move, Integer> moveSettingsForColor = new HashMap<>();
         switch (pieceColor) {
             case WHITE:
-                Collection<Tuple<Move, Integer>> tuples = moveSettings.get(pieceColor);
-                for (Tuple<Move, Integer> entry : tuples) {
+                Collection<Pair<Move, Integer>> pairs = moveSettings.get(pieceColor);
+                for (Pair<Move, Integer> entry : pairs) {
                     moveSettingsForColor.put(entry.getLeft(), entry.getRight());
                 }
                 return moveSettingsForColor;
             case BLACK:
-                Collection<Tuple<Move, Integer>> tuples2 = moveSettings.get(pieceColor);
-                for (Tuple<Move, Integer> entry : tuples2) {
+                Collection<Pair<Move, Integer>> tuples2 = moveSettings.get(pieceColor);
+                for (Pair<Move, Integer> entry : tuples2) {
                     moveSettingsForColor.put(entry.getLeft(), entry.getRight());
                 }
                 return moveSettingsForColor;

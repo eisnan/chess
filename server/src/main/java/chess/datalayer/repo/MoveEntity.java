@@ -4,6 +4,7 @@ import chess.domain.File;
 import chess.domain.PieceType;
 import chess.domain.Rank;
 import chess.datalayer.converters.CoordinateConverter;
+import chess.domain.util.Pair;
 
 import javax.persistence.*;
 
@@ -18,15 +19,15 @@ public class MoveEntity {
     private PieceType pieceType;
 
     @Convert(converter = CoordinateConverter.class)
-    private chess.domain.util.Tuple<File, Rank> coordinateFrom;
+    private Pair<File, Rank> coordinateFrom;
 
     @Transient
-    private chess.domain.util.Tuple<File, Rank> disambiguatedMove;
+    private Pair<File, Rank> disambiguatedMove;
 
     public MoveEntity() {
     }
 
-    public MoveEntity(PieceType pieceType, chess.domain.util.Tuple<File, Rank> coordinateFrom) {
+    public MoveEntity(PieceType pieceType, Pair<File, Rank> coordinateFrom) {
         this.pieceType = pieceType;
         this.coordinateFrom = coordinateFrom;
     }
@@ -47,11 +48,11 @@ public class MoveEntity {
         this.pieceType = pieceType;
     }
 
-    public chess.domain.util.Tuple<File, Rank> getCoordinateFrom() {
+    public Pair<File, Rank> getCoordinateFrom() {
         return coordinateFrom;
     }
 
-    public void setCoordinateFrom(chess.domain.util.Tuple<File, Rank> coordinateFrom) {
+    public void setCoordinateFrom(Pair<File, Rank> coordinateFrom) {
         this.coordinateFrom = coordinateFrom;
     }
 

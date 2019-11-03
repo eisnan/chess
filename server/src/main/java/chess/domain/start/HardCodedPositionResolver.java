@@ -4,7 +4,7 @@ import chess.domain.Piece;
 import chess.domain.PieceColor;
 import chess.domain.PieceType;
 import chess.domain.Position;
-import chess.domain.util.Tuple;
+import chess.domain.util.Pair;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,12 +30,12 @@ public class HardCodedPositionResolver implements StartPositionResolver {
         pawnsPosition.forEach((pieceColor, positions) -> initialPositions.put(new Piece(pieceColor, PieceType.PAWN), positions));
 
         //kings
-        Tuple<Position, Position> kingsPosition = kingStartPositionResolver.getKingsPosition();
+        Pair<Position, Position> kingsPosition = kingStartPositionResolver.getKingsPosition();
         initialPositions.put(Piece.getWhitePiece(PieceType.KING), Collections.singleton(kingsPosition.getLeft()));
         initialPositions.put(Piece.getBlackPiece(PieceType.KING), Collections.singleton(kingsPosition.getRight()));
 
         //queens
-        Tuple<Position, Position> queensPosition = queenStartPositionResolver.getQueensPosition();
+        Pair<Position, Position> queensPosition = queenStartPositionResolver.getQueensPosition();
         initialPositions.put(Piece.getWhitePiece(PieceType.QUEEN), Collections.singleton(queensPosition.getLeft()));
         initialPositions.put(Piece.getBlackPiece(PieceType.QUEEN), Collections.singleton(queensPosition.getRight()));
 

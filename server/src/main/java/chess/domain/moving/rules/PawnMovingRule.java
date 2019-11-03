@@ -5,7 +5,7 @@ import chess.domain.PieceType;
 import chess.domain.moving.moves.*;
 import chess.domain.moving.validators.PawnValidator;
 import chess.domain.moving.validators.PositionValidator;
-import chess.domain.util.Tuple;
+import chess.domain.util.Pair;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,8 +16,8 @@ public class PawnMovingRule implements MovingRule {
 
     private PositionValidator validator = new PawnValidator();
 
-    private Map<PieceColor, Collection<Tuple<Move, Integer>>> moveParameters = new HashMap<>();
-    private Map<PieceColor, Collection<Tuple<Move, Integer>>> captureParameters = new HashMap<>();
+    private Map<PieceColor, Collection<Pair<Move, Integer>>> moveParameters = new HashMap<>();
+    private Map<PieceColor, Collection<Pair<Move, Integer>>> captureParameters = new HashMap<>();
     private Collection<Move> legalMoves = Arrays.asList(
             new ForwardMove(),
             new ForwardDiagonalLeft(),
@@ -27,23 +27,23 @@ public class PawnMovingRule implements MovingRule {
             new BackwardDiagonalRight());
 
     public PawnMovingRule() {
-        moveParameters.put(PieceColor.WHITE, Arrays.asList(new Tuple<>(new ForwardMove(), 2)));
-        moveParameters.put(PieceColor.BLACK, Arrays.asList(new Tuple<>(new BackwardMove(), 2)));
+        moveParameters.put(PieceColor.WHITE, Arrays.asList(new Pair<>(new ForwardMove(), 2)));
+        moveParameters.put(PieceColor.BLACK, Arrays.asList(new Pair<>(new BackwardMove(), 2)));
 
-        captureParameters.put(PieceColor.WHITE, Arrays.asList(new Tuple<>(new ForwardDiagonalLeft(), 1),
-                new Tuple<>(new ForwardDiagonalRight(), 1)));
-        captureParameters.put(PieceColor.BLACK, Arrays.asList(new Tuple<>(new BackwardDiagonalLeft(), 1),
-                new Tuple<>(new BackwardDiagonalRight(), 1)));
+        captureParameters.put(PieceColor.WHITE, Arrays.asList(new Pair<>(new ForwardDiagonalLeft(), 1),
+                new Pair<>(new ForwardDiagonalRight(), 1)));
+        captureParameters.put(PieceColor.BLACK, Arrays.asList(new Pair<>(new BackwardDiagonalLeft(), 1),
+                new Pair<>(new BackwardDiagonalRight(), 1)));
 
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getMoveParameters() {
+    public Map<PieceColor, Collection<Pair<Move, Integer>>> getMoveParameters() {
         return moveParameters;
     }
 
     @Override
-    public Map<PieceColor, Collection<Tuple<Move, Integer>>> getCaptureParameters() {
+    public Map<PieceColor, Collection<Pair<Move, Integer>>> getCaptureParameters() {
         return captureParameters;
     }
 

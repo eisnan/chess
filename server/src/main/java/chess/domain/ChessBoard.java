@@ -3,7 +3,7 @@ package chess.domain;
 import chess.domain.moving.PlayerMove;
 import chess.domain.start.HardCodedPositionResolver;
 import chess.domain.start.StartPositionResolver;
-import chess.domain.util.Tuple;
+import chess.domain.util.Pair;
 import com.google.inject.internal.util.Lists;
 import lombok.extern.slf4j.Slf4j;
 
@@ -89,12 +89,12 @@ public class ChessBoard {
         System.out.println(collect);
     }
 
-    public Tuple<Position, Piece> getKing(PieceColor pieceColor) {
+    public Pair<Position, Piece> getKing(PieceColor pieceColor) {
 
-        Optional<Tuple<Position, Piece>> king = this.model.entrySet().stream()
+        Optional<Pair<Position, Piece>> king = this.model.entrySet().stream()
                 .filter(POSITIONS_WITH_NO_PIECES)
                 .filter(positionPieceEntry -> !positionPieceEntry.getValue().canBeCaptured() && positionPieceEntry.getValue().getPieceColor() == pieceColor)
-                .map(positionPieceEntry -> new Tuple<>(positionPieceEntry.getKey(), positionPieceEntry.getValue())).findFirst();
+                .map(positionPieceEntry -> new Pair<>(positionPieceEntry.getKey(), positionPieceEntry.getValue())).findFirst();
 
         if (!king.isPresent()) {
             throw new InvalidStateException();
@@ -103,11 +103,11 @@ public class ChessBoard {
         return king.get();
     }
 
-    public Collection<Tuple<Position, Piece>> getPieces(PieceType pieceType, PieceColor pieceColor) {
+    public Collection<Pair<Position, Piece>> getPieces(PieceType pieceType, PieceColor pieceColor) {
         return getModel().entrySet().stream()
                 .filter(POSITIONS_WITH_NO_PIECES)
                 .filter(positionPieceEntry -> positionPieceEntry.getValue().getPieceType() == pieceType && positionPieceEntry.getValue().getPieceColor() == pieceColor)
-                .map(positionPieceEntry -> new Tuple<>(positionPieceEntry.getKey(), positionPieceEntry.getValue())).collect(Collectors.toSet());
+                .map(positionPieceEntry -> new Pair<>(positionPieceEntry.getKey(), positionPieceEntry.getValue())).collect(Collectors.toSet());
     }
 
     public Collection<Position> getAdjacentPositions(Position position) {
