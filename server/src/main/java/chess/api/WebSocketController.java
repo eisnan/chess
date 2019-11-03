@@ -36,10 +36,10 @@ public class WebSocketController {
         return "SUBSCRIBED : " + message;
     }
 
-    @Scheduled(fixedRate = 1000)
-    public void sendMessage() {
-        template.convertAndSend(SENDING_URL, buildNextMessage());
-    }
+//    @Scheduled(fixedRate = 1000)
+//    public void sendMessage() {
+//        template.convertAndSend(SENDING_URL, buildNextMessage());
+//    }
 
     private String buildNextMessage() {
         message = "Test" + counter.getAndIncrement();
