@@ -33,7 +33,7 @@ public class PawnValidator implements PositionValidator {
                 }
             }
         });
-        return validToMove.stream().map(playerMove -> new PlayerMove(playerMove, MoveType.NORMAL)).collect(Collectors.toSet());
+        return validToMove.stream().map(playerMove -> new PlayerMove(playerMove, MoveType.MOVE)).collect(Collectors.toSet());
     }
 
     @Override

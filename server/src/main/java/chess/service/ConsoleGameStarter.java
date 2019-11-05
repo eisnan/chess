@@ -1,7 +1,7 @@
 package chess.service;
 
 import chess.domain.*;
-import chess.domain.moving.PlayerAction;
+import chess.domain.moving.PlayerMover;
 
 import java.util.Collection;
 import java.util.Scanner;
@@ -56,7 +56,7 @@ public class ConsoleGameStarter {
                 String positionSelection = sc.nextLine();
                 Position moveToPosition = engine.getPosition(positionSelection);
 
-                new PlayerAction().move(chessBoard, selectedPiece, selectedPosition, moveToPosition);
+                new PlayerMover().move(chessBoard, selectedPiece, selectedPosition, moveToPosition);
 
                 boolean kingInCheck = new CheckRunner(chessBoard, selectedPiece.getPieceColor()).isKingInCheck();
 //                System.out.println(selectedPiece.getPieceColor() + " checks " + kingInCheck);

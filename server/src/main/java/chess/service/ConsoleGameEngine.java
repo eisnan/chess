@@ -15,7 +15,7 @@ public class ConsoleGameEngine {
 
         // map user input to piece
 
-        Collection<PlayerMove> availablePositions = new PositionResolver().getAvailablePositions(chessBoard, position);
+        Collection<PlayerMove> availablePositions = new PositionResolver().getAvailableMoves(chessBoard, position);
         return availablePositions.stream().map(playerMove -> playerMove.getToPosition()).collect(Collectors.toSet());
 
 //        // map user input to move

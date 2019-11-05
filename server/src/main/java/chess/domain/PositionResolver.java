@@ -10,7 +10,7 @@ import java.util.HashSet;
 public class PositionResolver {
 
 
-    public Collection<PlayerMove> getAvailablePositions(ChessBoard chessBoard, Position currentPosition) {
+    public Collection<PlayerMove> getAvailableMoves(ChessBoard chessBoard, Position currentPosition) {
 
         Piece piece = chessBoard.getModel().get(currentPosition);
 

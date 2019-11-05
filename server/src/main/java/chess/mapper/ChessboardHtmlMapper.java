@@ -22,7 +22,7 @@ public class ChessboardHtmlMapper {
                 "        .chess-board th { padding: .5em; }\n" +
                 "        .chess-board td { border: 1px solid; width: 2em; height: 2em; }\n" +
                 "        .chess-board .light { background: #eee; }\n" +
-                "        .chess-board .dark { background: #999; }    </style>\n" +
+                "        .chess-board .dark { background: #E0E0E0\t; }    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "<table class=\"chess-board\">\n" +

@@ -67,15 +67,4 @@ public class CheckRunner {
 //    }
 
 
-    public boolean isKingInCheck2(ChessBoard chessBoard, PieceColor pieceColor) {
-
-        boolean isKingInCheck = false;
-
-        Pair<Position, Piece> king = chessBoard.getKing(pieceColor);
-
-
-        return isKingInCheck;
-
-    }
-
 }

@@ -18,7 +18,11 @@ public class ChessBoard {
     private Map<Position, Piece> model = new LinkedHashMap<>();
     private StartPositionResolver startPositionResolver = new HardCodedPositionResolver();
     private LinkedList<PlayerMove> playerMoves = new LinkedList<>();
-    private Map<PieceColor, Boolean> kingMoved;
+    private boolean whiteKingMoved = false;
+    private boolean blackKingMoved = false;
+
+
+
 
     public Map<Position, Piece> getModel() {
         return model;
@@ -26,10 +30,6 @@ public class ChessBoard {
 
     public Piece get(Position position) {
         return model.get(position);
-    }
-
-    public List<Position> get(Piece piece) {
-        return null;
     }
 
     public ChessBoard() {
@@ -77,7 +77,33 @@ public class ChessBoard {
     }
 
     public void addMove(PlayerMove playerMove) {
+        checkIfKingIsMoving(playerMove);
         playerMoves.add(playerMove);
+    }
+
+    public void addMoves(Collection<PlayerMove> playerMoves) {
+        playerMoves.forEach(move -> {
+            checkIfKingIsMoving(move);
+            playerMoves.add(move);
+        });
+
+    }
+
+    private void checkIfKingIsMoving(PlayerMove playerMove) {
+        if (unlessAnyOfTheKingsDidNotMove() && playerMove.getPiece().getPieceType() == PieceType.KING) {
+            switch (playerMove.getPiece().getPieceColor()) {
+                case WHITE:
+                    whiteKingMoved = true;
+                    break;
+                case BLACK:
+                    blackKingMoved = true;
+                    break;
+            }
+        }
+    }
+
+    private boolean unlessAnyOfTheKingsDidNotMove() {
+        return !whiteKingMoved || !blackKingMoved;
     }
 
     public PlayerMove getLastMove() {
@@ -139,7 +165,9 @@ public class ChessBoard {
         return !isEmpty(position);
     }
 
-    public boolean hasKingMoved(PieceColor pieceColor) {
-        return kingMoved.get(pieceColor);
+    public List<Position> get(Piece piece) {
+        return model.entrySet().stream()
+                .filter(POSITIONS_WITH_NO_PIECES)
+                .filter(positionPieceEntry -> positionPieceEntry.getValue().equals(piece)).map(Map.Entry::getKey).collect(Collectors.toList());
     }
 }

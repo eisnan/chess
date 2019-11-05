@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import java.util.Objects;
+
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -28,6 +30,5 @@ public class PlayerMove {
         this.toPosition = playerMove.toPosition;
         this.moveType = moveType;
     }
-
 
 }

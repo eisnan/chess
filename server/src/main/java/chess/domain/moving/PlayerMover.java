@@ -3,7 +3,7 @@ package chess.domain.moving;
 import chess.domain.*;
 import chess.domain.moving.validators.PawnValidator;
 
-public class PlayerAction {
+public class PlayerMover {
 
     private PawnPromoter pawnPromoter = new PawnPromoter();
 
@@ -11,9 +11,7 @@ public class PlayerAction {
 
         // isKingInCheck for uncapturable pieces
 
-
         // isKingInCheck if king is left in isKingInCheck
-
 
         chessBoard.getModel().put(fromPosition, null);
         chessBoard.getModel().put(toPosition, piece);
@@ -41,6 +39,7 @@ public class PlayerAction {
         chessBoard.addMove(new PlayerMove(piece, fromPosition, toPosition));
 
     }
+
 
     public void move(ChessBoard chessBoard, PlayerMove playerMove) {
         move(chessBoard, playerMove.getPiece(), playerMove.getFromPosition(), playerMove.getToPosition());

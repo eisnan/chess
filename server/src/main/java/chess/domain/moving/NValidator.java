@@ -16,9 +16,9 @@ public class NValidator implements PositionValidator {
                 .flatMap(moveDescriberPositionsEntry -> moveDescriberPositionsEntry.getValue().stream())
                 .filter(playerMove -> {
                     Piece piece = chessBoard.getModel().get(playerMove.getToPosition());
-                    return piece == null || piece.getPieceColor() != moveSettings.getPiece().getPieceColor();
+                    return piece == null;
                 })
-                .map(playerMove -> new PlayerMove(playerMove, MoveType.NORMAL))
+                .map(playerMove -> new PlayerMove(playerMove, MoveType.MOVE))
                 .collect(Collectors.toCollection(() -> new TreeSet<>(new AscendingPositionComparator())));
     }
 }

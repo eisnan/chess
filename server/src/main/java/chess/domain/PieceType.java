@@ -1,7 +1,7 @@
 package chess.domain;
 
 public enum PieceType {
-    PAWN("P"), KING("K"), QUEEN("Q"), BISHOP("B"), KNIGHT("N"), ROOK("R");
+    PAWN(""), KING("K"), QUEEN("Q"), BISHOP("B"), KNIGHT("N"), ROOK("R");
 
     private String notationSymbol;
 
@@ -19,6 +19,13 @@ public enum PieceType {
                 return pieceType;
             }
         }
+        //for pawns should be rank
+        for (File f : File.values()) {
+            if (notationSymbol.equals(f.name())) {
+                return PAWN;
+            }
+        }
         throw new IllegalArgumentException();
     }
+
 }
