@@ -58,10 +58,10 @@ public class AlgebraicNotationLoader {
         }
 
         PieceType pieceType = detectPieceType(moveNotation);
-        Piece piece = new Piece(pieceColor, pieceType);
+        Piece piece =  Piece.of(pieceColor, pieceType);
 
         if (moveType == MoveType.PROMOTION) {
-            piece = new Piece(pieceColor, PieceType.PAWN);
+            piece =  Piece.of(pieceColor, PieceType.PAWN);
         }
 
         Position toPosition;

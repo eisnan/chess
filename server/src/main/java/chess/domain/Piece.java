@@ -1,18 +1,24 @@
 package chess.domain;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
+/**
+ * The class is self cached based on enum values, meaning it can only have a limited amount of values
+ */
 public class Piece {
 
     private PieceColor pieceColor;
     private PieceType pieceType;
-    private Collection<Position> attackingPositions = Collections.emptySet();
 
-    public Piece(PieceColor pieceColor, PieceType pieceType) {
+    private Piece(PieceColor pieceColor, PieceType pieceType) {
         this.pieceColor = pieceColor;
         this.pieceType = pieceType;
+    }
+
+    public static Piece of(PieceColor pieceColor, PieceType pieceType) {
+        return PieceCache.getPieceCache().get(pieceColor).get(pieceType);
     }
 
     public static Piece getWhitePiece(PieceType pieceType) {
@@ -23,13 +29,6 @@ public class Piece {
         return new Piece(PieceColor.BLACK, pieceType);
     }
 
-    public Collection<Position> getAttackingPositions() {
-        return Collections.unmodifiableCollection(attackingPositions);
-    }
-
-    public void setAttackingPositions(Collection<Position> attackingPositions) {
-        this.attackingPositions = attackingPositions;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -74,41 +73,24 @@ public class Piece {
         return pieceColor == PieceColor.BLACK;
     }
 
-    public String getUnicode() {
-        switch (pieceColor) {
-            case WHITE:
-                switch (pieceType) {
-                    case PAWN:
-                        return "&#9817;";
-                    case KING:
-                        return "&#9812;";
-                    case QUEEN:
-                        return "&#9813;";
-                    case BISHOP:
-                        return "&#9815;";
-                    case KNIGHT:
-                        return "&#9816;";
-                    case ROOK:
-                        return "&#9814;";
+    private static class PieceCache {
+        private static Map<PieceColor, Map<PieceType,Piece>> pieceCache = new HashMap<>();
+
+        static {
+            for (PieceColor color : PieceColor.values()) {
+                Map<PieceType,Piece> pieceTypes  = new HashMap<>();
+                for (PieceType type : PieceType.values()) {
+                    Piece piece = new Piece(color, type);
+                    pieceTypes.put(type, piece);
+
                 }
-                break;
-            case BLACK:
-                switch (pieceType) {
-                    case PAWN:
-                        return "&#9823;";
-                    case KING:
-                        return "&#9818;";
-                    case QUEEN:
-                        return "&#9819;";
-                    case BISHOP:
-                        return "&#9821;";
-                    case KNIGHT:
-                        return "&#9822;";
-                    case ROOK:
-                        return "&#9820;";
-                }
-                break;
+                pieceCache.put(color, pieceTypes);
+            }
         }
-        return "";
+
+        public static Map<PieceColor, Map<PieceType,Piece>> getPieceCache() {
+            return pieceCache;
+        }
+
     }
 }

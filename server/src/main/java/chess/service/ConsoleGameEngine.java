@@ -40,7 +40,7 @@ public class ConsoleGameEngine {
 //        }
 
 
-        return new Piece(PieceColor.valueOf(color), PieceType.getByNotationSymbol(pieceLetter));
+        return Piece.of(PieceColor.valueOf(color), PieceType.getByNotationSymbol(pieceLetter));
     }
 
     public void printBoard(ChessBoard chessBoard) {

@@ -4,6 +4,7 @@ import chess.domain.ChessBoard;
 import chess.domain.File;
 import chess.domain.Piece;
 import chess.domain.Rank;
+import chess.domain.util.Unicoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -44,7 +45,7 @@ public class ChessboardHtmlMapper {
         for (int j = Rank.values().length - 1; j >= 0; j--) {
             html += "<tr><th>" + (j + 1) + "</th>";
             for (int i = 0; i < File.values().length; i++) {
-                html += "<td class=\"" + (white ? "light" : "dark") + "\">" + ((arrayModel[i][j] != null) ? arrayModel[i][j].getUnicode() : "") + "</td>\n";
+                html += "<td class=\"" + (white ? "light" : "dark") + "\">" + ((arrayModel[i][j] != null) ? Unicoder.getUnicode(arrayModel[i][j]) : "") + "</td>\n";
                 white = !white;
             }
             white = !white;

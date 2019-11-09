@@ -27,7 +27,7 @@ public class HardCodedPositionResolver implements StartPositionResolver {
 
         //pawns
         Map<PieceColor, Set<Position>> pawnsPosition = pawnStartPositionResolver.getPawnsPosition();
-        pawnsPosition.forEach((pieceColor, positions) -> initialPositions.put(new Piece(pieceColor, PieceType.PAWN), positions));
+        pawnsPosition.forEach((pieceColor, positions) -> initialPositions.put( Piece.of(pieceColor, PieceType.PAWN), positions));
 
         //kings
         Pair<Position, Position> kingsPosition = kingStartPositionResolver.getKingsPosition();
@@ -41,15 +41,15 @@ public class HardCodedPositionResolver implements StartPositionResolver {
 
         //bishops
         Map<PieceColor, Set<Position>> bishopsPosition = bishopStartPositionResolver.getBishopsPosition();
-        bishopsPosition.forEach((pieceColor, positions) -> initialPositions.put(new Piece(pieceColor, PieceType.BISHOP), positions));
+        bishopsPosition.forEach((pieceColor, positions) -> initialPositions.put( Piece.of(pieceColor, PieceType.BISHOP), positions));
 
         //knights
         Map<PieceColor, Set<Position>> knightsPosition = knightStartPositionResolver.getKnightsPosition();
-        knightsPosition.forEach((pieceColor, positions) -> initialPositions.put(new Piece(pieceColor, PieceType.KNIGHT), positions));
+        knightsPosition.forEach((pieceColor, positions) -> initialPositions.put( Piece.of(pieceColor, PieceType.KNIGHT), positions));
 
         //rooks
         Map<PieceColor, Set<Position>> rooksPosition = rookStartPositionResolver.getRooksPosition();
-        rooksPosition.forEach((pieceColor, positions) -> initialPositions.put(new Piece(pieceColor, PieceType.ROOK), positions));
+        rooksPosition.forEach((pieceColor, positions) -> initialPositions.put( Piece.of(pieceColor, PieceType.ROOK), positions));
 
         return initialPositions;
     }

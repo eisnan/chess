@@ -95,8 +95,8 @@ public class Position {
     }
 
     private static class PositionCache {
-        static Map<String, Position> algCache = new HashMap<>();
-        static Map<File, Map<Rank, Position>> frCache = new HashMap<>();
+        private static Map<String, Position> algCache = new HashMap<>();
+        private static Map<File, Map<Rank, Position>> frCache = new HashMap<>();
 
         static {
             for (File f : File.values()) {
