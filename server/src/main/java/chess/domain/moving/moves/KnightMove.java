@@ -27,27 +27,10 @@ public class KnightMove implements Move {
         Set<Position> belowPositions = new HashSet<>();
         int fileOrdinal = currentPosition.getFile().ordinal();
         int rankOrdinal = currentPosition.getRank().ordinal();
-        // todo refactor this
-        try {
-            belowPositions.add(new Position(fileOrdinal - 2, rankOrdinal - 1));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-        try {
-            belowPositions.add(new Position(fileOrdinal - 1, rankOrdinal - 2));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-        try {
-            belowPositions.add(new Position(fileOrdinal + 2, rankOrdinal - 1));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-        try {
-            belowPositions.add(new Position(fileOrdinal + 1, rankOrdinal - 2));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
+        Position.of(fileOrdinal - 2, rankOrdinal - 1).ifPresent(belowPositions::add);
+        Position.of(fileOrdinal - 1, rankOrdinal - 2).ifPresent(belowPositions::add);
+        Position.of(fileOrdinal + 2, rankOrdinal - 1).ifPresent(belowPositions::add);
+        Position.of(fileOrdinal + 1, rankOrdinal - 2).ifPresent(belowPositions::add);
 
         return belowPositions.stream()
                 .map(position -> new PlayerMove(piece, currentPosition, position))
@@ -58,27 +41,10 @@ public class KnightMove implements Move {
         Set<Position> abovePositions = new HashSet<>();
         int fileOrdinal = currentPosition.getFile().ordinal();
         int rankOrdinal = currentPosition.getRank().ordinal();
-        // todo refactor this
-        try {
-            abovePositions.add(new Position(fileOrdinal - 2, rankOrdinal + 1));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-        try {
-            abovePositions.add(new Position(fileOrdinal - 1, rankOrdinal + 2));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-        try {
-            abovePositions.add(new Position(fileOrdinal + 2, rankOrdinal + 1));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
-        try {
-            abovePositions.add(new Position(fileOrdinal + 1, rankOrdinal + 2));
-        } catch (InvalidPositionException ex) {
-            log.info(ex.toString());
-        }
+        Position.of(fileOrdinal - 2, rankOrdinal + 1).ifPresent(abovePositions::add);
+        Position.of(fileOrdinal - 1, rankOrdinal + 2).ifPresent(abovePositions::add);
+        Position.of(fileOrdinal + 2, rankOrdinal + 1).ifPresent(abovePositions::add);
+        Position.of(fileOrdinal + 1, rankOrdinal + 2).ifPresent(abovePositions::add);
 
         return abovePositions.stream()
                 .map(position -> new PlayerMove(piece, currentPosition, position))

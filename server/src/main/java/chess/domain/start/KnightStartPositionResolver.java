@@ -24,10 +24,10 @@ public class KnightStartPositionResolver {
     }
 
     public Set<Position> getWhiteKnightsPosition() {
-        return new HashSet<>(Arrays.asList(new Position(File.b, WHITE_KNIGHT_RANK), new Position(File.g, WHITE_KNIGHT_RANK)));
+        return new HashSet<>(Arrays.asList(Position.ofValid(File.b, WHITE_KNIGHT_RANK), Position.ofValid(File.g, WHITE_KNIGHT_RANK)));
     }
 
     public Set<Position> getBlackKnightsPosition() {
-        return new HashSet<>(Arrays.asList(new Position(File.b, BLACK_KNIGHT_RANK), new Position(File.g, BLACK_KNIGHT_RANK)));
+        return new HashSet<>(Arrays.asList(Position.ofValid(File.b, BLACK_KNIGHT_RANK), Position.ofValid(File.g, BLACK_KNIGHT_RANK)));
     }
 }

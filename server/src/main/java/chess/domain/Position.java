@@ -4,10 +4,8 @@ import chess.domain.util.Pair;
 import com.google.common.collect.ImmutableMap;
 import lombok.Getter;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import javax.swing.text.html.Option;
+import java.util.*;
 
 @Getter
 public class Position {
@@ -16,32 +14,38 @@ public class Position {
     private Rank rank;
     private SquareColor squareColor;
 
-    public Position(File file, Rank rank) {
+    private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
         this.squareColor = determineColor(file, rank);
-    }
-
-    public Position(Pair<File, Rank> coordinate) {
-        this.file = coordinate.getLeft();
-        this.rank = coordinate.getRight();
-        this.squareColor = determineColor(file, rank);
-    }
-
-    public Position(int fileOrdinal, int rankOrdinal) {
-        try {
-            this.file = File.values()[fileOrdinal];
-            this.rank = Rank.values()[rankOrdinal];
-            this.squareColor = determineColor(file, rank);
-        } catch (IndexOutOfBoundsException ex) {
-            throw new InvalidPositionException("", fileOrdinal, rankOrdinal);
-        }
     }
 
     @Deprecated
     public Position(char file, int rank) {
         this.file = File.valueOf(String.valueOf(file));
         this.rank = Rank.getRank(String.valueOf(rank));
+    }
+
+    // static factory methods
+    public static Optional<Position> of(int fileOrdinal, int rankOrdinal) {
+        try {
+            return Optional.of(PositionCache.getFrCache().get(File.values()[fileOrdinal]).get(Rank.values()[rankOrdinal]));
+        } catch (IndexOutOfBoundsException ex) {
+            return Optional.empty();
+        }
+    }
+
+    public static Optional<Position> of(File file, Rank rank) {
+        Position position = PositionCache.getFrCache().get(file).get(rank);
+        return  position != null ? Optional.of(position) : Optional.empty();
+    }
+
+    /**
+     * Use this just when hardcoding asking for an instance.
+     * Will return null if invalid file/rank are used
+     */
+    public static Position ofValid(File file, Rank rank) {
+        return PositionCache.getFrCache().get(file).get(rank);
     }
 
     public Position(String algebraicNotation) {

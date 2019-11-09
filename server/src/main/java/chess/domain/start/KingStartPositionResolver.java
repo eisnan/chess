@@ -13,6 +13,6 @@ public class KingStartPositionResolver {
      * Left tuple is white king, right tuple is black king
      */
     public Pair<Position, Position> getKingsPosition() {
-        return new Pair<>(new Position(KING_FILE, Rank._1), new Position(KING_FILE, Rank._8));
+        return new Pair<>(Position.ofValid(KING_FILE, Rank._1), Position.ofValid(KING_FILE, Rank._8));
     }
 }

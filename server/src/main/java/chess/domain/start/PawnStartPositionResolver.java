@@ -28,13 +28,13 @@ public class PawnStartPositionResolver {
 
     public Set<Position> getWhitePawnsPosition() {
         return Stream.of(File.values()).
-                map(file -> new Position(file, WHITE_PAWN_RANK)).
+                map(file -> Position.ofValid(file, WHITE_PAWN_RANK)).
                 collect(Collectors.toSet());
     }
 
     public Set<Position> getBlackPawnsPosition() {
         return Stream.of(File.values()).
-                map(file -> new Position(file, BLACK_PAWN_RANK)).
+                map(file -> Position.ofValid(file, BLACK_PAWN_RANK)).
                 collect(Collectors.toSet());
     }
 }

@@ -24,10 +24,10 @@ public class RookStartPositionResolver {
     }
 
     public Set<Position> getWhiteRooksPosition() {
-        return new HashSet<>(Arrays.asList(new Position(File.a, WHITE_ROOK_RANK), new Position(File.h, WHITE_ROOK_RANK)));
+        return new HashSet<>(Arrays.asList(Position.ofValid(File.a, WHITE_ROOK_RANK), Position.ofValid(File.h, WHITE_ROOK_RANK)));
     }
 
     public Set<Position> getBlackRooksPosition() {
-        return new HashSet<>(Arrays.asList(new Position(File.a, BLACK_ROOK_RANK), new Position(File.h, BLACK_ROOK_RANK)));
+        return new HashSet<>(Arrays.asList( Position.ofValid(File.a, BLACK_ROOK_RANK),  Position.ofValid(File.h, BLACK_ROOK_RANK)));
     }
 }

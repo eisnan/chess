@@ -47,7 +47,7 @@ public class ChessBoard {
         Collections.reverse(ranks);
         for (Rank rank : ranks) {
             for (File file : File.values()) {
-                model.put(new Position(file, rank), null);
+                model.put(Position.ofValid(file, rank), null);
             }
         }
     }
@@ -81,7 +81,7 @@ public class ChessBoard {
         System.out.println(collect);
     }
 
-    public class QChessBoard  {
+    public class QChessBoard {
 
         private QChessBoard() {
         }
@@ -97,7 +97,7 @@ public class ChessBoard {
             Piece[][] arrayModel = new Piece[8][8];
             for (int j = Rank.values().length - 1; j >= 0; j--) {
                 for (int i = 0; i < File.values().length; i++) {
-                    arrayModel[i][j] = model.get(new Position(File.values()[i], Rank.values()[j]));
+                    arrayModel[i][j] = model.get(Position.ofValid(File.values()[i], Rank.values()[j]));
                 }
             }
 
@@ -159,11 +159,7 @@ public class ChessBoard {
                     if (i == f && j == r) {
                         continue;
                     }
-                    try {
-                        positions.add(new Position(f, r));
-                    } catch (InvalidPositionException ex) {
-                        log.info(ex.toString());
-                    }
+                    Position.of(f, r).ifPresent(positions::add);
                 }
             }
 

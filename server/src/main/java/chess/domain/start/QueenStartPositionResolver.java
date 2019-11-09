@@ -14,6 +14,6 @@ public class QueenStartPositionResolver {
      * Left tuple is white queen, right tuple is black queen
      */
     public Pair<Position, Position> getQueensPosition() {
-        return new Pair<>(new Position(QUEEN_FILE, Rank._1), new Position(QUEEN_FILE, Rank._8));
+        return new Pair<>( Position.ofValid(QUEEN_FILE, Rank._1),  Position.ofValid(QUEEN_FILE, Rank._8));
     }
 }

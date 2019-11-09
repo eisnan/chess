@@ -24,10 +24,10 @@ public class BishopStartPositionResolver {
     }
 
     public Set<Position> getWhiteBishopsPosition() {
-        return new HashSet<>(Arrays.asList(new Position(File.c, WHITE_BISHOP_RANK), new Position(File.f, WHITE_BISHOP_RANK)));
+        return new HashSet<>(Arrays.asList(Position.ofValid(File.c, WHITE_BISHOP_RANK), Position.ofValid(File.f, WHITE_BISHOP_RANK)));
     }
 
     public Set<Position> getBlackBishopsPosition() {
-        return new HashSet<>(Arrays.asList(new Position(File.c, BLACK_BISHOP_RANK), new Position(File.f, BLACK_BISHOP_RANK)));
+        return new HashSet<>(Arrays.asList(Position.ofValid(File.c, BLACK_BISHOP_RANK), Position.ofValid(File.f, BLACK_BISHOP_RANK)));
     }
 }

@@ -36,9 +36,10 @@ public class PlayerMover {
             if (enPassant) {
                 Position epCapture;
                 if (piece.isWhitePiece()) {
-                    epCapture = new Position(toPosition.getFile(), toPosition.getRank().previous());
+                    // ofValid because pawn can never go backwards
+                    epCapture =  Position.ofValid(toPosition.getFile(), toPosition.getRank().previous());
                 } else {
-                    epCapture = new Position(toPosition.getFile(), toPosition.getRank().next());
+                    epCapture =  Position.ofValid(toPosition.getFile(), toPosition.getRank().next());
                 }
                 chessBoard.getModel().put(epCapture, null);
             }
