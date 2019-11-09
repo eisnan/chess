@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.rules.MovingRule;
 import chess.domain.moving.rules.MovingRules;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.HashSet;

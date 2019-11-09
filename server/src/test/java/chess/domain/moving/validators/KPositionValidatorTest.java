@@ -8,6 +8,8 @@ public class KPositionValidatorTest {
 
     @Test
     public void keepValidPositionsToMove() {
+
+
     }
 
     @Test

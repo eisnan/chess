@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class ChessBoard {
-    private static final Predicate<Map.Entry<Position, Piece>> POSITIONS_WITH_NO_PIECES = positionPieceEntry -> positionPieceEntry.getValue() != null;
 
     private final KPositionValidator kPositionValidator = new KPositionValidator();
     private Map<Position, Piece> model = new LinkedHashMap<>();
@@ -76,12 +75,9 @@ public class ChessBoard {
         return playerMoves.isEmpty() ? null : playerMoves.getLast();
     }
 
-    private void observePromotionRanks() {
-        List<Position> collect = model.keySet().stream().filter(position -> position.getRank() == Rank._1 || position.getRank() == Rank._8).collect(Collectors.toList());
-        System.out.println(collect);
-    }
-
     public class QChessBoard {
+
+        private final Predicate<Map.Entry<Position, Piece>> POSITIONS_WITH_NO_PIECES = positionPieceEntry -> positionPieceEntry.getValue() != null;
 
         private QChessBoard() {
         }

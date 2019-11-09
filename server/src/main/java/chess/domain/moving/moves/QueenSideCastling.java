@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * Created by Gabs on 1/26/2019.
  */
-public class QueenSideCastling implements Move, SpecialMove {
+public class QueenSideCastling implements SpecialMove {
 
     private Comparator<PlayerMove> blackPositionComparator = new AscendingPositionComparator();
     private Comparator<PlayerMove> whitePositionComparator = new DescendingPositionComparator();

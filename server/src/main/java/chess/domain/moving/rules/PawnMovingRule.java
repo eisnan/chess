@@ -24,7 +24,8 @@ public class PawnMovingRule implements MovingRule {
             new ForwardDiagonalRight(),
             new BackwardMove(),
             new BackwardDiagonalLeft(),
-            new BackwardDiagonalRight());
+            new BackwardDiagonalRight(),
+            new PromotionMove());
 
     public PawnMovingRule() {
         moveParameters.put(PieceColor.WHITE, Arrays.asList(new Pair<>(new ForwardMove(), 2)));

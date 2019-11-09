@@ -1,0 +1,2 @@
+e2 -> {e2,e3,MOVE},{e2,e4,MOVE} -> e4
+d7 -> {d7,d6,MOVE},{d7,d5,MOVE} -> d5

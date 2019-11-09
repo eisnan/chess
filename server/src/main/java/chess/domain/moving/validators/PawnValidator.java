@@ -23,7 +23,11 @@ public class PawnValidator implements PositionValidator {
 
         possiblePositions.forEach((moveDescriber, playerMoves) -> {
             for (PlayerMove playerMove : playerMoves) {
-                if (chessBoard.q.isEmpty(playerMove.getToPosition())) {
+                Position toPosition = playerMove.getToPosition();
+                boolean isPromotionRank = playerMove.getPiece().getPieceColor().isPromotionRank(toPosition.getRank());
+                MoveType moveType = isPromotionRank ? MoveType.PROMOTION : MoveType.MOVE;
+                if (chessBoard.q.isEmpty(toPosition)) {
+                    playerMove.setMoveType(moveType);
                     validToMove.add(playerMove);
                     if (!firstRankForColor) {
                         break;
@@ -33,7 +37,7 @@ public class PawnValidator implements PositionValidator {
                 }
             }
         });
-        return validToMove.stream().map(playerMove -> new PlayerMove(playerMove, MoveType.MOVE)).collect(Collectors.toSet());
+        return validToMove;
     }
 
     @Override
@@ -41,7 +45,11 @@ public class PawnValidator implements PositionValidator {
         Collection<PlayerMove> validPositionsToAttack = PositionValidator.super.keepValidPositionsToAttack(chessBoard, moveSettings, possiblePositions);
         possiblePositions.values().stream().flatMap(Set::stream).filter(playerMove -> isEnPassant(chessBoard, moveSettings.getPiece(), moveSettings.getCurrentPosition(), playerMove.getToPosition()))
                 .findFirst().ifPresent(validPositionsToAttack::add);
-        return validPositionsToAttack;
+        return validPositionsToAttack.stream().peek(playerMove -> {
+            if (playerMove.getPiece().getPieceColor().isPromotionRank(playerMove.getToPosition().getRank())) {
+                playerMove.setMoveType(MoveType.PROMOTION);
+            }
+        }).collect(Collectors.toSet());
     }
 
     public boolean isEnPassant(ChessBoard chessBoard, Piece currentPiece, Position currentPosition, Position evaluatedPosition) {

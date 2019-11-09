@@ -6,6 +6,8 @@ import lombok.Getter;
 
 import javax.swing.text.html.Option;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Getter
 public class Position {
@@ -37,7 +39,7 @@ public class Position {
 
     public static Optional<Position> of(File file, Rank rank) {
         Position position = PositionCache.getFrCache().get(file).get(rank);
-        return  position != null ? Optional.of(position) : Optional.empty();
+        return position != null ? Optional.of(position) : Optional.empty();
     }
 
     /**
@@ -54,6 +56,10 @@ public class Position {
 
     public static Position of(String algNotation) {
         return PositionCache.getAlgCache().get(algNotation);
+    }
+
+    public static Collection<Position> of(String... algNotations) {
+        return Stream.of(algNotations).map(algNotation -> PositionCache.getAlgCache().get(algNotation)).collect(Collectors.toList());
     }
 
     public File getFile() {
@@ -101,10 +107,10 @@ public class Position {
         static {
             for (File f : File.values()) {
                 Map<Rank, Position> ranks = new HashMap<>();
-                for (Rank r: Rank.values()) {
+                for (Rank r : Rank.values()) {
                     Position pos = new Position(f, r);
                     ranks.put(r, pos);
-                    algCache.put(f.name()+r.getCoordinate(), pos);
+                    algCache.put(f.name() + r.getCoordinate(), pos);
                 }
                 frCache.put(f, ranks);
             }

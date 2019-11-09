@@ -33,4 +33,12 @@ public enum PieceColor {
             return rank == Rank._7;
         }
     }
+
+    public boolean isPromotionRank(Rank rank) {
+        if (this == WHITE) {
+            return rank == Rank._8;
+        } else {
+            return rank == Rank._1;
+        }
+    }
 }

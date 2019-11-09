@@ -10,7 +10,6 @@ import java.util.Objects;
 
 @Getter
 @AllArgsConstructor
-@EqualsAndHashCode
 public class PlayerMove {
 
     private Piece piece;
@@ -31,4 +30,26 @@ public class PlayerMove {
         this.moveType = moveType;
     }
 
+    public void setMoveType(MoveType moveType) {
+        this.moveType = moveType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        PlayerMove pMove = (PlayerMove) o;
+        return piece.equals(pMove.piece) &&
+                fromPosition.equals(pMove.fromPosition) &&
+                toPosition.equals(pMove.toPosition);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(piece, fromPosition, toPosition);
+    }
 }
