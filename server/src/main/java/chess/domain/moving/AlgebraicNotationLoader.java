@@ -1,7 +1,6 @@
 package chess.domain.moving;
 
 import chess.domain.*;
-import chess.domain.util.ChessboardSingleton;
 import com.google.common.io.Resources;
 import org.springframework.stereotype.Component;
 
@@ -16,18 +15,13 @@ public class AlgebraicNotationLoader {
 
     private PositionResolver positionResolver = new PositionResolver();
     private PlayerMover mover = new PlayerMover();
-    private Map<UUID, ChessBoard> gameMemory = ChessboardSingleton.INSTANCE.getGameMemory();
-
 
     public AlgebraicNotationLoader() {
-
     }
 
     public ChessBoard loadFrom(String algebraicNotation) {
 
         ChessBoard chessBoard = new ChessBoard();
-
-
         String[] split = algebraicNotation.split("(\\d+\\.)");
 
         Stream.of(split).filter(s -> s.length() > 0).map(String::trim).forEach(s -> {
@@ -35,14 +29,9 @@ public class AlgebraicNotationLoader {
 
             Collection<PlayerMove> whiteMoves = parseMove(chessBoard, moves[0], PieceColor.WHITE);
             whiteMoves.forEach(mv -> mover.move(chessBoard, mv));
-//            mover.move(chessBoard, whiteMoves);
             Collection<PlayerMove> blackMoves = parseMove(chessBoard, moves[1], PieceColor.BLACK);
             blackMoves.forEach(mv -> mover.move(chessBoard, mv));
-//            mover.move(chessBoard, blackMoves);
-
         });
-
-
         return chessBoard;
     }
 
@@ -50,44 +39,7 @@ public class AlgebraicNotationLoader {
         Collection<MoveType> moveTypes = detectMoveType(moveNotation);
 
         return processMove(chessBoard, moveNotation, pieceColor, moveTypes);
-
-//
-//        Piece piece = new Piece(pieceColor, pieceType);
-//        Position toPosition = new Position(positionNotation);
-//        PlayerMove playerMove;
-//        if (positionNotation.length() == 2) { //normal moveNotation
-//
-//
-//        } else { //other moveNotation
-//            playerMove = null;
-//        }
-//        return new PlayerMove(piece, playerMove.getFromPosition(), toPosition);
     }
-
-//    private void processMove2(String moveNotation, Collection<MoveType> moveTypes) {
-//        PieceType pieceType = detectPieceType(moveNotation);
-////        processMove(moveNotation, moveTypes);
-//
-//        if (pieceType == PieceType.PAWN) {
-//            positionNotation = moveNotation;
-//        } else if (moveNotation.length() == 3) {
-//            String pieceTypeNotation = moveNotation.substring(0, 1);
-//            positionNotation = moveNotation.substring(1, 3);
-//            pieceType = PieceType.getByNotationSymbol(pieceTypeNotation);
-//        } else if (moveNotation.length() == 4) {
-//            String pieceTypeNotation = moveNotation.substring(0, 1);
-//
-//            pieceType = PieceType.getByNotationSymbol(pieceTypeNotation);
-//        } else {
-//            throw new RuntimeException();
-//        }
-//
-//
-//        if (moveTypes.contains(MoveType.MOVE)) {
-//
-//        }
-//    }
-
 
     private Collection<PlayerMove> processMove(ChessBoard chessBoard, String moveNotation, PieceColor pieceColor, Collection<MoveType> moveTypes) {
         if (moveTypes.containsAll(Arrays.asList(MoveType.PROMOTION, MoveType.CHECK))) {
@@ -100,7 +52,6 @@ public class AlgebraicNotationLoader {
     }
 
     private Collection<PlayerMove> analyzeMove(ChessBoard chessBoard, String moveNotation, PieceColor pieceColor, MoveType moveType) {
-
 
         if (MoveType.isCastling(moveType)) {
             return castling(pieceColor, moveType);
@@ -124,12 +75,12 @@ public class AlgebraicNotationLoader {
         }
 
         //get all pieces of that type from chessboard
-        List<Position> positions = chessBoard.get(piece);
+        List<Position> positions = chessBoard.q.get(piece);
 
         // find out which could have moved to that position
         Collection<PlayerMove> availableMoves = new ArrayList<>();
         positions.stream().forEach(position -> {
-            availableMoves.addAll(positionResolver.getAvailableMoves(chessBoard, position));
+            availableMoves.addAll(positionResolver.getValidMoves(chessBoard, position));
         });
 
         List<PlayerMove> playerMoves = availableMoves.stream().filter(pmove -> pmove.getToPosition().equals(toPosition)).collect(Collectors.toList());
@@ -165,7 +116,6 @@ public class AlgebraicNotationLoader {
                         break;
                 }
 
-
                 break;
             case BLACK:
                 switch (moveType) {
@@ -174,7 +124,7 @@ public class AlgebraicNotationLoader {
                         moves.add(new PlayerMove(Piece.getWhitePiece(PieceType.ROOK), new Position("a8"), new Position("d8")));
                         break;
                     case KING_SIDE_CASTLING:
-                        moves.add(new PlayerMove(Piece.getWhitePiece(PieceType.KING), new Position("e8"), new Position("c8")));
+                        moves.add(new PlayerMove(Piece.getWhitePiece(PieceType.KING), new Position("e8"), new Position("g8")));
                         moves.add(new PlayerMove(Piece.getWhitePiece(PieceType.ROOK), new Position("a8"), new Position("d8")));
                         break;
                 }
@@ -222,24 +172,8 @@ public class AlgebraicNotationLoader {
         return moveTypes;
     }
 
-    private String readFromInputStream(InputStream inputStream)
-            throws IOException {
-        StringBuilder resultStringBuilder = new StringBuilder();
-        try (BufferedReader br
-                     = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                resultStringBuilder.append(line).append("\n");
-            }
-        }
-        return resultStringBuilder.toString();
-    }
-
     public ChessBoard loadFromFile(String file) throws IOException {
-
         String fileContents = Resources.toString(Resources.getResource(file), Charset.defaultCharset());
-
         return loadFrom(fileContents);
-
     }
 }

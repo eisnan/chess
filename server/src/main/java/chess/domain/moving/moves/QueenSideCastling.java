@@ -1,14 +1,16 @@
 package chess.domain.moving.moves;
 
-import chess.domain.ChessBoard;
-import chess.domain.PieceColor;
+import chess.domain.*;
 import chess.domain.comparators.AscendingPositionComparator;
 import chess.domain.comparators.DescendingPositionComparator;
 import chess.domain.moving.DirectionIterator;
 import chess.domain.moving.MoveSettings;
+import chess.domain.moving.MoveType;
 import chess.domain.moving.PlayerMove;
 
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -21,12 +23,14 @@ public class QueenSideCastling implements Move, SpecialMove {
 
     @Override
     public Set<PlayerMove> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
+        switch (moveSettings.getPiece().getPieceColor()) {
+            case WHITE:
+                return Collections.singleton(new PlayerMove(Piece.getWhitePiece(PieceType.KING), Position.of("e1"), Position.of("c1"), MoveType.QUEEN_SIDE_CASTLING));
+            case BLACK:
+                return Collections.singleton(new PlayerMove(Piece.getWhitePiece(PieceType.KING), Position.of("e8"), Position.of("c8"), MoveType.QUEEN_SIDE_CASTLING));
+        }
 
-        DirectionIterator directionIterator = new DirectionIterator();
-        LeftMove leftMove = new LeftMove();
-        return directionIterator.iterate(moveSettings, leftMove, leftMove.fileFunction(), leftMove.rankFunction());
-
-
+        return Collections.emptySet();
     }
 
     @Override

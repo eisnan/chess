@@ -15,7 +15,7 @@ public class ConsoleGameEngine {
 
         // map user input to piece
 
-        Collection<PlayerMove> availablePositions = new PositionResolver().getAvailableMoves(chessBoard, position);
+        Collection<PlayerMove> availablePositions = new PositionResolver().getValidMoves(chessBoard, position);
         return availablePositions.stream().map(playerMove -> playerMove.getToPosition()).collect(Collectors.toSet());
 
 //        // map user input to move
@@ -44,7 +44,7 @@ public class ConsoleGameEngine {
     }
 
     public void printBoard(ChessBoard chessBoard) {
-        Piece[][] arrayModel = chessBoard.getArrayModel();
+        Piece[][] arrayModel = chessBoard.q.getArrayModel();
         ConsolePrinter.print(arrayModel);
     }
 }

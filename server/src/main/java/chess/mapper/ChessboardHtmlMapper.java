@@ -37,7 +37,7 @@ public class ChessboardHtmlMapper {
                 "        <th>g</th>\n" +
                 "        <th>h</th>\n" +
                 "    </tr>\n";
-        Piece[][] arrayModel = chessBoard.getArrayModel();
+        Piece[][] arrayModel = chessBoard.q.getArrayModel();
 
         boolean white = true;
 

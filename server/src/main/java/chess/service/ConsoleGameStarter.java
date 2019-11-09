@@ -15,7 +15,7 @@ public class ConsoleGameStarter {
         ConsoleGameEngine engine = new ConsoleGameEngine();
 
         ChessBoard chessBoard = new ChessBoard();
-        Piece[][] arrayModel = chessBoard.getArrayModel();
+        Piece[][] arrayModel = chessBoard.q.getArrayModel();
         ConsolePrinter.print(arrayModel);
 
         Scanner sc = new Scanner(System.in);
@@ -56,7 +56,7 @@ public class ConsoleGameStarter {
                 String positionSelection = sc.nextLine();
                 Position moveToPosition = engine.getPosition(positionSelection);
 
-                new PlayerMover().move(chessBoard, selectedPiece, selectedPosition, moveToPosition);
+                new PlayerMover().move(chessBoard, selectedPosition, moveToPosition);
 
                 boolean kingInCheck = new CheckRunner(chessBoard, selectedPiece.getPieceColor()).isKingInCheck();
 //                System.out.println(selectedPiece.getPieceColor() + " checks " + kingInCheck);

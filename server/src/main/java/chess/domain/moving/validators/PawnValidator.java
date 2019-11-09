@@ -23,7 +23,7 @@ public class PawnValidator implements PositionValidator {
 
         possiblePositions.forEach((moveDescriber, playerMoves) -> {
             for (PlayerMove playerMove : playerMoves) {
-                if (chessBoard.isEmpty(playerMove.getToPosition())) {
+                if (chessBoard.q.isEmpty(playerMove.getToPosition())) {
                     validToMove.add(playerMove);
                     if (!firstRankForColor) {
                         break;

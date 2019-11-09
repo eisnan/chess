@@ -21,7 +21,7 @@ public class ProtectedKingInCheck implements KingInCheck {
     @Override
     public boolean isKingInCheck(ChessBoard chessBoard, PieceColor pieceColor, Set<Position> openPositions) {
 
-        Pair<Position, Piece> king = chessBoard.getKing(pieceColor);
+        Pair<Position, Piece> king = chessBoard.q.getKing(pieceColor);
         Position kingPosition = king.getLeft();
         Piece kingPiece = king.getRight();
 

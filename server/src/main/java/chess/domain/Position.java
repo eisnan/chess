@@ -1,8 +1,12 @@
 package chess.domain;
 
 import chess.domain.util.Pair;
+import com.google.common.collect.ImmutableMap;
 import lombok.Getter;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @Getter
@@ -44,6 +48,10 @@ public class Position {
         this(File.valueOf(algebraicNotation.substring(0, 1)), Rank.getRank(algebraicNotation.substring(1, 2)));
     }
 
+    public static Position of(String algNotation) {
+        return PositionCache.getAlgCache().get(algNotation);
+    }
+
     public File getFile() {
         return file;
     }
@@ -80,5 +88,30 @@ public class Position {
 
     private SquareColor determineColor(File file, Rank rank) {
         return BoardColorCode.get(file.ordinal(), rank.ordinal());
+    }
+
+    private static class PositionCache {
+        static Map<String, Position> algCache = new HashMap<>();
+        static Map<File, Map<Rank, Position>> frCache = new HashMap<>();
+
+        static {
+            for (File f : File.values()) {
+                Map<Rank, Position> ranks = new HashMap<>();
+                for (Rank r: Rank.values()) {
+                    Position pos = new Position(f, r);
+                    ranks.put(r, pos);
+                    algCache.put(f.name()+r.getCoordinate(), pos);
+                }
+                frCache.put(f, ranks);
+            }
+        }
+
+        static Map<String, Position> getAlgCache() {
+            return Collections.unmodifiableMap(algCache);
+        }
+
+        static Map<File, Map<Rank, Position>> getFrCache() {
+            return Collections.unmodifiableMap(frCache);
+        }
     }
 }

@@ -3,11 +3,25 @@ package chess.domain.moving;
 import chess.domain.*;
 import chess.domain.moving.validators.PawnValidator;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class PlayerMover {
 
     private PawnPromoter pawnPromoter = new PawnPromoter();
+    private PositionResolver resolver = new PositionResolver();
 
-    public void move(ChessBoard chessBoard, Piece piece, Position fromPosition, Position toPosition) {
+    public void move(ChessBoard chessBoard, Position fromPosition, Position toPosition) {
+
+        Piece piece = chessBoard.get(fromPosition);
+
+        //validate move
+        List<Position> validPositions = resolver.getValidMoves(chessBoard, fromPosition).stream().map(PlayerMove::getToPosition).collect(Collectors.toList());
+        if (!validPositions.contains(toPosition)) {
+            throw new RuntimeException("Move is invalid");
+        }
 
         // isKingInCheck for uncapturable pieces
 
@@ -41,8 +55,7 @@ public class PlayerMover {
     }
 
 
-    public void move(ChessBoard chessBoard, PlayerMove playerMove) {
-        move(chessBoard, playerMove.getPiece(), playerMove.getFromPosition(), playerMove.getToPosition());
-
+    public void move(ChessBoard chessBoard, PlayerMove... playerMoves) {
+        Stream.of(playerMoves).forEach(playerMove -> move(chessBoard, playerMove.getFromPosition(), playerMove.getToPosition()));
     }
 }

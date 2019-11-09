@@ -22,7 +22,7 @@ public interface PositionValidator {
     default Collection<PlayerMove> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<PlayerMove>> possiblePositions) {
         Piece selectedPiece = moveSettings.getPiece();
         return possiblePositions.values().stream().flatMap(Set::stream)
-                .filter(playerMove -> chessBoard.isNotEmpty(playerMove.getToPosition()))
+                .filter(playerMove -> chessBoard.q.isNotEmpty(playerMove.getToPosition()))
                 .filter(playerMovePredicate -> chessBoard.getModel().get(playerMovePredicate.getToPosition()).getPieceColor().isOppositeColor(selectedPiece.getPieceColor()))
                 .map(playerMove -> new PlayerMove(playerMove, MoveType.CAPTURE))
                 .collect(Collectors.toList());

@@ -15,10 +15,17 @@ public interface KingInCheck {
 
     boolean isKingInCheck(ChessBoard chessBoard, PieceColor pieceColor, Set<Position> openPositions);
 
+    default boolean anyPieceAttackingPosition(ChessBoard chessBoard, Position kingPosition, Position newPosition) {
+
+
+
+        return false;
+    }
+
     default boolean knightsAttackKing(ChessBoard chessBoard, PieceColor pieceColor, Position kingPosition) {
 
         // isKingInCheck if there are enemy knights on the board
-        Collection<Pair<Position, Piece>> knights = chessBoard.getPieces(PieceType.KNIGHT, pieceColor.oppositeColor());
+        Collection<Pair<Position, Piece>> knights = chessBoard.q.getPieces(PieceType.KNIGHT, pieceColor.oppositeColor());
         //no vulnerable and no knights
         if (knights.isEmpty()) {
             return false;

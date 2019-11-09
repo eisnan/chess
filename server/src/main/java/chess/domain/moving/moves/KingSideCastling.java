@@ -1,29 +1,35 @@
 package chess.domain.moving.moves;
 
-import chess.domain.ChessBoard;
-import chess.domain.PieceColor;
+import chess.domain.*;
 import chess.domain.comparators.AscendingPositionComparator;
 import chess.domain.comparators.DescendingPositionComparator;
 import chess.domain.moving.DirectionIterator;
 import chess.domain.moving.MoveSettings;
+import chess.domain.moving.MoveType;
 import chess.domain.moving.PlayerMove;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
 /**
  * Created by Gabs on 1/26/2019.
  */
-public class KingSideCastling implements SpecialMove {
+public class KingSideCastling implements Move, SpecialMove {
 
     private Comparator<PlayerMove> blackPositionComparator = new AscendingPositionComparator();
     private Comparator<PlayerMove> whitePositionComparator = new DescendingPositionComparator();
 
     @Override
     public Set<PlayerMove> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
-        DirectionIterator directionIterator = new DirectionIterator();
-        RightMove rightMove = new RightMove();
-        return directionIterator.iterate(moveSettings, rightMove, rightMove.fileFunction(), rightMove.rankFunction());
+        switch (moveSettings.getPiece().getPieceColor()) {
+            case WHITE:
+                return Collections.singleton(new PlayerMove(Piece.getWhitePiece(PieceType.KING), Position.of("e1"), Position.of("g1"), MoveType.KING_SIDE_CASTLING));
+            case BLACK:
+                return Collections.singleton(new PlayerMove(Piece.getWhitePiece(PieceType.KING), Position.of("e8"), Position.of("g8"), MoveType.KING_SIDE_CASTLING));
+        }
+
+        return Collections.emptySet();
     }
 
     @Override

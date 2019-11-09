@@ -64,7 +64,7 @@ public class RawHtmlBoardController {
     public String checkPosition(@RequestParam("gameId") String gameId, @RequestParam("fromPosition") String fromStringPosition) {
         ChessBoard chessBoard = gameMemory.get(UUID.fromString(gameId));
         Position fromPosition = new Position(fromStringPosition);
-        Collection<PlayerMove> availablePositions = new PositionResolver().getAvailableMoves(chessBoard, fromPosition);
+        Collection<PlayerMove> availablePositions = new PositionResolver().getValidMoves(chessBoard, fromPosition);
         Set<String> collect = availablePositions.stream()
                 .sorted(new AscendingPositionComparator())
                 .map(PlayerMove::getToPosition)
@@ -79,7 +79,7 @@ public class RawHtmlBoardController {
         Position fromPosition = new Position(fromStringPosition);
         Piece selectedPiece = chessBoard.get(fromPosition);
         Position toPosition = new Position(toStringPosition);
-        new PlayerMover().move(chessBoard, selectedPiece, fromPosition, toPosition);
+        new PlayerMover().move(chessBoard, fromPosition, toPosition);
 
         return mapper.toPage(chessBoard);
     }

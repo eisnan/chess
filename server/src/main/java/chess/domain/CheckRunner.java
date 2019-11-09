@@ -18,18 +18,24 @@ public class CheckRunner {
     public CheckRunner(ChessBoard chessBoard, PieceColor pieceColor) {
         this.chessBoard = chessBoard;
         this.pieceColor = pieceColor;
-        this.king = chessBoard.getKing(pieceColor);
+        this.king = chessBoard.q.getKing(pieceColor);
         this.kingInCheckStrategy = getStrategy(chessBoard, pieceColor);
+    }
+
+    public boolean checkFor(ChessBoard chessBoard, PieceColor pieceColor, Position position) {
+
+
+        return false;
     }
 
     private Pair<KingInCheck, Set<Position>> getStrategy(ChessBoard chessBoard, PieceColor pieceColor) {
 
-        Pair<Position, Piece> king = chessBoard.getKing(pieceColor);
+        Pair<Position, Piece> king = chessBoard.q.getKing(pieceColor);
         //isKingInCheck if king is protected by own piece
         Position kingPosition = king.getLeft();
         Piece kingPiece = king.getRight();
 
-        Collection<Position> adjacentPositions = chessBoard.getAdjacentPositions(kingPosition);
+        Collection<Position> adjacentPositions = chessBoard.q.getAdjacentPositions(kingPosition);
         Predicate<Position> nullPositionOrOppositeColor = position -> chessBoard.getModel().get(position) == null ||
                 chessBoard.getModel().get(position).getPieceColor() == pieceColor.oppositeColor();
         Set<Position> openPositions = adjacentPositions.stream().filter(nullPositionOrOppositeColor).collect(Collectors.toSet());
