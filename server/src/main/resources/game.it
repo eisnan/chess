@@ -1,2 +1,7 @@
-e2 -> {e2,e3,MOVE},{e2,e4,MOVE} -> e4
-d7 -> {d7,d6,MOVE},{d7,d5,MOVE} -> d5
+e2 -> e3,MOVE;e4,MOVE -> e4
+d7 -> d6,MOVE;d5,MOVE -> d5
+e4 -> e5,MOVE;d5,CAPTURE -> d5
+e7 -> e6,MOVE;e5,MOVE -> e5
+d5 -> d6,MOVE;e6,EN_PASSANT -> e6
+f7 -> f6,MOVE;f5,MOVE;e6,CAPTURE -> e6
+f1 -> e2,MOVE;d3,MOVE;c4,MOVE;b5,CHECK;a6,MOVE -> b5

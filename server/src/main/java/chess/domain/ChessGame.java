@@ -7,21 +7,29 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ChessGame {
 
-    private GameId gameId;
-    private ChessBoard chessBoard;
-    private ChessPlayer whitePlayer;
-    private ChessPlayer blackPlayer;
+    private final GameId gameId;
+    private final ChessPlayer whitePlayer;
+    private final ChessPlayer blackPlayer;
+    private ChessEngine engine;
 
-    public ChessGame(GameId gameId, ChessBoard chessBoard, ChessPlayer whitePlayer, ChessPlayer blackPlayer) {
+    public ChessGame(GameId gameId, ChessPlayer whitePlayer, ChessPlayer blackPlayer) {
         this.gameId = gameId;
-        this.chessBoard = chessBoard;
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
     }
 
-    public void startGame() {
+    public ChessEngine startGame() {
       log.info("Starting game:" + gameId.getId());
 
+      ChessBoard chessBoard = new ChessBoard();
+      engine = new ChessEngine(chessBoard);
+
       log.info("Game started");
+
+      return engine;
     }
+
+
+
+
 }

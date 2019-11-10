@@ -43,8 +43,6 @@ public class PawnValidator implements PositionValidator {
     @Override
     public Collection<PlayerMove> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<PlayerMove>> possiblePositions) {
         Collection<PlayerMove> validPositionsToAttack = PositionValidator.super.keepValidPositionsToAttack(chessBoard, moveSettings, possiblePositions);
-        possiblePositions.values().stream().flatMap(Set::stream).filter(playerMove -> isEnPassant(chessBoard, moveSettings.getPiece(), moveSettings.getCurrentPosition(), playerMove.getToPosition()))
-                .findFirst().ifPresent(validPositionsToAttack::add);
         return validPositionsToAttack.stream().peek(playerMove -> {
             if (playerMove.getPiece().getPieceColor().isPromotionRank(playerMove.getToPosition().getRank())) {
                 playerMove.setMoveType(MoveType.PROMOTION);

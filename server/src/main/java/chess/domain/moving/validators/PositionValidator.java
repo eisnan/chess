@@ -6,6 +6,7 @@ import chess.domain.moving.MoveSettings;
 import chess.domain.moving.MoveType;
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.moves.Move;
+import chess.domain.moving.moves.SpecialMove;
 
 import java.util.Collection;
 import java.util.Map;
@@ -21,10 +22,28 @@ public interface PositionValidator {
      */
     default Collection<PlayerMove> keepValidPositionsToAttack(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<PlayerMove>> possiblePositions) {
         Piece selectedPiece = moveSettings.getPiece();
-        return possiblePositions.values().stream().flatMap(Set::stream)
+        Set<PlayerMove> specialMoves = getSpecialMoves(possiblePositions);
+        Map<Move, Set<PlayerMove>> nonSpecialMoves = getNonSpecialMoves(possiblePositions);
+        Set<PlayerMove> evaluatedMoves = nonSpecialMoves.values().stream()
+                .flatMap(Set::stream)
                 .filter(playerMove -> chessBoard.q.isNotEmpty(playerMove.getToPosition()))
                 .filter(playerMovePredicate -> chessBoard.getModel().get(playerMovePredicate.getToPosition()).getPieceColor().isOppositeColor(selectedPiece.getPieceColor()))
                 .map(playerMove -> new PlayerMove(playerMove, MoveType.CAPTURE))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
+        evaluatedMoves.addAll(specialMoves);
+        return evaluatedMoves;
+    }
+
+    default Map<Move, Set<PlayerMove>> getNonSpecialMoves(Map<Move, Set<PlayerMove>> possiblePositions) {
+        return possiblePositions.entrySet().stream()
+                    .filter(playerMovesPerMove -> !(playerMovesPerMove.getKey() instanceof SpecialMove))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    default Set<PlayerMove> getSpecialMoves(Map<Move, Set<PlayerMove>> possiblePositions) {
+        return possiblePositions.entrySet().stream()
+                    .filter(playerMovesPerMove -> playerMovesPerMove.getKey() instanceof SpecialMove)
+                    .flatMap(playerMovesPerMove -> playerMovesPerMove.getValue().stream())
+                    .collect(Collectors.toSet());
     }
 }

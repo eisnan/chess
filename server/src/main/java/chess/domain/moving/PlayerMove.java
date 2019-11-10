@@ -42,14 +42,25 @@ public class PlayerMove {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        PlayerMove pMove = (PlayerMove) o;
-        return piece.equals(pMove.piece) &&
-                fromPosition.equals(pMove.fromPosition) &&
-                toPosition.equals(pMove.toPosition);
+        PlayerMove that = (PlayerMove) o;
+        return Objects.equals(piece, that.piece) &&
+                Objects.equals(fromPosition, that.fromPosition) &&
+                Objects.equals(toPosition, that.toPosition) &&
+                moveType == that.moveType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(piece, fromPosition, toPosition);
+        return Objects.hash(piece, fromPosition, toPosition, moveType);
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerMove{" +
+                "piece=" + piece +
+                ", fromPosition=" + fromPosition +
+                ", toPosition=" + toPosition +
+                ", moveType=" + moveType +
+                '}';
     }
 }

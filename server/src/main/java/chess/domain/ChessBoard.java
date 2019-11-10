@@ -21,7 +21,6 @@ public class ChessBoard {
     private StartPositionResolver startPositionResolver = new HardCodedPositionResolver();
     private LinkedList<PlayerMove> playerMoves = new LinkedList<>();
     private EventBus eventBus = new EventBus();
-    private Piece selectedPiece;
 
     public final QChessBoard q;
 

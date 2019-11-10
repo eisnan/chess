@@ -11,7 +11,7 @@ public class ChessGameTest {
         ChessBoard chessBoard = new ChessBoard();
         ChessPlayer whitePlayer = new ChessPlayer("Gabs");
         ChessPlayer blackPlayer = new ChessPlayer("Horia");
-        ChessGame chessGame = new ChessGame(gameId, chessBoard, whitePlayer, blackPlayer);
+        ChessGame chessGame = new ChessGame(gameId, whitePlayer, blackPlayer);
 
         chessGame.startGame();
 
