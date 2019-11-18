@@ -29,6 +29,11 @@ public class ChessGame {
       return engine;
     }
 
+    public ChessPlayer getPlayerByColor(PieceColor pieceColor) {
+        return pieceColor == PieceColor.WHITE ? whitePlayer : blackPlayer;
+    }
+
+
 
 
 

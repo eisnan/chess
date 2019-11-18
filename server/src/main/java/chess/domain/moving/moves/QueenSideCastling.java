@@ -27,7 +27,7 @@ public class QueenSideCastling implements SpecialMove {
             case WHITE:
                 return Collections.singleton(new PlayerMove(Piece.getWhitePiece(PieceType.KING), Position.of("e1"), Position.of("c1"), MoveType.QUEEN_SIDE_CASTLING));
             case BLACK:
-                return Collections.singleton(new PlayerMove(Piece.getWhitePiece(PieceType.KING), Position.of("e8"), Position.of("c8"), MoveType.QUEEN_SIDE_CASTLING));
+                return Collections.singleton(new PlayerMove(Piece.getBlackPiece(PieceType.KING), Position.of("e8"), Position.of("c8"), MoveType.QUEEN_SIDE_CASTLING));
         }
 
         return Collections.emptySet();

@@ -37,9 +37,9 @@ public class PlayerMover {
                 Position epCapture;
                 if (piece.isWhitePiece()) {
                     // ofValid because pawn can never go backwards
-                    epCapture =  Position.ofValid(toPosition.getFile(), toPosition.getRank().previous());
+                    epCapture = Position.ofValid(toPosition.getFile(), toPosition.getRank().previous());
                 } else {
-                    epCapture =  Position.ofValid(toPosition.getFile(), toPosition.getRank().next());
+                    epCapture = Position.ofValid(toPosition.getFile(), toPosition.getRank().next());
                 }
                 chessBoard.getModel().put(epCapture, null);
             }
@@ -55,8 +55,17 @@ public class PlayerMover {
 
     }
 
+    /**
+     * Force move
+     */
+    public void fMove(ChessBoard chessBoard, Position fromPosition, Position toPosition) {
+        Piece piece = chessBoard.get(fromPosition);
+        chessBoard.getModel().put(fromPosition, null);
+        chessBoard.getModel().put(toPosition, piece);
+    }
 
     public void move(ChessBoard chessBoard, PlayerMove... playerMoves) {
         Stream.of(playerMoves).forEach(playerMove -> move(chessBoard, playerMove.getFromPosition(), playerMove.getToPosition()));
     }
+
 }

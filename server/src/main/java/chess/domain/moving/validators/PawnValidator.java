@@ -6,7 +6,10 @@ import chess.domain.moving.MoveType;
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.moves.Move;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PawnValidator implements PositionValidator {

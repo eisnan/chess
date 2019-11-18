@@ -25,7 +25,7 @@ public class ProtectedKingInCheck implements KingInCheck {
         Position kingPosition = king.getLeft();
         Piece kingPiece = king.getRight();
 
-        System.out.println(openPositions);
+//        System.out.println(openPositions);
 
         boolean knightsAttackKing = knightsAttackKing(chessBoard, pieceColor, kingPosition);
 
@@ -33,7 +33,7 @@ public class ProtectedKingInCheck implements KingInCheck {
         // based on open positions determine open (vulnerable) vectors/directions
         Collection<IterableMove> openDirections = new PositionInterpreter().getAttackDirections(chessBoard, pieceColor, kingPosition, openPositions);
 
-        System.out.println(openDirections);
+//        System.out.println(openDirections);
 
 
         // follow those directions, see if encounter enemy piece
@@ -43,11 +43,12 @@ public class ProtectedKingInCheck implements KingInCheck {
 
         for (IterableMove move : openDirections) {
             Collection<PlayerMove> positions = move.checkMove(chessBoard, new MoveSettings(kingPosition, kingPiece, movingSettings));
-            System.out.println(positions);
+//            System.out.println(positions);
             Optional<Pair<Position, Piece>> firstPieceOnDirection = new PositionInterpreter().findFirstPieceOnDirection(chessBoard, move, kingPiece, kingPosition);
             if (firstPieceOnDirection.isPresent() && kingPiece.getPieceColor().isOppositeColor(firstPieceOnDirection.get().getRight().getPieceColor())) {
-                Collection<PlayerMove> attackingPositions = MovingRules.getMovingRule(firstPieceOnDirection.get().getRight().getPieceType()).getAttackingPositions(chessBoard, firstPieceOnDirection.get().getRight(), firstPieceOnDirection.get().getLeft());
-                System.out.println(attackingPositions);
+                Collection<PlayerMove> attackingMoves = MovingRules.getMovingRule(firstPieceOnDirection.get().getRight().getPieceType()).getAttackingPositions(chessBoard, firstPieceOnDirection.get().getRight(), firstPieceOnDirection.get().getLeft());
+//                System.out.println(attackingPositions);
+                Collection<Position> attackingPositions = attackingMoves.stream().map(PlayerMove::getToPosition).collect(Collectors.toSet());
                 if (attackingPositions.contains(kingPosition)) {
                     return true;
                 }

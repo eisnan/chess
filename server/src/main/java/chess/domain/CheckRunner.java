@@ -22,12 +22,6 @@ public class CheckRunner {
         this.kingInCheckStrategy = getStrategy(chessBoard, pieceColor);
     }
 
-    public boolean checkFor(ChessBoard chessBoard, PieceColor pieceColor, Position position) {
-
-
-        return false;
-    }
-
     private Pair<KingInCheck, Set<Position>> getStrategy(ChessBoard chessBoard, PieceColor pieceColor) {
 
         Pair<Position, Piece> king = chessBoard.q.getKing(pieceColor);
@@ -41,7 +35,9 @@ public class CheckRunner {
         Set<Position> openPositions = adjacentPositions.stream().filter(nullPositionOrOppositeColor).collect(Collectors.toSet());
 
         if (openPositions.size() >= PROTECTED_BY_HOW_MANY_PIECES) {
-            return Pair.of(new UnprotectedKingInCheck(), openPositions);
+
+            // TODO CHANGE
+            return Pair.of(new ProtectedKingInCheck(), openPositions);
         } else {
             return Pair.of(new ProtectedKingInCheck(), openPositions);
         }

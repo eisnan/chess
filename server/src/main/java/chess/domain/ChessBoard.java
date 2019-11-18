@@ -1,11 +1,10 @@
 package chess.domain;
 
 import chess.domain.moving.PlayerMove;
-import chess.domain.moving.validators.KPositionValidator;
+import chess.domain.moving.validators.KValidator;
 import chess.domain.start.HardCodedPositionResolver;
 import chess.domain.start.StartPositionResolver;
 import chess.domain.util.Pair;
-import com.google.common.eventbus.EventBus;
 import com.google.inject.internal.util.Lists;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,13 +15,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ChessBoard {
 
-    private final KPositionValidator kPositionValidator = new KPositionValidator();
+    private final KValidator kValidator = new KValidator();
     private Map<Position, Piece> model = new LinkedHashMap<>();
     private StartPositionResolver startPositionResolver = new HardCodedPositionResolver();
     private LinkedList<PlayerMove> playerMoves = new LinkedList<>();
-    private EventBus eventBus = new EventBus();
 
-    public final QChessBoard q;
+    public QChessBoard q = new QChessBoard();
 
     public Map<Position, Piece> getModel() {
         return model;
@@ -35,10 +33,13 @@ public class ChessBoard {
     public ChessBoard() {
         this.initModel();
         this.arrangePiecesForStart();
-        eventBus.register(kPositionValidator);
         q = new QChessBoard();
     }
 
+    private ChessBoard(ChessBoard other) {
+        this.model.putAll(other.getModel());
+        this.playerMoves.addAll(other.playerMoves);
+    }
 
     private void initModel() {
         List<Rank> ranks = Lists.newArrayList(Rank.values());
@@ -72,6 +73,10 @@ public class ChessBoard {
 
     public PlayerMove getLastMove() {
         return playerMoves.isEmpty() ? null : playerMoves.getLast();
+    }
+
+    public ChessBoard evaluate() {
+        return new ChessBoard(this);
     }
 
     public class QChessBoard {

@@ -23,7 +23,7 @@ public class DirectionIterator {
                 .forEach(integer -> {
                         Optional<Position> position = Position.of(fileFunction.apply(currentPosition.getFile().ordinal(), integer),
                                 rankFunction.apply(currentPosition.getRank().ordinal(), integer));
-                        position.ifPresent(pos -> playerMoves.add(new PlayerMove(moveSettings.getPiece(), currentPosition, pos)));
+                        position.ifPresent(pos -> playerMoves.add(new PlayerMove(moveSettings.getPiece(), currentPosition, pos, MoveType.MOVE)));
                 });
         return playerMoves;
     }
