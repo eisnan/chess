@@ -3,7 +3,6 @@ package chess.domain.moving.moves;
 import chess.domain.*;
 import chess.domain.comparators.AscendingPositionComparator;
 import chess.domain.comparators.DescendingPositionComparator;
-import chess.domain.moving.DirectionIterator;
 import chess.domain.moving.MoveSettings;
 import chess.domain.moving.MoveType;
 import chess.domain.moving.PlayerMove;

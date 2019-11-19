@@ -12,6 +12,7 @@ import java.util.TreeSet;
 
 public class PositionResolver {
 
+    private MoveTypeResolver moveTypeResolver = new MoveTypeResolver();
 
     public Collection<PlayerMove> getValidMoves(ChessBoard chessBoard, Position currentPosition) {
 
@@ -35,8 +36,8 @@ public class PositionResolver {
         Collection<PlayerMove> attackingPositions = movingRule.getAttackingPositions(chessBoard, piece, currentPosition);
         possiblePositions.addAll(attackingPositions);
 
+        return moveTypeResolver.update(chessBoard, possiblePositions);
 
-        return possiblePositions;
     }
 
 }

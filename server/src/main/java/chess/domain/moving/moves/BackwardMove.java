@@ -9,6 +9,7 @@ import chess.domain.moving.PlayerMove;
 import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.function.BiFunction;
+import java.util.function.IntBinaryOperator;
 
 public class BackwardMove implements IterableMove {
     private Comparator<PlayerMove> positionComparator = new DescendingPositionComparator();
@@ -20,12 +21,12 @@ public class BackwardMove implements IterableMove {
     }
 
     @Override
-    public BiFunction<Integer, Integer, Integer> fileFunction() {
+    public IntBinaryOperator fileFunction() {
         return (integer, integer2) -> integer;
     }
 
     @Override
-    public BiFunction<Integer, Integer, Integer> rankFunction() {
+    public IntBinaryOperator rankFunction() {
         return (integer, integer2) -> integer - integer2;
     }
 

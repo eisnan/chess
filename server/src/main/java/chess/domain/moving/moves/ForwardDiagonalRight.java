@@ -9,6 +9,7 @@ import chess.domain.moving.PlayerMove;
 import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.function.BiFunction;
+import java.util.function.IntBinaryOperator;
 
 public class ForwardDiagonalRight implements IterableMove {
 
@@ -21,13 +22,13 @@ public class ForwardDiagonalRight implements IterableMove {
     }
 
     @Override
-    public BiFunction<Integer, Integer, Integer> fileFunction() {
-        return (integer, integer2) -> integer + integer2;
+    public IntBinaryOperator fileFunction() {
+        return Integer::sum;
     }
 
     @Override
-    public BiFunction<Integer, Integer, Integer> rankFunction() {
-        return (integer, integer2) -> integer + integer2;
+    public IntBinaryOperator rankFunction() {
+        return Integer::sum;
     }
 
     @Override

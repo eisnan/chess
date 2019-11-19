@@ -6,3 +6,4 @@ d5 -> d6,MOVE;e6,EN_PASSANT -> e6
 f7 -> f6,MOVE;f5,MOVE;e6,CAPTURE -> e6
 f1 -> e2,MOVE;d3,MOVE;c4,MOVE;b5,CHECK;a6,MOVE -> b5
 e8 -> e7,MOVE;f7,MOVE -> f7
+d1 -> e2,MOVE;f3,CHECK;g4,MOVE;h5,CHECK -> f3
