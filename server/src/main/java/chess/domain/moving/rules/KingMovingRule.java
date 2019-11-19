@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class KingMovingRule implements MovingRule {
 
@@ -38,14 +39,23 @@ public class KingMovingRule implements MovingRule {
     public KingMovingRule() {
         Collection<Pair<Move, Integer>> iterables = iterableMoves
                 .stream().map(moveDescriber -> new Pair<>(moveDescriber, getLimitPositions(moveDescriber))).collect(Collectors.toList());
-        this.moveParameters.put(PieceColor.WHITE, iterables);
-        this.moveParameters.put(PieceColor.BLACK, iterables);
-
         Collection<Pair<Move, Integer>> specials = specialMoves
                 .stream().map(moveDescriber -> new Pair<>(moveDescriber, getLimitPositions(moveDescriber))).collect(Collectors.toList());
 
-        this.captureParameters.put(PieceColor.WHITE, specials);
-        this.captureParameters.put(PieceColor.BLACK, specials);
+        this.moveParameters.put(PieceColor.WHITE, iterables);
+        this.moveParameters.merge(PieceColor.WHITE, specials, (list1, list2) ->
+                Stream.of(list1, list2)
+                        .flatMap(Collection::stream)
+                        .collect(Collectors.toList()));
+        this.moveParameters.put(PieceColor.BLACK, iterables);
+        this.moveParameters.merge(PieceColor.BLACK, specials, (list1, list2) ->
+                Stream.of(list1, list2)
+                        .flatMap(Collection::stream)
+                        .collect(Collectors.toList()));
+
+
+        this.captureParameters.put(PieceColor.WHITE, iterables);
+        this.captureParameters.put(PieceColor.BLACK, iterables);
     }
 
     private Integer getLimitPositions(Move moveDescriber) {
@@ -59,7 +69,7 @@ public class KingMovingRule implements MovingRule {
 
     @Override
     public Map<PieceColor, Collection<Pair<Move, Integer>>> getCaptureParameters() {
-        return moveParameters;
+        return captureParameters;
     }
 
     @Override

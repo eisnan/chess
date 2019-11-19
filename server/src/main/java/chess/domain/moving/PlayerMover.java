@@ -51,7 +51,7 @@ public class PlayerMover {
                 pawnPromoter.promote(chessBoard, piece);
             }
         }
-        chessBoard.addMove(new PlayerMove(piece, fromPosition, toPosition));
+        chessBoard.addMove(PlayerMove.of(piece, fromPosition, toPosition));
 
     }
 

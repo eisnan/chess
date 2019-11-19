@@ -4,9 +4,12 @@ import chess.domain.*;
 import com.google.common.io.Resources;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,10 +61,10 @@ public class AlgebraicNotationLoader {
         }
 
         PieceType pieceType = detectPieceType(moveNotation);
-        Piece piece =  Piece.of(pieceColor, pieceType);
+        Piece piece = Piece.of(pieceColor, pieceType);
 
         if (moveType == MoveType.PROMOTION) {
-            piece =  Piece.of(pieceColor, PieceType.PAWN);
+            piece = Piece.of(pieceColor, PieceType.PAWN);
         }
 
         Position toPosition;
@@ -107,12 +110,12 @@ public class AlgebraicNotationLoader {
             case WHITE:
                 switch (moveType) {
                     case QUEEN_SIDE_CASTLING:
-                        moves.add(new PlayerMove(Piece.getWhitePiece(PieceType.KING), new Position("e1"), new Position("c1")));
-                        moves.add(new PlayerMove(Piece.getWhitePiece(PieceType.ROOK), new Position("a1"), new Position("d1")));
+                        moves.add(PlayerMove.of(Piece.getWhitePiece(PieceType.KING), new Position("e1"), new Position("c1")));
+                        moves.add(PlayerMove.of(Piece.getWhitePiece(PieceType.ROOK), new Position("a1"), new Position("d1")));
                         break;
                     case KING_SIDE_CASTLING:
-                        moves.add(new PlayerMove(Piece.getWhitePiece(PieceType.KING), new Position("e1"), new Position("g1")));
-                        moves.add(new PlayerMove(Piece.getWhitePiece(PieceType.ROOK), new Position("h1"), new Position("f1")));
+                        moves.add(PlayerMove.of(Piece.getWhitePiece(PieceType.KING), new Position("e1"), new Position("g1")));
+                        moves.add(PlayerMove.of(Piece.getWhitePiece(PieceType.ROOK), new Position("h1"), new Position("f1")));
                         break;
                 }
 
@@ -120,12 +123,12 @@ public class AlgebraicNotationLoader {
             case BLACK:
                 switch (moveType) {
                     case QUEEN_SIDE_CASTLING:
-                        moves.add(new PlayerMove(Piece.getWhitePiece(PieceType.KING), new Position("e8"), new Position("c8")));
-                        moves.add(new PlayerMove(Piece.getWhitePiece(PieceType.ROOK), new Position("a8"), new Position("d8")));
+                        moves.add(PlayerMove.of(Piece.getWhitePiece(PieceType.KING), new Position("e8"), new Position("c8")));
+                        moves.add(PlayerMove.of(Piece.getWhitePiece(PieceType.ROOK), new Position("a8"), new Position("d8")));
                         break;
                     case KING_SIDE_CASTLING:
-                        moves.add(new PlayerMove(Piece.getWhitePiece(PieceType.KING), new Position("e8"), new Position("g8")));
-                        moves.add(new PlayerMove(Piece.getWhitePiece(PieceType.ROOK), new Position("a8"), new Position("d8")));
+                        moves.add(PlayerMove.of(Piece.getWhitePiece(PieceType.KING), new Position("e8"), new Position("g8")));
+                        moves.add(PlayerMove.of(Piece.getWhitePiece(PieceType.ROOK), new Position("a8"), new Position("d8")));
                         break;
                 }
                 break;

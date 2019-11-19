@@ -143,8 +143,8 @@ public class ChessBoardIT {
             String[] pmove = str.split(",");
             Piece piece = chessBoard.get(from);
             Position tPos = Position.of(pmove[0]);
-            MoveType moveType = MoveType.valueOf(pmove[1]);
-            return new PlayerMove(piece, from, tPos, moveType);
+            MoveType moveType = MoveType.valueOf(pmove[1].toUpperCase());
+            return PlayerMove.of(piece, from, tPos, moveType);
         }).collect(Collectors.toList());
 
         Position to = Position.of(split.get(2));

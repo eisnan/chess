@@ -28,7 +28,7 @@ public interface PositionValidator {
                 .flatMap(Set::stream)
                 .filter(playerMove -> chessBoard.q.isNotEmpty(playerMove.getToPosition()))
                 .filter(playerMovePredicate -> chessBoard.getModel().get(playerMovePredicate.getToPosition()).getPieceColor().isOppositeColor(selectedPiece.getPieceColor()))
-                .map(playerMove -> new PlayerMove(playerMove, MoveType.CAPTURE))
+                .map(playerMove -> PlayerMove.of(playerMove, MoveType.CAPTURE))
                 .collect(Collectors.toSet());
         evaluatedMoves.addAll(specialMoves);
         return evaluatedMoves;

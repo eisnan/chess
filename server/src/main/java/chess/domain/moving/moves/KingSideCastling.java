@@ -23,9 +23,9 @@ public class KingSideCastling implements SpecialMove {
     public Set<PlayerMove> checkMove(ChessBoard chessBoard, MoveSettings moveSettings) {
         switch (moveSettings.getPiece().getPieceColor()) {
             case WHITE:
-                return Collections.singleton(new PlayerMove(Piece.getWhitePiece(PieceType.KING), Position.of("e1"), Position.of("g1"), MoveType.KING_SIDE_CASTLING));
+                return Collections.singleton(PlayerMove.of(Piece.getWhitePiece(PieceType.KING), Position.of("e1"), Position.of("g1"), MoveType.KING_SIDE_CASTLING));
             case BLACK:
-                return Collections.singleton(new PlayerMove(Piece.getBlackPiece(PieceType.KING), Position.of("e8"), Position.of("g8"), MoveType.KING_SIDE_CASTLING));
+                return Collections.singleton(PlayerMove.of(Piece.getBlackPiece(PieceType.KING), Position.of("e8"), Position.of("g8"), MoveType.KING_SIDE_CASTLING));
         }
 
         return Collections.emptySet();

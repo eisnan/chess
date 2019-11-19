@@ -40,10 +40,10 @@ public class EnPassantMove implements SpecialMove {
             switch (currentPiece.getPieceColor()) {
                 case WHITE:
                     epPosition = Position.ofValid(lastPlayerMove.getToPosition().getFile(), Rank._6);
-                    return Collections.singleton(new PlayerMove(currentPiece, currentPosition, epPosition, MoveType.EN_PASSANT));
+                    return Collections.singleton( PlayerMove.of(currentPiece, currentPosition, epPosition, MoveType.EN_PASSANT));
                 case BLACK:
                     epPosition = Position.ofValid(lastPlayerMove.getToPosition().getFile(), Rank._3);
-                    return Collections.singleton(new PlayerMove(currentPiece, currentPosition, epPosition, MoveType.EN_PASSANT));
+                    return Collections.singleton( PlayerMove.of(currentPiece, currentPosition, epPosition, MoveType.EN_PASSANT));
             }
 
         }

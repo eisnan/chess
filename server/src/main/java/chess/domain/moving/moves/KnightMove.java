@@ -33,7 +33,7 @@ public class KnightMove implements Move {
         Position.of(fileOrdinal + 1, rankOrdinal - 2).ifPresent(belowPositions::add);
 
         return belowPositions.stream()
-                .map(position -> new PlayerMove(piece, currentPosition, position))
+                .map(position -> PlayerMove.of(piece, currentPosition, position))
                 .collect(Collectors.toSet());
     }
 
@@ -47,7 +47,7 @@ public class KnightMove implements Move {
         Position.of(fileOrdinal + 1, rankOrdinal + 2).ifPresent(abovePositions::add);
 
         return abovePositions.stream()
-                .map(position -> new PlayerMove(piece, currentPosition, position))
+                .map(position -> PlayerMove.of(piece, currentPosition, position))
                 .collect(Collectors.toSet());
     }
 }

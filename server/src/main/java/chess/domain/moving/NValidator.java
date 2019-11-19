@@ -18,7 +18,7 @@ public class NValidator implements PositionValidator {
                     Piece piece = chessBoard.getModel().get(playerMove.getToPosition());
                     return piece == null;
                 })
-                .map(playerMove -> new PlayerMove(playerMove, MoveType.MOVE))
+                .map(playerMove -> PlayerMove.of(playerMove, MoveType.MOVE))
                 .collect(Collectors.toCollection(() -> new TreeSet<>(new AscendingPositionComparator())));
     }
 }

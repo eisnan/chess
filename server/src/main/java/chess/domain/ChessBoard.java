@@ -165,5 +165,6 @@ public class ChessBoard {
 
             return positions;
         }
+
     }
 }

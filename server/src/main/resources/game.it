@@ -7,3 +7,7 @@ f7 -> f6,MOVE;f5,MOVE;e6,CAPTURE -> e6
 f1 -> e2,MOVE;d3,MOVE;c4,MOVE;b5,CHECK;a6,MOVE -> b5
 e8 -> e7,MOVE;f7,MOVE -> f7
 d1 -> e2,MOVE;f3,CHECK;g4,MOVE;h5,CHECK -> f3
+f7 -> e7,MOVE;g6,MOVE -> e7
+g1 -> e2,MOVE;h3,MOVE -> e2
+c8 -> d7,MOVE -> d7
+e1 -> d1,MOVE;f1,MOVE;g1,KING_SIDE_CASTLING -> g1

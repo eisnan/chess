@@ -55,21 +55,22 @@ public class KValidator implements PositionValidator {
         Collection<PlayerMove> validMoves = new ArrayList<>();
         for (PlayerMove playerMove : playerMoves) {
             if (MoveType.isCastling(playerMove.getMoveType())) {
-                validateCastling(chessBoard, playerMove);
-            }
-
-            Piece piece = chessBoard.getModel().get(playerMove.getToPosition());
-            if (piece == null) {
-                if (!checkEvaluator.isCheckedMove(chessBoard, playerMove)) {
+                if (validCastling(chessBoard, playerMove)) {
                     validMoves.add(playerMove);
                 }
-            } else if (selectedPiece.getPieceColor() != piece.getPieceColor()) {
-                validMoves.add(playerMove);
-                break;
             } else {
-                break;
+                Piece piece = chessBoard.getModel().get(playerMove.getToPosition());
+                if (piece == null) {
+                    if (!checkEvaluator.isCheckedMove(chessBoard, playerMove)) {
+                        validMoves.add(playerMove);
+                    }
+                } else if (selectedPiece.getPieceColor() != piece.getPieceColor()) {
+                    validMoves.add(playerMove);
+                    break;
+                } else {
+                    break;
+                }
             }
-
 
         }
 
@@ -81,8 +82,7 @@ public class KValidator implements PositionValidator {
     /*
     No pieces between the king and rook(s) whatsoever & none of the positions king is moving through are in check
      */
-    private boolean validateCastling(ChessBoard chessBoard, PlayerMove playerMove) {
-//        Collection<Pair<Position, Piece>> attackingCastlingPositions = new ArrayList<>();
+    private boolean validCastling(ChessBoard chessBoard, PlayerMove playerMove) {
         if (playerMove.getMoveType() == MoveType.KING_SIDE_CASTLING) {
             switch (playerMove.getPiece().getPieceColor()) {
                 case WHITE:
