@@ -6,9 +6,7 @@ import chess.domain.moving.PlayerMove;
 import chess.domain.moving.rules.MovingRule;
 import chess.domain.moving.rules.MovingRules;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.TreeSet;
+import java.util.*;
 
 public class PositionResolver {
 

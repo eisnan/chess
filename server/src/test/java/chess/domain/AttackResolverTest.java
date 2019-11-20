@@ -18,7 +18,7 @@ public class AttackResolverTest {
         mover.move(chessBoard, Position.of("c1"), Position.of("f4"));
 
 
-        attackResolver.whoIsAttackingPosition(chessBoard, Position.of("c7"));
+        attackResolver.whoIsAttackingPosition(chessBoard, PieceColor.WHITE, Position.of("c7"));
 
     }
 }

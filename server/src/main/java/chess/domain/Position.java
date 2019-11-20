@@ -102,11 +102,11 @@ public class Position {
 
     private static class PositionCache {
         private static Map<String, Position> algCache = new HashMap<>();
-        private static Map<File, Map<Rank, Position>> frCache = new HashMap<>();
+        private static Map<File, Map<Rank, Position>> frCache = new EnumMap<>(File.class);
 
         static {
             for (File f : File.values()) {
-                Map<Rank, Position> ranks = new HashMap<>();
+                Map<Rank, Position> ranks = new EnumMap<>(Rank.class);
                 for (Rank r : Rank.values()) {
                     Position pos = new Position(f, r);
                     ranks.put(r, pos);

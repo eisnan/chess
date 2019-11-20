@@ -5,7 +5,9 @@ import chess.domain.moving.MoveSettings;
 import chess.domain.moving.MoveType;
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.moves.Move;
+import chess.domain.util.Pair;
 import com.google.common.eventbus.Subscribe;
+import javafx.geometry.Pos;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -55,9 +57,7 @@ public class KValidator implements PositionValidator {
         Collection<PlayerMove> validMoves = new ArrayList<>();
         for (PlayerMove playerMove : playerMoves) {
             if (MoveType.isCastling(playerMove.getMoveType())) {
-                if (validCastling(chessBoard, playerMove)) {
-                    validMoves.add(playerMove);
-                }
+                validMoves.addAll(computeCastling(chessBoard, playerMove));
             } else {
                 Piece piece = chessBoard.getModel().get(playerMove.getToPosition());
                 if (piece == null) {
@@ -82,12 +82,19 @@ public class KValidator implements PositionValidator {
     /*
     No pieces between the king and rook(s) whatsoever & none of the positions king is moving through are in check
      */
-    private boolean validCastling(ChessBoard chessBoard, PlayerMove playerMove) {
+    private Collection<PlayerMove> computeCastling(ChessBoard chessBoard, PlayerMove playerMove) {
+        Collection<PlayerMove> castlingMoves = new ArrayList<>();
+        PieceColor pieceColor = playerMove.getPiece().getPieceColor();
         if (playerMove.getMoveType() == MoveType.KING_SIDE_CASTLING) {
-            switch (playerMove.getPiece().getPieceColor()) {
+            switch (pieceColor) {
                 case WHITE:
-                    boolean attackingCastlingPositions = attackResolver.whoIsAttackingPosition(chessBoard, Position.of("e1"), Position.of("f1"), Position.of("g1")).stream().findAny().isPresent();
-
+                    Collection<Pair<Position, Piece>> attackingPieces = attackResolver.whoIsAttackingPosition(chessBoard, pieceColor, Position.of("e1"), Position.of("f1"), Position.of("g1"));
+                    if (attackingPieces.isEmpty()) {
+                        PlayerMove kingCastling = PlayerMove.of(Piece.getWhitePiece(PieceType.KING), Position.of("e1"), Position.of("g1"), MoveType.KING_SIDE_CASTLING);
+                        PlayerMove rookCastling = PlayerMove.of(Piece.getWhitePiece(PieceType.ROOK), Position.of("h1"), Position.of("f1"), MoveType.KING_SIDE_CASTLING);
+                        castlingMoves.add(kingCastling);
+                        castlingMoves.add(rookCastling);
+                    }
 
                     break;
                 case BLACK:
@@ -99,7 +106,7 @@ public class KValidator implements PositionValidator {
         if (playerMove.getMoveType() == MoveType.QUEEN_SIDE_CASTLING) {
 
         }
-        return false;
+        return castlingMoves;
     }
 
 
