@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.moving.MoveType;
+import chess.domain.moving.PawnPromoter;
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.PlayerMover;
 import chess.domain.util.Triple;
@@ -28,6 +29,7 @@ public class ChessBoardIT {
     private PlayerMover mover = new PlayerMover();
     private CheckEvaluator checkEvaluator = new CheckEvaluator();
     MoveTypeResolver moveTypeResolver = new MoveTypeResolver();
+    PawnPromoter pawnPromoter = new PawnPromoter();
 
     @Before
     public void setUp() throws Exception {
@@ -55,7 +57,7 @@ public class ChessBoardIT {
 
 
             boolean pinnedPiece = checkEvaluator.isPinnedPiece(chessBoard, fromPossibleTo.getLeft());
-            System.out.println(pinnedPiece);
+
             for (PlayerMove playerMove : validMovesUpdated) {
 
                 boolean checkMove = checkEvaluator.isCheckMove(chessBoard, playerMove);
@@ -64,7 +66,20 @@ public class ChessBoardIT {
 //                    playerMove.setMoveType(MoveType.CHECK);
                 }
 
-                System.out.println(checkMove);
+                if (playerMove.getMoveType() == MoveType.PROMOTION) {
+                    String s = "QUEEN";
+                    PieceColor pieceColor = playerMove.getPiece().getPieceColor();
+                    Piece promotedPiece;
+                    if (pieceColor == PieceColor.WHITE) {
+                        promotedPiece = Piece.getWhitePiece(PieceType.valueOf(s));
+                    } else {
+                        promotedPiece = Piece.getBlackPiece(PieceType.valueOf(s));
+                    }
+
+                    pawnPromoter.promote(chessBoard, playerMove.getFromPosition(), promotedPiece);
+
+                }
+
             }
 
 

@@ -3,7 +3,6 @@ package chess.domain.moving;
 import chess.domain.*;
 import chess.domain.moving.validators.PawnValidator;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -45,10 +44,10 @@ public class PlayerMover {
             }
 
             if (piece.isWhitePiece() && toPosition.getRank() == Rank._8) {
-                pawnPromoter.promote(chessBoard, piece);
+//                pawnPromoter.promote(chessBoard, piece, promotedPiece);
             }
             if (piece.isBlackPiece() && toPosition.getRank() == Rank._1) {
-                pawnPromoter.promote(chessBoard, piece);
+//                pawnPromoter.promote(chessBoard, piece, promotedPiece);
             }
         }
         chessBoard.addMove(PlayerMove.of(piece, fromPosition, toPosition));
