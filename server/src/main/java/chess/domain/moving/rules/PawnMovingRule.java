@@ -25,7 +25,6 @@ public class PawnMovingRule implements MovingRule {
             new BackwardMove(),
             new BackwardDiagonalLeft(),
             new BackwardDiagonalRight(),
-            new PromotionMove(),
             new EnPassantMove());
 
     public PawnMovingRule() {

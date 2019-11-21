@@ -7,10 +7,14 @@ import chess.domain.comparators.DescendingPositionComparator;
 import chess.domain.moving.MoveSettings;
 import chess.domain.moving.PlayerMove;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
 public class PromotionMove implements SpecialMove {
+
+    private PromotionMove() {
+    }
 
     private Comparator<PlayerMove> blackPositionComparator = new AscendingPositionComparator();
     private Comparator<PlayerMove> whitePositionComparator = new DescendingPositionComparator();
@@ -32,6 +36,6 @@ public class PromotionMove implements SpecialMove {
                 break;
         }
 
-        return null;
+        return Collections.emptySet();
     }
 }

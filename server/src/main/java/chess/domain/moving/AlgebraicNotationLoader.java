@@ -156,7 +156,7 @@ public class AlgebraicNotationLoader {
             moveTypes.add(MoveType.CHECK);
         }
         if (moveNotation.contains("x")) {
-            moveTypes.add(MoveType.CAPTURE);
+            moveTypes.add(MoveType.ATTACK);
         }
         if (moveNotation.contains("=")) {
             moveTypes.add(MoveType.PROMOTION);

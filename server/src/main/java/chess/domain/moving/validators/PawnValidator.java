@@ -30,7 +30,7 @@ public class PawnValidator implements PositionValidator {
                 boolean isPromotionRank = playerMove.getPiece().getPieceColor().isPromotionRank(toPosition.getRank());
                 MoveType moveType = isPromotionRank ? MoveType.PROMOTION : MoveType.MOVE;
                 if (chessBoard.q.isEmpty(toPosition)) {
-                    playerMove.setMoveType(moveType);
+//                    playerMove.setMoveType(moveType);
                     validToMove.add(playerMove);
                     if (!firstRankForColor) {
                         break;
@@ -48,7 +48,7 @@ public class PawnValidator implements PositionValidator {
         Collection<PlayerMove> validPositionsToAttack = PositionValidator.super.keepValidPositionsToAttack(chessBoard, moveSettings, possiblePositions);
         return validPositionsToAttack.stream().peek(playerMove -> {
             if (playerMove.getPiece().getPieceColor().isPromotionRank(playerMove.getToPosition().getRank())) {
-                playerMove.setMoveType(MoveType.PROMOTION);
+//                playerMove.setMoveType(MoveType.PROMOTION);
             }
         }).collect(Collectors.toSet());
     }

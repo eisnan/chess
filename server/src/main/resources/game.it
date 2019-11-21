@@ -1,9 +1,9 @@
 e2 -> e3,MOVE;e4,MOVE -> e4
 d7 -> d6,MOVE;d5,MOVE -> d5
-e4 -> e5,MOVE;d5,CAPTURE -> d5
+e4 -> e5,MOVE;d5,ATTACK -> d5
 e7 -> e6,MOVE;e5,MOVE -> e5
 d5 -> d6,MOVE;e6,EN_PASSANT -> e6
-f7 -> f6,MOVE;f5,MOVE;e6,CAPTURE -> e6
+f7 -> f6,MOVE;f5,MOVE;e6,ATTACK -> e6
 f1 -> e2,MOVE;d3,MOVE;c4,MOVE;b5,CHECK;a6,MOVE -> b5
 e8 -> e7,MOVE;f7,MOVE -> f7
 d1 -> e2,MOVE;f3,CHECK;g4,MOVE;h5,CHECK -> f3
@@ -12,4 +12,14 @@ g1 -> e2,MOVE;h3,MOVE -> e2
 c8 -> d7,MOVE -> d7
 e1 -> d1,MOVE;f1,MOVE;g1,KING_SIDE_CASTLING<>h1,KING_SIDE_CASTLING,f1 -> g1
 b8 -> a6,MOVE;c6,MOVE -> c6
-b5 -> a6,MOVE;c6,CAPTURE;a4,MOVE;c4,MOVE;d3,MOVE -> c6
+b5 -> a6,MOVE;c6,ATTACK;a4,MOVE;c4,MOVE;d3,MOVE -> c6
+d7 -> c8,MOVE;e8,MOVE;c6,ATTACK -> c6
+b2 -> b3,MOVE;b4,MOVE -> b4
+h7 -> h6,MOVE;h5,MOVE -> h6
+b4 -> b5,MOVE -> b5
+g8 -> f6,MOVE -> f6
+b5 -> c6,ATTACK;b6,MOVE -> c6
+e7 -> e8,MOVE;f7,MOVE;d6,MOVE -> f7
+c6 -> b7,ATTACK -> b7
+h6 -> h5,MOVE -> h5
+b7 -> b8,PROMOTION;a8,PROMOTION -> a8

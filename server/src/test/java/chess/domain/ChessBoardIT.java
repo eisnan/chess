@@ -27,6 +27,7 @@ public class ChessBoardIT {
     private ChessBoard chessBoard;
     private PlayerMover mover = new PlayerMover();
     private CheckEvaluator checkEvaluator = new CheckEvaluator();
+    MoveTypeResolver moveTypeResolver = new MoveTypeResolver();
 
     @Before
     public void setUp() throws Exception {
@@ -35,19 +36,6 @@ public class ChessBoardIT {
 
     public List<String> loadFromFile(String file) throws IOException {
         return Resources.readLines(Resources.getResource(file), Charset.defaultCharset());
-    }
-
-    @Test
-    public void testHash() {
-        Set<PlayerMove> set = new HashSet<>();
-        PlayerMove p1 = PlayerMove.of(Piece.getWhitePiece(PieceType.BISHOP), Position.of("f1"), Position.of("b5"), MoveType.CHECK);
-
-        set.add(p1);
-
-
-        Collection<PlayerMove> list = new ArrayList<>();
-        list.add(PlayerMove.of(Piece.getWhitePiece(PieceType.BISHOP), Position.ofValid(File.f, Rank._1), Position.of("b5"), MoveType.CHECK));
-        assertTrue(set.containsAll(list));
     }
 
     @Test
@@ -63,21 +51,24 @@ public class ChessBoardIT {
 
             Collection<PlayerMove> validMoves = positionResolver.getValidMoves(chessBoard, fromPossibleTo.getLeft());
 
+            Collection<PlayerMove> validMovesUpdated = moveTypeResolver.update(chessBoard, validMoves);
+
+
             boolean pinnedPiece = checkEvaluator.isPinnedPiece(chessBoard, fromPossibleTo.getLeft());
             System.out.println(pinnedPiece);
-            for (PlayerMove playerMove : validMoves) {
+            for (PlayerMove playerMove : validMovesUpdated) {
 
                 boolean checkMove = checkEvaluator.isCheckMove(chessBoard, playerMove);
 
                 if (checkMove) {
-                    playerMove.setMoveType(MoveType.CHECK);
+//                    playerMove.setMoveType(MoveType.CHECK);
                 }
 
                 System.out.println(checkMove);
             }
 
 
-            assertTrue(fromPossibleTo.getMiddle().containsAll(validMoves) && validMoves.containsAll(fromPossibleTo.getMiddle()));
+            assertTrue(fromPossibleTo.getMiddle().containsAll(validMovesUpdated) && validMovesUpdated.containsAll(fromPossibleTo.getMiddle()));
 
 
             List<PlayerMove> matchMoves = fromPossibleTo.getMiddle().stream().filter(playerMove -> playerMove.getToPosition() == fromPossibleTo.getRight()).collect(Collectors.toList());
@@ -126,7 +117,7 @@ public class ChessBoardIT {
                     boolean checkMove = checkEvaluator.isCheckMove(chessBoard, playerMove);
 
                     if (checkMove) {
-                        playerMove.setMoveType(MoveType.CHECK);
+//                        playerMove.setMoveType(MoveType.CHECK);
                     }
 
                     System.out.println(checkMove);
@@ -153,7 +144,7 @@ public class ChessBoardIT {
         Position from = Position.of(split.get(0));
         String[] pMoves = split.get(1).split(";");
 
-        List<PlayerMove> possible = Stream.of(pMoves).map(str -> {
+        Set<PlayerMove> possible = Stream.of(pMoves).map(str -> {
             List<PlayerMove> parsedMoves = new ArrayList<>();
 
             String[] doubleMoves = str.split("<>");
@@ -174,7 +165,7 @@ public class ChessBoardIT {
             }
             return parsedMoves;
 
-        }).flatMap(Collection::stream).collect(Collectors.toList());
+        }).flatMap(Collection::stream).collect(Collectors.toSet());
 
         Position to = Position.of(split.get(2));
         return Triple.of(from, possible, to);

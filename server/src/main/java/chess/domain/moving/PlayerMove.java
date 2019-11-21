@@ -46,11 +46,6 @@ public class PlayerMove {
         this.moveType = moveType;
     }
 
-    public PlayerMove setMoveType(MoveType moveType) {
-        this.moveType = moveType;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -2,6 +2,7 @@ package chess.domain.moving.validators;
 
 import chess.domain.ChessBoard;
 import chess.domain.Piece;
+import chess.domain.moving.MoveType;
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.moves.Move;
 import chess.domain.moving.MoveSettings;
@@ -33,7 +34,7 @@ public class RBQValidator implements PositionValidator {
             if (piece == null) {
                 validPlayerMoves.add(playerMove);
             } else if (selectedPiece.getPieceColor() != piece.getPieceColor()) {
-                validPlayerMoves.add(playerMove);
+                validPlayerMoves.add(PlayerMove.of(playerMove, MoveType.ATTACK));
                 break;
             } else {
                 break;

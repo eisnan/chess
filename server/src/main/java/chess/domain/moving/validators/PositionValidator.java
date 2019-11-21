@@ -17,6 +17,7 @@ public interface PositionValidator {
 
     Collection<PlayerMove> keepValidPositionsToMove(ChessBoard chessBoard, MoveSettings moveSettings, Map<Move, Set<PlayerMove>> possiblePositions);
 
+
     /**
      * Default implementation returns the positions where there are enemy pieces.
      */
@@ -28,7 +29,7 @@ public interface PositionValidator {
                 .flatMap(Set::stream)
                 .filter(playerMove -> chessBoard.q.isNotEmpty(playerMove.getToPosition()))
                 .filter(playerMovePredicate -> chessBoard.getModel().get(playerMovePredicate.getToPosition()).getPieceColor().isOppositeColor(selectedPiece.getPieceColor()))
-                .map(playerMove -> PlayerMove.of(playerMove, MoveType.CAPTURE))
+                .map(playerMove -> PlayerMove.of(playerMove, MoveType.ATTACK))
                 .collect(Collectors.toSet());
         evaluatedMoves.addAll(specialMoves);
         return evaluatedMoves;

@@ -2,15 +2,19 @@ package chess.domain;
 
 import chess.domain.comparators.AscendingPositionComparator;
 import chess.domain.comparators.DescendingPositionComparator;
+import chess.domain.moving.MoveType;
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.rules.MovingRule;
 import chess.domain.moving.rules.MovingRules;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PositionResolver {
 
     private MoveTypeResolver moveTypeResolver = new MoveTypeResolver();
+    private IllegalMoveValidator illegalMoveValidator = new IllegalMoveValidator();
+    CheckEvaluator checkEvaluator = new CheckEvaluator();
 
     public Collection<PlayerMove> getValidMoves(ChessBoard chessBoard, Position currentPosition) {
 
@@ -29,13 +33,13 @@ public class PositionResolver {
 
         // generate possible positions
         Collection<PlayerMove> movePositions = movingRule.getMovePositions(chessBoard, piece, currentPosition);
-        Collection<PlayerMove> possiblePositions = new TreeSet<>(comparator);
-        possiblePositions.addAll(movePositions);
+        Collection<PlayerMove> possibleMoves = new HashSet<>();
+        possibleMoves.addAll(movePositions);
         Collection<PlayerMove> attackingPositions = movingRule.getAttackingPositions(chessBoard, piece, currentPosition);
-        possiblePositions.addAll(attackingPositions);
 
-        return moveTypeResolver.update(chessBoard, possiblePositions);
+        possibleMoves.addAll(attackingPositions);
 
+        return possibleMoves;
     }
 
 }

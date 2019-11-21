@@ -38,7 +38,7 @@ public class KValidator implements PositionValidator {
         Collection<PlayerMove> validPositionsToAttack = PositionValidator.super.keepValidPositionsToAttack(chessBoard, moveSettings, possiblePositions);
         return validPositionsToAttack.stream().peek(playerMove -> {
             if (playerMove.getPiece().getPieceColor().isPromotionRank(playerMove.getToPosition().getRank())) {
-                playerMove.setMoveType(MoveType.PROMOTION);
+//                playerMove.setMoveType(MoveType.PROMOTION);
             }
         }).collect(Collectors.toSet());
     }
@@ -64,7 +64,7 @@ public class KValidator implements PositionValidator {
                     if (!checkEvaluator.isCheckedMove(chessBoard, playerMove)) {
                         validMoves.add(playerMove);
                     }
-                } else if (selectedPiece.getPieceColor() != piece.getPieceColor()) {
+                } else if (selectedPiece.getPieceColor() != piece.getPieceColor() && kingsAreNotAdjacent(chessBoard, playerMove)) {
                     validMoves.add(playerMove);
                     break;
                 } else {
@@ -77,6 +77,9 @@ public class KValidator implements PositionValidator {
         return validMoves;
     }
 
+    private boolean kingsAreNotAdjacent(ChessBoard chessBoard, PlayerMove playerMove) {
+        return true;
+    }
 
 
     /*
