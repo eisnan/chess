@@ -55,6 +55,7 @@ public class ChessBoardIT {
 
             Collection<PlayerMove> validMovesUpdated = moveTypeResolver.update(chessBoard, validMoves);
 
+            boolean lastMoveCheck = false;
 
             boolean pinnedPiece = checkEvaluator.isPinnedPiece(chessBoard, fromPossibleTo.getLeft());
 
@@ -78,6 +79,14 @@ public class ChessBoardIT {
 
                     pawnPromoter.promote(chessBoard, playerMove.getFromPosition(), promotedPiece);
 
+                }
+
+
+                if (i == 7) {
+                    if (checkEvaluator.isCheckMate(chessBoard, playerMove.getPiece().getPieceColor())) {
+                        System.out.println("CHECKMATE");
+                        return;
+                    }
                 }
 
             }

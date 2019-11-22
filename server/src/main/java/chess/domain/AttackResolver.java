@@ -2,10 +2,8 @@ package chess.domain;
 
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.rules.MovingRule;
-import chess.domain.moving.rules.MovingRules;
 import chess.domain.util.Pair;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +22,7 @@ public class AttackResolver {
         Collection<Pair<Position, Piece>> enemyPieces = chessBoard.q.getPieces(pieceColor.oppositeColor(), PieceType.values());
 
         List<PlayerMove> allAttacks = enemyPieces.stream().map(positionPiece -> {
-            MovingRule movingRule = MovingRules.getMovingRule(positionPiece.getRight().getPieceType());
+            MovingRule movingRule = positionPiece.getRight().getPieceType().getMovingRule();
             return movingRule.getAttackingPositions(chessBoard, positionPiece.getRight(), positionPiece.getLeft());
         }).flatMap(Collection::stream).collect(Collectors.toList());
 

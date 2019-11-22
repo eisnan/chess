@@ -5,7 +5,6 @@ import chess.domain.moving.PlayerMove;
 import chess.domain.moving.moves.IterableMove;
 import chess.domain.moving.moves.Move;
 import chess.domain.moving.moves.SpecialMove;
-import chess.domain.moving.rules.MovingRules;
 import chess.domain.util.Pair;
 
 import java.util.Collection;
@@ -37,7 +36,7 @@ public class ProtectedKingInCheck implements KingInCheck {
 
 
         // follow those directions, see if encounter enemy piece
-        Map<Move, Integer> movingSettings = MovingRules.getMovingRule(kingPiece.getPieceType()).getMoveDescribers().stream()
+        Map<Move, Integer> movingSettings = king.getRight().getPieceType().getMovingRule().getMoveDescribers().stream()
                 .filter(moveDescriber -> !(moveDescriber instanceof SpecialMove))
                 .filter(openDirections::contains).collect(Collectors.toMap(moveDescriber -> moveDescriber, movingPositions -> 8));
 
@@ -46,7 +45,7 @@ public class ProtectedKingInCheck implements KingInCheck {
 //            System.out.println(positions);
             Optional<Pair<Position, Piece>> firstPieceOnDirection = new PositionInterpreter().findFirstPieceOnDirection(chessBoard, move, kingPiece, kingPosition);
             if (firstPieceOnDirection.isPresent() && kingPiece.getPieceColor().isOppositeColor(firstPieceOnDirection.get().getRight().getPieceColor())) {
-                Collection<PlayerMove> attackingMoves = MovingRules.getMovingRule(firstPieceOnDirection.get().getRight().getPieceType()).getAttackingPositions(chessBoard, firstPieceOnDirection.get().getRight(), firstPieceOnDirection.get().getLeft());
+                Collection<PlayerMove> attackingMoves = firstPieceOnDirection.get().getRight().getPieceType().getMovingRule().getAttackingPositions(chessBoard, firstPieceOnDirection.get().getRight(), firstPieceOnDirection.get().getLeft());
 //                System.out.println(attackingPositions);
                 Collection<Position> attackingPositions = attackingMoves.stream().map(PlayerMove::getToPosition).collect(Collectors.toSet());
                 if (attackingPositions.contains(kingPosition)) {

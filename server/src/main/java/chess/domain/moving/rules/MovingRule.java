@@ -15,7 +15,9 @@ import java.util.Set;
 public interface MovingRule {
     Map<PieceColor, Collection<Pair<Move, Integer>>> getMoveParameters();
 
-    Map<PieceColor, Collection<Pair<Move, Integer>>> getCaptureParameters();
+    default Map<PieceColor, Collection<Pair<Move, Integer>>> getCaptureParameters() {
+        return getMoveParameters();
+    }
 
     PieceType getPieceType();
 

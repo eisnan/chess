@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.moving.MoveSettings;
 import chess.domain.moving.PlayerMove;
-import chess.domain.moving.rules.MovingRules;
 import chess.domain.util.Pair;
 import chess.domain.moving.moves.*;
 
@@ -63,10 +62,5 @@ public class PositionInterpreter {
                 .filter(position -> chessBoard.get(position) != null)
                 .map(position -> Pair.of(position, chessBoard.get(position)))
                 .findFirst();
-    }
-
-    public boolean isOnAttackingDirection(Move move, Piece attackingPiece) {
-        Collection<PieceType> pieceTypes = MovingRules.findWhichPiecesCanAttackOnThisDirection(move);
-        return pieceTypes.contains(attackingPiece.getPieceType());
     }
 }

@@ -1,16 +1,30 @@
 package chess.domain;
 
+import chess.domain.moving.rules.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.EnumSet;
+
 public enum PieceType {
-    PAWN(""), KING("K"), QUEEN("Q"), BISHOP("B"), KNIGHT("N"), ROOK("R");
+    PAWN("", new PawnMovingRule()), KING("K", new KingMovingRule()), QUEEN("Q", new QueenMovingRule()),
+    BISHOP("B", new BishopMovingRule()), KNIGHT("N", new KnightMovingRule()), ROOK("R", new RookMovingRule());
 
     private String notationSymbol;
+    private MovingRule movingRule;
 
-    PieceType(String notationSymbol) {
+    PieceType(String notationSymbol, MovingRule movingRule) {
         this.notationSymbol = notationSymbol;
+        this.movingRule = movingRule;
     }
 
     public String getTypeNotation() {
         return notationSymbol;
+    }
+
+    public MovingRule getMovingRule() {
+        return movingRule;
     }
 
     public static PieceType getByNotationSymbol(String notationSymbol) {

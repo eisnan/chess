@@ -39,11 +39,6 @@ public class RookMovingRule implements MovingRule {
     }
 
     @Override
-    public Map<PieceColor, Collection<Pair<Move, Integer>>> getCaptureParameters() {
-        return moveParameters;
-    }
-
-    @Override
     public PieceType getPieceType() {
         return PieceType.ROOK;
     }

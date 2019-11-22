@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.rules.MovingRule;
-import chess.domain.moving.rules.MovingRules;
 import chess.domain.util.Pair;
 
 import java.util.Collection;
@@ -35,7 +34,7 @@ public interface KingInCheck {
         boolean knightsCheckKing = false;
 
         for (Pair<Position, Piece> knight : knights) {
-            MovingRule movingRule = MovingRules.getMovingRule(knight.getRight().getPieceType());
+            MovingRule movingRule = knight.getRight().getPieceType().getMovingRule();
             Collection<PlayerMove> attackingPositionsOfKnight = movingRule.getAttackingPositions(chessBoard, knight.getRight(), knight.getLeft());
 
             knightsCheckKing |= attackingPositionsOfKnight.contains(kingPosition);

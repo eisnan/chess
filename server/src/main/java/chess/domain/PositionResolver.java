@@ -2,19 +2,12 @@ package chess.domain;
 
 import chess.domain.comparators.AscendingPositionComparator;
 import chess.domain.comparators.DescendingPositionComparator;
-import chess.domain.moving.MoveType;
 import chess.domain.moving.PlayerMove;
 import chess.domain.moving.rules.MovingRule;
-import chess.domain.moving.rules.MovingRules;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class PositionResolver {
-
-    private MoveTypeResolver moveTypeResolver = new MoveTypeResolver();
-    private IllegalMoveValidator illegalMoveValidator = new IllegalMoveValidator();
-    CheckEvaluator checkEvaluator = new CheckEvaluator();
 
     public Collection<PlayerMove> getValidMoves(ChessBoard chessBoard, Position currentPosition) {
 
@@ -28,7 +21,7 @@ public class PositionResolver {
         }
 
         // get move algorithm
-        MovingRule movingRule = MovingRules.getMovingRule(piece.getPieceType());
+        MovingRule movingRule = piece.getPieceType().getMovingRule();
 
 
         // generate possible positions
