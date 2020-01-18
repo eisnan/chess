@@ -10,12 +10,12 @@ import java.util.*;
 public class BishopStartPositionResolver {
 
 
-    private Rank WHITE_BISHOP_RANK = Rank._1;
-    private Rank BLACK_BISHOP_RANK = Rank._8;
+    private static final Rank WHITE_BISHOP_RANK = Rank._1;
+    private static final Rank BLACK_BISHOP_RANK = Rank._8;
 
     public Map<PieceColor, Set<Position>> getBishopsPosition() {
         // todo use jdk 9
-        Map<PieceColor, Set<Position>> bishopsPosition = new HashMap<>();
+        Map<PieceColor, Set<Position>> bishopsPosition = new EnumMap<>(PieceColor.class);
 
         bishopsPosition.put(PieceColor.WHITE, getWhiteBishopsPosition());
         bishopsPosition.put(PieceColor.BLACK, getBlackBishopsPosition());
@@ -24,10 +24,10 @@ public class BishopStartPositionResolver {
     }
 
     public Set<Position> getWhiteBishopsPosition() {
-        return new HashSet<>(Arrays.asList(Position.ofValid(File.c, WHITE_BISHOP_RANK), Position.ofValid(File.f, WHITE_BISHOP_RANK)));
+        return Set.of(Position.ofValid(File.c, WHITE_BISHOP_RANK), Position.ofValid(File.f, WHITE_BISHOP_RANK));
     }
 
     public Set<Position> getBlackBishopsPosition() {
-        return new HashSet<>(Arrays.asList(Position.ofValid(File.c, BLACK_BISHOP_RANK), Position.ofValid(File.f, BLACK_BISHOP_RANK)));
+        return Set.of(Position.ofValid(File.c, BLACK_BISHOP_RANK), Position.ofValid(File.f, BLACK_BISHOP_RANK));
     }
 }

@@ -21,16 +21,17 @@ public class QueenMovingRule implements MovingRule {
     private Map<PieceColor, Collection<Pair<Move, Integer>>> moveParameters = new HashMap<>();
     private PositionValidator validator = new RBQValidator();
 
+    private final Collection<Pair<Move, Integer>> legalMoves = Arrays.asList(
+            new Pair<>(new ForwardMove(), QUEEN_LIMIT_POSITIONS),
+            new Pair<>(new BackwardMove(), QUEEN_LIMIT_POSITIONS),
+            new Pair<>(new LeftMove(), QUEEN_LIMIT_POSITIONS),
+            new Pair<>(new RightMove(), QUEEN_LIMIT_POSITIONS),
+            new Pair<>(new ForwardDiagonalLeft(), QUEEN_LIMIT_POSITIONS),
+            new Pair<>(new ForwardDiagonalRight(), QUEEN_LIMIT_POSITIONS),
+            new Pair<>(new BackwardDiagonalLeft(), QUEEN_LIMIT_POSITIONS),
+            new Pair<>(new BackwardDiagonalRight(), QUEEN_LIMIT_POSITIONS));
+
     public QueenMovingRule() {
-        Collection<Pair<Move, Integer>> legalMoves = Arrays.asList(
-                new Pair<>(new ForwardMove(), QUEEN_LIMIT_POSITIONS),
-                new Pair<>(new BackwardMove(), QUEEN_LIMIT_POSITIONS),
-                new Pair<>(new LeftMove(), QUEEN_LIMIT_POSITIONS),
-                new Pair<>(new RightMove(), QUEEN_LIMIT_POSITIONS),
-                new Pair<>(new ForwardDiagonalLeft(), QUEEN_LIMIT_POSITIONS),
-                new Pair<>(new ForwardDiagonalRight(), QUEEN_LIMIT_POSITIONS),
-                new Pair<>(new BackwardDiagonalLeft(), QUEEN_LIMIT_POSITIONS),
-                new Pair<>(new BackwardDiagonalRight(), QUEEN_LIMIT_POSITIONS));
         moveParameters.put(PieceColor.WHITE, legalMoves);
         moveParameters.put(PieceColor.BLACK, legalMoves);
     }

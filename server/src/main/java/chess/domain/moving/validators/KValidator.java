@@ -7,7 +7,6 @@ import chess.domain.moving.PlayerMove;
 import chess.domain.moving.moves.Move;
 import chess.domain.util.Pair;
 import com.google.common.eventbus.Subscribe;
-import javafx.geometry.Pos;
 
 import java.util.*;
 import java.util.stream.Collectors;

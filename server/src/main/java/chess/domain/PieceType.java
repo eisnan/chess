@@ -1,11 +1,6 @@
 package chess.domain;
 
 import chess.domain.moving.rules.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.util.EnumSet;
 
 public enum PieceType {
     PAWN("", new PawnMovingRule()), KING("K", new KingMovingRule()), QUEEN("Q", new QueenMovingRule()),

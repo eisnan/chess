@@ -10,16 +10,13 @@ import chess.domain.moving.validators.PositionValidator;
 import chess.domain.moving.validators.RBQValidator;
 import chess.domain.util.Pair;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BishopMovingRule implements MovingRule {
 
     private static final Integer BISHOP_LIMIT_POSITIONS = 8;
-    private Map<PieceColor, Collection<Pair<Move, Integer>>> moveParameters = new HashMap<>();
+    private Map<PieceColor, Collection<Pair<Move, Integer>>> moveParameters = new EnumMap<>(PieceColor.class);
     private PositionValidator validator = new RBQValidator();
     private Collection<Move> legalMoves = Arrays.asList(
             new ForwardDiagonalLeft(),
@@ -54,6 +51,7 @@ public class BishopMovingRule implements MovingRule {
         return legalMoves;
     }
 
+    @Override
     public MoveSettings getMoveSettings(Position currentPosition, Piece piece) {
         return new MoveSettings(currentPosition, piece, adaptForPieceColor(piece.getPieceColor(), moveParameters));
     }
