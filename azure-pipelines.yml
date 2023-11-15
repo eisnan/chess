@@ -6,7 +6,9 @@
 trigger:
 - master
 
-pool: builders
+pool: 
+  name: builders 
+  vmImage: ubuntu-latest
 
 steps:
 - task: Maven@3
