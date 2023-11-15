@@ -1,8 +1,8 @@
 package chess.domain;
 
 import chess.entity.Game;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.util.Objects;
 
 @Entity

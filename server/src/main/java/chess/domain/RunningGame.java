@@ -3,8 +3,8 @@ package chess.domain;
 import chess.datalayer.converters.JpaToStringConverter;
 import chess.datalayer.repo.MoveEntity;
 import chess.entity.Game;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.util.Collection;
 import java.util.LinkedList;
 

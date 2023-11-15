@@ -53,4 +53,8 @@ public enum Rank {
         }
         return stringValues;
     }
+
+    public String getNotation() {
+        return this.name().substring(1,2);
+    }
 }

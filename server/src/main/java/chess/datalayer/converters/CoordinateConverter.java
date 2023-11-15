@@ -3,8 +3,8 @@ package chess.datalayer.converters;
 import chess.domain.File;
 import chess.domain.Rank;
 import chess.domain.util.Pair;
+import jakarta.persistence.AttributeConverter;
 
-import javax.persistence.AttributeConverter;
 
 public class CoordinateConverter implements AttributeConverter<Pair<File, Rank>, String> {
     @Override

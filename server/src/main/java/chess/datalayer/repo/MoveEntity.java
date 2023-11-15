@@ -5,8 +5,7 @@ import chess.domain.PieceType;
 import chess.domain.Rank;
 import chess.datalayer.converters.CoordinateConverter;
 import chess.domain.util.Pair;
-
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class MoveEntity {

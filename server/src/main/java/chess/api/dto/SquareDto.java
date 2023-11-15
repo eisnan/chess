@@ -1,6 +1,10 @@
 package chess.api.dto;
 
 import chess.api.dto.serializers.SquareSerializer;
+import chess.domain.Piece;
+import chess.domain.PieceColor;
+import chess.domain.Position;
+import chess.domain.SquareColor;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +16,7 @@ import lombok.Data;
 @AllArgsConstructor
 @JsonSerialize(using = SquareSerializer.class)
 public class SquareDto {
-    private ColorDto squareColor;
-    private PositionDto position;
-    private PieceDto piece;
+    private SquareColor squareColor;
+    private Position position;
+    private Piece piece;
 }

@@ -1,6 +1,5 @@
 package chess.api.dto.serializers;
 
-import chess.api.dto.PositionDto;
 import chess.api.dto.SquareDto;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

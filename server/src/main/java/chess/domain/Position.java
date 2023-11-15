@@ -100,6 +100,13 @@ public class Position {
         return BoardColorCode.get(file.ordinal(), rank.ordinal());
     }
 
+    public String getNotation() {
+        if (file == null || rank == null) {
+            return "";
+        }
+        return file.name() + rank.getNotation();
+    }
+
     private static class PositionCache {
         private static Map<String, Position> algCache = new HashMap<>();
         private static Map<File, Map<Rank, Position>> frCache = new EnumMap<>(File.class);

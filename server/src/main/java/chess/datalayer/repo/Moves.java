@@ -1,8 +1,7 @@
 package chess.datalayer.repo;
 
 import chess.entity.Game;
-
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Moves {

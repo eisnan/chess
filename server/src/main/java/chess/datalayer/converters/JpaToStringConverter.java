@@ -1,8 +1,7 @@
 package chess.datalayer.converters;
 
 import chess.domain.Player;
-
-import javax.persistence.AttributeConverter;
+import jakarta.persistence.AttributeConverter;
 
 public class JpaToStringConverter implements AttributeConverter<Player, String> {
     @Override
