@@ -7,6 +7,7 @@ trigger:
 - master
 
 pool: 
+  name: localbuilders 
   vmImage: ubuntu-latest
 
 steps:
